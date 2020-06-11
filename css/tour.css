@@ -1,0 +1,214 @@
+
+.tour-container .tour-title {
+    margin: 50px 0;
+    text-align: center;
+}
+
+.tour-container .tour-title h2 {
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 50px;
+}
+
+.tour-content .tour-image {
+    overflow: hidden;
+}
+
+.tour-content .tour-image img {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.tour-content .tour-image:hover img {
+    transform: scale3d(1.1, 1.1, 1);
+}
+
+.tour-content .tour-image-sub {
+    background-color: rgba(0, 0, 0, .9);
+    padding: 20px 30px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.tour-content .tour-description {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.tour-widget div {
+    margin: 10px;
+}
+
+.tour-widget .w-title {
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #000;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.tour-widget h5:first-child {
+    text-align: center!important;
+}
+
+.tour-widget .w-price h5 {
+    display: inline!important;
+}
+
+.tour-widget .w-price p {
+    display: inline!important;
+    color: red;
+}
+
+.tour-widget p {
+    display: inline!important;
+    color: #888888;
+    font-size: 15px;
+}
+
+.tour-widget h5 {
+    display: inline!important;
+    padding-right: 5px;
+    color: #888888;
+}
+
+/* Đặt tour */
+
+.tour-book {
+    margin-top: 100px;
+}
+
+.tour-book form {
+    font-size: 15px;
+}
+
+.tour-book .progress {
+    padding: 40px 10px!important;
+    margin-bottom: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 2px solid #2196F3;
+    background: #fff;
+    text-transform: uppercase;
+    text-align: center!important;
+}
+
+.tour-book .active {
+    background: #2196F3;
+    color: #fff;
+}
+
+.tour-book .btn-info {
+    background: #2196F3;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    text-transform: uppercase;
+}
+
+.tour-book .img-travello {
+    margin-top: 10px;
+}
+
+.tour-book .img-travello img {
+    width: 100%;
+    height: 100%;
+}
+
+.tour-book .subtour-info {
+    padding: 20px;
+    background: #f1f1f1;
+    box-shadow: 2px;
+    margin-bottom: 20px;
+}
+
+.tour-book .subtour-info p {
+    font-size: 15px;
+}
+
+.tour-book .subtour-info i {
+    font-size: 20px;
+    padding-right: 5px;
+}
+
+.tour-book .subtour-info #Child  {
+    display: inline-block!important;
+}
+
+/* .tour-book .subtour-info .display-hidden {
+    display: none;
+} */
+
+.tour-book #tour-Sum:active {
+    border: 0!important;
+}
+
+.tour-book #Sum {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tour-book #Sum p{
+    font-size: 20px;
+    font-weight: bold;
+}
+.tour-book #accordion .btn-primary{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    background: #fff;
+    color: #2196F3;
+}
+
+.tour-book .card-header {
+    padding: 0;
+}
+
+.tour-book .btn-link:hover {
+    text-decoration: none;
+}
+
+.tour-book #accordion .btn-primary:focus{
+    background: #2196F3;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+#accordion .card {
+    margin: 10px 0;
+    font-size: 17px;
+}
+
+.card:hover .payment img {
+    transform: none;
+}
+
+.card .payment p {
+    font-size: 15px;
+    margin: 0;
+
+}
+
+.btn-progress .btn-success{
+    padding: 10px 20px;
+    margin-right: 0;
+    width: 100%;
+    margin: 20px 0;
+    text-transform: uppercase;
+}
+
+.btn-progress .btn-success a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
