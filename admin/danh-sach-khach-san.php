@@ -60,6 +60,8 @@
             <th>Địa Chỉ</th>
             <th>Điện Thoại</th>
             <th>Số Phòng</th>
+            <th>Ngày Đến</th>
+            <th>Ngày Đi</th>
             <th>WebSite</th>
             <th>Ảnh</th>
             <th>EDIT</th>
@@ -81,6 +83,8 @@
                   <td> <?php echo $row['DiaChi']; ?>  </td>
                   <td> <?php echo $row['DienThoai']; ?>  </td>
                   <td> <?php echo $row['SoPhong']; ?>  </td>
+                  <td> <?php echo $row['NgayDen']; ?>  </td>
+                  <td> <?php echo $row['NgayDi']; ?>  </td>
                   <td> <?php echo $row['WebSite']; ?>  </td>
                   <td> <?php echo $row['Anh']; ?>  </td>
                   <td>

@@ -61,6 +61,8 @@
             <th>SDT</th>
             <th>Giới Thiệu</th>
             <th>Giá Nhà Hàng</th>
+            <th>Ngày Đến</th>
+            <th>Ngày Đi</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -81,6 +83,8 @@
                   <td> <?php echo $row['SDT']; ?>  </td>
                   <td> <?php echo $row['GioiThieuNH']; ?>  </td>
                   <td> <?php echo $row['GiaNH']; ?>  </td>
+                  <td> <?php echo $row['NgayDen']; ?>  </td>
+                  <td> <?php echo $row['NgayDi']; ?>  </td>
                   <td>
                     <form action="sua-nha-hang.php" method="post">
                       <input type="hidden" name="sua_mnh" value="<?php echo $row['MaNH']; ?>">

@@ -3,9 +3,7 @@
   include('includes/header.php'); 
   include('includes/navbar.php');
 ?>
-
 <div class="container-fluid">
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -50,11 +48,18 @@
         $connection = mysqli_connect("localhost","root","","travello_db");
         $query = "SELECT * FROM tintuc";
         $query_run = mysqli_query($connection, $query);
+        // $query1="SELECT *, theloai.TenTheLoai FROM tintuc INNER JOIN theloai ON tintuc.MaTheLoai = theloai.MaTheLoai";
+        // $result1 = mysqli_query($connection, $query1);
+        $query1="SELECT * FROM tintuc, nhanvien, theloai where tintuc.MaNV = nhanvien.MaNV
+         and theloai.MaTheLoai=tintuc.MaTheLoai";
+        $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Mã Tin Tức</th>
+            <th>Tên Thể Loại</th>
+            <th>Tên Nhân Viên</th>
             <th>Tên Tin Tức</th>
             <th>Mô Tả</th>
             <th>Chi Tiết</th>
@@ -66,15 +71,20 @@
           </tr>
         </thead>
         <tbody>
-
           <?php
-            if(mysqli_num_rows($query_run) > 0)
+            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0)
             {
-              while($row = mysqli_fetch_assoc($query_run))
+              while(($row = mysqli_fetch_assoc($query_run))&& $rows1 =mysqli_fetch_assoc($result1))
               {
           ?>
                 <tr>
                   <td><?php echo $row['MaTinTuc']; ?></td>
+                  <td><?php
+                  echo $rows1['TenTheLoai']; 
+                  ?></td>
+                  <td><?php
+                  echo $rows1['TenNV']; 
+                  ?></td>
                   <td> <?php echo $row['TenTinTuc']; ?>  </td>
                   <td> <?php echo $row['MoTa']; ?>  </td>
                   <td> <?php echo $row['ChiTiet']; ?>  </td>
@@ -101,19 +111,14 @@
               echo "no record found";
             }
           ?>
-        
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
-
 </div>
 <!-- /.container-fluid -->
-
 <?php
 include('includes/scripts.php');
 include('includes/footer.php');
 ?>
-

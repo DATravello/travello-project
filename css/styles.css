@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Poppins', sans-serif!important;
+    color: #0D0D11!important;
+}
+
+
 html {
     font-size: 13px;
-    font-family: 'Source Sans Pro', sans-serif;
+    overflow-x: hidden;
+
 }
 
 ul {
@@ -24,6 +33,10 @@ a {
 
 a:hover {
     text-decoration: none;
+}
+
+p {
+    font-size: 14px;
 }
 
 .fixed-top {
@@ -235,6 +248,14 @@ card-tour {
     overflow: hidden;
 }
 
+.card-deck .row .col-6 {
+    padding: 0!important;
+}
+
+.card-deck .card {
+    padding: 0!important;
+}
+
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
@@ -254,6 +275,7 @@ card-tour {
     transform: translate(0);
     transition: all .3s ease-in-out;
     max-height: 380px;
+    width: 100%;
 
 }
 
@@ -269,7 +291,7 @@ card-tour {
 
 
 .card-body h5 {
-    font-size: 30px;
+    font-size: 20px;
     letter-spacing: 1px;
     font-weight: 400;
 }
@@ -368,6 +390,10 @@ card-tour {
     height: 200px;
 }
 
+.card-img-top {
+    width: 100%;
+}
+
 .tour-hot .card-body {
     width: 100%;
     height: 100%;
@@ -401,6 +427,59 @@ card-tour {
     color: #000;
     font-weight: 400;
 }
+
+
+/* FOOTER */
+
+.footer {
+    font-size: 20px;
+    background: #212121;
+    color: #fff;
+
+}
+
+.footer h3 {
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.footer h5 {
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    width: auto;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.footer h5::before {
+    content: " ";
+    position: absolute;
+    width: 100%;
+    background: #e8e8e8;
+    height: 1px;
+    bottom: -5px;
+    left: 0;
+}
+
+
+.footer .row {
+    padding: 50px 60px;
+}
+
+.footer-copyright {
+    padding: 10px 20px;
+    background: #111312;
+}
+
+.footer-copyright i {
+    margin: 0 5px;
+    font-size: 35px;
+}
+
+/* END FOOTER */
 
 
 /* Responsive */

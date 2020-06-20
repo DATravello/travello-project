@@ -44,7 +44,7 @@
                 unset($_SESSION['status']);
             }
         ?>
-        <form action="code.php" method="POST">
+        <form action="code.php" method="POST" enctype="multipart/form-data">
 
         <div class="modal-body">
 
@@ -71,7 +71,15 @@
             </div>
             <div class="form-group">
                 <label> Ảnh </label>
-                <input type="text" name="Anh" class="form-control" placeholder="Nhập Ảnh">
+                <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                </div>
             </div>
             <div class="form-group">
                 <label> Quyền </label>
