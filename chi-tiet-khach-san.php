@@ -196,9 +196,14 @@ if(isset($_GET['khachsan']))
                     <div class="w-vehicle"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiKS'];?></p></div>
                     <div class="w-hotel"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiPhong'];?></p></div>
                     <div class="w-guide"><h5>Hướng dẫn viên: </h5> <p><?php echo $rows_hdv['TenHDV'];?></p></div> -->
+<<<<<<< HEAD
+                </div>
+                <button class="btn btn-success"><a href="dat-khach-san.php?tour=<?php echo $rows['MaKS'];?>">Đặt Khách Sạn</button>
+=======
                     <button class="btn btn-book"><a href="dat-khach-san.php?tour=<?php echo $rows['MaKS'];?>">Đặt Khách Sạn</button>
                 </div>
                 
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
             </div>
         </div>
     </div>

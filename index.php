@@ -36,6 +36,51 @@
 </div>
 
 
+<<<<<<< HEAD
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Du Lịch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vận Chuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Liên Hệ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <?php
+                            if (isset($_SESSION['Email']) && $_SESSION['Email']){
+                                echo '<a class="nav-link" href="#"><i class="fas fa-user"></i></a>';
+                            }
+                            else{
+                                echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
+                            }
+                            // else
+                            // {
+                            //     echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
+                            // }
+                        ?>
+                    </li>
+                </ul>
+=======
 
 <div class="card-group">
     <div class="card">
@@ -69,6 +114,7 @@
                     additional content. This card has even longer content than the first to show that equal height
                     action.</p>
                 <a href="#" class="btn btn-primary">Xem Ngay</a>
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
             </div>
         </div>
 
@@ -152,6 +198,109 @@
     </div>
     <div class="card-deck">
         <div class="card">
+<<<<<<< HEAD
+          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
+          <div class="dark-overlay">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
+          <div class="dark-overlay">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
+          <div class="dark-overlay">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+          </div>
+          
+        </div> -->
+
+    <!-- </div> -->
+
+
+    <!-- TOUR ĐẶT NHIỀU -->
+    <section class="tour-hot">
+    <?php
+        $query="SELECT * from loaitourdulich";
+        $result = mysqli_query($connection, $query);
+        $query2="SELECT * from tourdulich where MaLoaiTour='1'";
+	    $result2=mysqli_query($connection, $query2);
+        $query3="SELECT * from loaitourdulich where MaLoaiTour='1'";
+		$result3=mysqli_query($connection, $query3);
+		$rows3=mysqli_fetch_array($result3);
+    ?>
+        <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
+        <div class="card-deck">
+            <div class="row">
+
+            <?php
+			    while($rows=@mysqli_fetch_array($result2))
+			    {
+			?>
+            <div class="card col-6">
+                <img class="card-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
+                        <p class="card-text">Từ <?php echo $rows['GiaTien'] ?></p>
+                        <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour'];?>" class="btn btn-primary">Đặt Ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <?php
+                }
+            ?>
+            </div>
+        </div>
+    <?php
+    ?>
+    </section>
+
+    <!-- TOUR TRONG NƯỚC -->
+    <section class="tour-hot">
+        <h5>TOUR TRONG NƯỚC</h5>
+        <div class="card-deck">
+            <div class="card col-6">
+                <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title">Hawai</h5>
+                        <p class="card-text">Từ 5.000.000 VNĐ</p>
+                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title">Hawai</h5>
+                        <p class="card-text">Từ 5.000.000 VNĐ</p>
+                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title">Hawai</h5>
+                        <p class="card-text">Từ 5.000.000 VNĐ</p>
+                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
+                    </div>
+=======
             <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
             <div class="dark-overlay">
                 <div class="card-body">
@@ -178,6 +327,7 @@
                     <h5 class="card-title">Hawai</h5>
                     <p class="card-text">Từ 5.000.000 VNĐ</p>
                     <a href="#" class="btn btn-primary">Đặt Ngay</a>
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                 </div>
             </div>
 
@@ -222,6 +372,8 @@
 </section>
 
 
+<<<<<<< HEAD
+=======
 <!-- TOUR NƯỚC NGOÀI -->
 <section class="tour-hot">
     <?php
@@ -293,6 +445,7 @@
 </div>
 
 
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 </body>
 <script src="scripts/jquery-3.5.1.slim.min.js"></script>
 <script src="scripts/popper.min.js"></script>

@@ -106,6 +106,7 @@ if (isset($_POST['btn_them_phuong_tien'])) {
     $noidi = $_POST['NoiDi'];
     $noiden = $_POST['NoiDen'];
     $gia = $_POST['Gia'];
+<<<<<<< HEAD
 
     $sql_tenphuongtien = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
     $rstenphuongtien = mysqli_query($connection, $sql_tenphuongtien);
@@ -156,6 +157,58 @@ if(isset($_POST['btn_xoa_phuongtien']))
 {
     $mapt = $_POST['xoa_phuongtien'];
 
+=======
+
+    $sql_tenphuongtien = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
+    $rstenphuongtien = mysqli_query($connection, $sql_tenphuongtien);
+    if (!$tenphuongtien || !$noidi || !$noiden || !$gia) {
+        echo "Không thành công!";
+        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
+        header('location: them-phuong-tien.php');
+    } else {
+        if (mysqli_num_rows($rstendichvu) > 0) {
+            echo "Không thành công";
+            $_SESSION['status'] = "Dịch Vụ Đã Tồn Tại!";
+            header('location: them-phuong-tien.php');
+        } else {
+            $query = "INSERT INTO phuongtien (`PhuongTien`, `NoiDi`,`NoiDen`, `Gia`) VALUES ('$tenphuongtien','$noidi','$noiden','$gia')";
+            $query_run = mysqli_query($connection, $query);
+
+            if ($query_run) {
+                $_SESSION['success'] = "Thêm Thành Công!";
+                header('location: danh-sach-phuong-tien.php');
+            } else {
+                $_SESSION['status'] = "Thêm Thất Bại!";
+                header('location: them-phuong-tien.php');
+            }
+        }
+    }
+}
+//SỬA PHƯƠNG TIỆN (ĐƯỢC)
+if (isset($_POST['btn_capnhat_pt'])) {
+    $mapt = $_POST['sua_MaPhuongTien'];
+    $tenpt = $_POST['sua_tenphuongtien'];
+    $noidi = $_POST['sua_noidi'];
+    $noiden = $_POST['sua_noiden'];
+    $gia = $_POST['sua_gia'];
+
+    $query = "UPDATE phuongtien SET PhuongTien='$tenpt', NoiDi='$noidi', NoiDen='$noiden', Gia='$gia' WHERE MaPhuongTien='$mapt'";
+    $query_run = mysqli_query($connection, $query);
+
+    if ($query_run) {
+        $_SESSION['success'] = "Sửa Thành Công!";
+        header('location: danh-sach-phuong-tien.php');
+    } else {
+        $_SESSION['status'] = "Sửa Thất Bại!";
+        header('location: sua-phuong-tien.php');
+    }
+}
+// XÓA PHƯƠNG TIỆN (ĐƯỢC)
+if(isset($_POST['btn_xoa_phuongtien']))
+{
+    $mapt = $_POST['xoa_phuongtien'];
+
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
     $query = "DELETE FROM phuongtien WHERE MaPhuongTien='$mapt'";
     $query_run = mysqli_query($connection, $query);
 
@@ -527,19 +580,32 @@ if (isset($_POST['btn_them_tin_tuc'])) {
     $mota = $_POST['MoTa'];
     $nhanvien = $_POST['NhanVien'];
     $chitiet = $_POST['ChiTiet'];
+<<<<<<< HEAD
+    $hinhanh = $_FILES["HinhAnh"]['name'];
+=======
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
     $ngay = $_POST['Ngay'];
     $taoboi = $_POST['TaoBoi'];
 
     $sql_tentintuc = "SELECT * FROM tintuc WHERE TenTinTuc = '$tentintuc'";
     $rstentintuc = mysqli_query($connection, $sql_tentintuc);
+<<<<<<< HEAD
+    if (file_exists("img/tin-tuc/" . $_FILES["HinhAnh"]["name"])) {
+        $store = $_FILES["HinhAnh"]["name"];
+=======
     if (file_exists("img/tin-tuc/" . $_FILES["Anh"]['name'])) {
         $store = $_FILES["Anh"]['name'];
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-tin-tuc.php');
     }
     else
     {
+<<<<<<< HEAD
+    if (!$tentintuc || !$theloai || !$mota || !$nhanvien || !$chitiet || !$hinhanh || !$ngay || !$taoboi) {
+=======
     if (!$tentintuc || !$theloai || !$mota || !$nhanvien || !$chitiet || !$anh || !$ngay || !$taoboi) {
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
         echo "Không thành công!";
         $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
         header('location: them-tin-tuc.php');
@@ -550,10 +616,17 @@ if (isset($_POST['btn_them_tin_tuc'])) {
             header('location: them-tin-tuc.php');
         } else {
             $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
+<<<<<<< HEAD
+            VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$hinhanh','$ngay','$taoboi')";
+            $query_run = mysqli_query($connection, $query);
+            if ($query_run) {
+                move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/tin-tuc/".$_FILES["HinhAnh"]["name"]);
+=======
             VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$anh','$ngay','$taoboi')";
             $query_run = mysqli_query($connection, $query);
             if ($query_run) {
                 move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/".$_FILES["Anh"]['name']);
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                 $_SESSION['success'] = "Thêm Thành Công!";
                 header('location: danh-sach-tin-tuc.php');
             } else {

@@ -252,10 +252,13 @@ card-tour {
     padding: 0!important;
 }
 
+<<<<<<< HEAD
+=======
 .card-deck .card {
     padding: 0!important;
 }
 
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
