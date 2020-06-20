@@ -1,131 +1,120 @@
+<?php
+session_start();
+
+include('database/db_config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Travello</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Travello template project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="styles/main_styles.css">
-<link rel="stylesheet" type="text/css" href="styles/responsive.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Travello</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animate/animate.min.css">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
 </head>
+
 <body>
 
-<div class="super_container">
-	
-	<!-- Header -->
+    <!-- HEADER -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">TRAVELLO</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start">
-						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="index.php">Travello</a></div>
-							<nav class="main_nav">
-								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li class="active"><a href="index.php">Trang Chủ</a></li>
-									<li><a href="about.php">Giới Thiệu</a></li>
-									<li><a href="#">Dịch Vụ</a></li>
-									<li><a href="#">Tin Tức</a></li>
-									<li><a href="#">Liên Hệ</a></li>
-								</ul>
-							</nav>
-							<div class="header_phone ml-auto">Call us: (+84) 32 6805 211</div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Du Lịch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vận Chuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Liên Hệ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <?php
+                        if (isset($_SESSION['Email']) && $_SESSION['Email']) {
+                            echo '<a class="nav-link" href="thong-tin-tai-khoan.php"><i class="fas fa-user"></i></a>';
+                        } else {
+                            echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
+                        }
+                        ?>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-							<!-- Hamburger -->
+    <!-- BANNER -->
 
-							<div class="hamburger ml-auto">
-								<i class="fa fa-bars" aria-hidden="true"></i>
-							</div>
+    <section class="banner">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>KHÁM PHÁ THẾ GIỚI</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#search">Tìm Kiếm Ngay</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>Trải Nghiệm Mới</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#">Thêm Thông Tin</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>Tìm Chuyến Đi</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#">Tìm Kiếm</a></p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="header_social d-flex flex-row align-items-center justify-content-start">
-			<ul class="d-flex flex-row align-items-start justify-content-start">
-				<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-			</ul>
-		</div>
-	</header>
+    <!-- END BANNER -->
 
-	<?php
-		include "include/nav_menu.php"
-	?>
-	<!-- Home -->
-
-	<div class="home">
-		
-		<!-- Home Slider -->
-		<div class="home_slider_container">
-			<div class="owl-carousel owl-theme home_slider">
-				
-				<!-- Slide -->
-				<div class="owl-item">
-					<div class="background_image" style="background-image:url(images/home_slider.jpg)"></div>
-					<div class="home_slider_content_container">
-						<div class="container">
-							<div class="row">
-								<div class="col">
-									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Slide -->
-				<div class="owl-item">
-					<div class="background_image" style="background-image:url(images/home_slider.jpg)"></div>
-					<div class="home_slider_content_container">
-						<div class="container">
-							<div class="row">
-								<div class="col">
-									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Slide -->
-				<div class="owl-item">
-					<div class="background_image" style="background-image:url(images/home_slider.jpg)"></div>
-					<div class="home_slider_content_container">
-						<div class="container">
-							<div class="row">
-								<div class="col">
-									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-		</div>
-	</div>
-
-
-	<?php
-		include "include/search.php"
-	?>
+    <!-- END HEADER -->

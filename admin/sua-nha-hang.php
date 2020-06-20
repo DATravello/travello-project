@@ -22,7 +22,7 @@ include('includes/navbar.php');
 
             foreach ($query_run as $row) {
         ?>
-                <form action="code.php" method="POST">
+                <form action="code.php" method="POST"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Mã NH</label>
                         <input type="text" name="sua_mnh" value="<?php echo $row['MaNH'] ?>" class="form-control" readonly>
@@ -37,7 +37,15 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label> Ảnh </label>
-                        <input type="text" name="sua_anhnh" value="<?php echo $row['Anh'] ?>" class="form-control" placeholder="Nhập Ảnh">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label> Số Điện Thoại </label>
@@ -50,6 +58,14 @@ include('includes/navbar.php');
                     <div class="form-group">
                         <label> Giá </label>
                         <input type="number" name="sua_gianh" value="<?php echo $row['GiaNH'] ?>" class="form-control" placeholder="Nhập Giá">
+                    </div>
+                    <div class="form-group">
+                        <label> Ngày Đến </label>
+                        <input type="date" name="sua_ngayden" value="<?php echo $row['NgayDen'] ?>" class="form-control" placeholder="Nhập Ngày Đến">
+                    </div>
+                    <div class="form-group">
+                        <label> Ngày Đi </label>
+                        <input type="date" name="sua_ngaydi" value="<?php echo $row['NgayDi'] ?>" class="form-control" placeholder="Nhập Ngày Đi">
                     </div>
 
                     <a href="danh-sach-nha-hang.php" class="btn btn-danger">Huỷ Bỏ</a>
