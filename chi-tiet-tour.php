@@ -10,7 +10,8 @@ if(isset($_GET['tour']))
     $result=mysqli_query($connection, $query);
     $rows=@mysqli_fetch_array($result);
 
-    $query2="SELECT * from loaitourdulich where MaLoaiTour='1'";
+    //Loại Tour
+    $query2="SELECT * FROM tourdulich INNER JOIN loaitourdulich ON tourdulich.MaLoaiTour = loaitourdulich.MaLoaiTour ";
     $result2=mysqli_query($connection, $query2);
     $rows2=@mysqli_fetch_array($result2);
 
@@ -38,6 +39,7 @@ if(isset($_GET['tour']))
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Travello</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/tour.css">
     <link rel="stylesheet" href="css/animate/animate.min.css">
@@ -171,8 +173,9 @@ if(isset($_GET['tour']))
                     <div class="w-vehicle"><h5>Phương tiện: </h5> <p><?php echo $rows_pt['PhuongTien'];?></p></div>
                     <div class="w-hotel"><h5>Khách sạn: </h5> <p><?php echo $rows_ks['TenKS'];?></p></div>
                     <div class="w-guide"><h5>Hướng dẫn viên: </h5> <p><?php echo $rows_hdv['TenHDV'];?></p></div>
+                    <button class="btn btn-book"><a href="dat-tour.php?tour=<?php echo $rows['MaTour'];?>">Đặt tour</button>
                 </div>
-                <button class="btn btn-success"><a href="dat-tour.php?tour=<?php echo $rows['MaTour'];?>">Đặt tour</button>
+                
             </div>
         </div>
     </div>

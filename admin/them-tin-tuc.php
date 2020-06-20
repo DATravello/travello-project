@@ -55,7 +55,11 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label>Loại Tin Tức</label>
+<<<<<<< HEAD
                     <select class="form-control"  name="LoaiTin">
+=======
+                    <select class="form-control" name="LoaiTin">
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_theloai = "SELECT * FROM theloai";
@@ -71,7 +75,11 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label>Nhân Viên</label>
+<<<<<<< HEAD
                     <select class="form-control"  name="NhanVien">
+=======
+                    <select class="form-control" name="NhanVien">
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_nhanvien = "SELECT * FROM nhanvien";
@@ -83,14 +91,24 @@ include('includes/navbar.php');
                         }
                         ?>
                         <!-- </div> -->
+<<<<<<< HEAD
                         </select>
+=======
+                    </select>
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                 </div>
 
                 <div class="form-group">
                     <label> Chi Tiết </label>
+<<<<<<< HEAD
                     <!-- <input type="file" name="images" id="images" class="form-control" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"> -->
                     <input type="text" name="ChiTiet" class="form-control" placeholder="Nhập Chi Tiết">
                 </div>
+=======
+                    <input type="text" name="ChiTiet" class="form-control" placeholder="Nhập Chi Tiết">
+                </div>
+
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                 <div class="form-group">
                     <label> Hình Ảnh </label>
                     <div class="input-group">
@@ -98,12 +116,20 @@ include('includes/navbar.php');
                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                         </div>
                         <div class="custom-file">
+<<<<<<< HEAD
                             <input type="file" name="HinhAnh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+=======
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <!-- kiểu vậy á..cho dễ..cái mô tả chung vẫn để ngoài cho taonf bài đó..còn hình mô tả riêng -->
+=======
+
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
                 <div class="form-group">
                     <label> Ngày </label>
                     <input type="date" name="Ngay" class="form-control" placeholder="Chọn Ngày">

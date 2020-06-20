@@ -47,7 +47,7 @@
 
     <div class="table-responsive">
       <?php
-        $connection = mysqli_connect("localhost","root","","travello_db");
+        // $connection = mysqli_connect("localhost","root","","travello_db");
         $query = "SELECT * FROM tourdulich";
         $query_run = mysqli_query($connection, $query);
         $query1="SELECT * FROM tourdulich, loaitourdulich, nhahang, khachsan, phuongtien, huongdanvien, dichvudikem

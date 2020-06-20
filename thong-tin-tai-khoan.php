@@ -1,14 +1,7 @@
 <?php
 session_start();
 
-if (isset($_GET['tour'])) {
-    $matour = $_GET['tour'];
-    require_once('database/db_config.php');
-
-    $query = "SELECT * from tourdulich where MaTour='$matour'";
-    $result = mysqli_query($connection, $query);
-    $rows = @mysqli_fetch_array($result);
-}
+include('database/db_config.php');
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +12,11 @@ if (isset($_GET['tour'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Travello</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/tour.css">
+    <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="css/animate/animate.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
-
 </head>
 
 <body>
@@ -32,7 +24,7 @@ if (isset($_GET['tour'])) {
     <!-- Wrapper -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/index.php">TRAVELLO</a>
+            <a class="navbar-brand" href="#">TRAVELLO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,7 +32,7 @@ if (isset($_GET['tour'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Du Lịch</a>
@@ -67,6 +59,10 @@ if (isset($_GET['tour'])) {
                         } else {
                             echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
                         }
+                        // else
+                        // {
+                        //     echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
+                        // }
                         ?>
                     </li>
                 </ul>
@@ -83,7 +79,7 @@ if (isset($_GET['tour'])) {
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/bana-hill-slider.jpg" class="d-block w-100" alt="...">
+                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>KHÁM PHÁ THẾ GIỚI</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -118,65 +114,86 @@ if (isset($_GET['tour'])) {
         </div>
     </section>
 
-    <div class="container tour-book">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="progress">1. Chọn dịch vụ</div>
-            </div>
-            <div class="col-md-3">
-                <div class="progress active">2. Thông tin hành khách</div>
-            </div>
-            <div class="col-md-3">
-                <div class="progress">3. Thanh toán</div>
-            </div>
-            <div class="col-md-3">
-                <div class="progress">4. Xác nhận</div>
-            </div>
-        </div>
+    <!-- NỘI DUNG -->
 
-        <div class="row">
-            <div class="col-md-8">
-                <h5>Thông tin liên hệ</h5>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Tên (*)</label>
-                        <input type="text" class="form-control" id="inputEmail4" placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Số điện thoại (*)</label>
-                        <input type="number" class="form-control" id="inputPassword4" placeholder="">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Email (*)</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Địa chỉ (*)</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Thành Phố (*)</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Quốc Gia (*)</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="">
-                    </div>
-                </div>
-                <h5>Thông tin hành khách # </h5>
-            </div>
+    <?php
+    $email = $_SESSION['Email'];
+    $query = "SELECT * from khachhang where Email = '$email'";
+    $result = mysqli_query($connection, $query);
+    $rowTK = mysqli_fetch_array($result);
 
-            <div class="col-md-4">
-                <button class="btn btn-info">Hỗ trợ giao dịch 0326805211</button>
-                <div class="img-travello"><img src="img/travello-ds.jpg"></div>
+    $MaKH = $rowTK["MaKH"];
+    ?>
+
+    <div class="container users">
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Thông Tin Tài Khoản</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Quản Lý Đơn Hàng</a>
+                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Tour Yêu Thích</a>
+                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Tour Đã Xem</a>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Thông tin tài khoản -->
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                        <h5>Thông Tin Tài Khoản</h5>
+                        <form class="info-u">
+
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Họ Tên</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["TenKH"] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Ngày Sinh</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["NgaySinh"] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Địa Chỉ</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["DiaChi"] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Giới Tính</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["GioiTinh"] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Số Điện Thoại</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["SDT"] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Email</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<?php echo $rowTK["Email"] ?>" readonly>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!--  Quản Lý Đơn Hàng -->
+                    <?php
+                    $q_hd = "SELECT * FROM hoadon WHERE MaKH = '$MaKH'";
+                    $r_hd = mysqli_query($connection, $q_hd);
+                    ?>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="list-group">
+                            <h5>Danh Sách Tour Đã Đặt</h5>
+                            <?php
+                            while ($rowHD = @mysqli_fetch_array($r_hd)) {
+                            ?>
+                                <a href="#" class="list-group-item list-group-item-action disabled orders">Tour #<?php echo $rowHD["MaHD"] ?> <p class="status">(<?php echo $rowHD["TinhTrang"]?>)</p></a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                </div>
             </div>
         </div>
     </div>
-
 
 </body>
 <script src="scripts/jquery-3.5.1.slim.min.js"></script>

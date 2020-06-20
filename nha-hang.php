@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 session_start();
 include('database/db_config.php')
@@ -114,18 +115,28 @@ include('database/db_config.php')
 			</a>
 		</div>
 	</section>
+=======
+<?php include('include/header.php'); ?>
+
+<!-- NỘI DUNG -->
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 	<section class="nha-hang">
 		<?php
 		$query = "SELECT * from nhahang";
 		$result = mysqli_query($connection, $query);
+<<<<<<< HEAD
 		//$rows = mysqli_fetch_array($result);
 		
+=======
+		$rows = mysqli_fetch_array($result);
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 		?>
 		<!-- <h5><?php echo $rows['TenNhaHang'] ?></h5> -->
 		<div class="card-deck">
 		<div class="row">
 
 			<?php
+<<<<<<< HEAD
 			$temp = "";
 			while ($rows=mysqli_fetch_assoc($result)) {
 			?>
@@ -137,6 +148,10 @@ include('database/db_config.php')
 											
 							}
 				 ?></div>
+=======
+			while ($rows = @mysqli_fetch_array($result)) {
+			?>
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 				<div class="card col-6">
 					<img class="card-img-top" src="admin/img/nha-hang/<?php echo $rows['Anh'] ?>" alt="Card image cap">
 					<div class="dark-overlay">

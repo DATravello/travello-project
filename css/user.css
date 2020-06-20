@@ -1,0 +1,32 @@
+.users {
+    margin: 50px 120px;
+}
+
+.users h5 {
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    color: #2196F3;
+}
+
+.users .info-u {
+    font-size: 17px;
+}
+
+.users .info-u input {
+    font-size: 15px;
+    background: #ffffff;
+}
+
+.list-group .status {
+    display: inline;
+    color: #12AA45;
+    font-weight: bold;
+    float: right;
+}
+
+.list-group .orders {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3333DE;
+}

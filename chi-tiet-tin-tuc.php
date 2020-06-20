@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+<<<<<<< HEAD
 if(isset($_GET['tintuc']))
 {
     $matt=$_GET['tintuc'];
@@ -13,11 +14,25 @@ if(isset($_GET['tintuc']))
     $query2="SELECT * from theloai where MaTheLoai='6'";
     $result2=mysqli_query($connection, $query2);
     $rows2=@mysqli_fetch_array($result2);
+=======
+if (isset($_GET['tintuc'])) {
+    $matt = $_GET['tintuc'];
+    require_once('database/db_config.php');
+
+    $query = "SELECT * from tintuc where MaTinTuc='$matt'";
+    $result = mysqli_query($connection, $query);
+    $rows = @mysqli_fetch_array($result);
+
+    $query2 = "SELECT * from theloai where MaTheLoai='6'";
+    $result2 = mysqli_query($connection, $query2);
+    $rows2 = @mysqli_fetch_array($result2);
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 
     //Loại KS
     $loaitt = "SELECT * FROM tintuc INNER JOIN theloai ON tintuc.MaTheLoai = theloai.MaTheLoai where MaTinTuc='$matt'";
     $result_loaitt = mysqli_query($connection, $loaitt);
     $rows_loaitt = @mysqli_fetch_array($result_loaitt);
+<<<<<<< HEAD
     //ý là nội dung cho xuất hình như mi gắng cứng à
     // trong csdl phải có nh hình đã
     //bỏ mô tả cho từng hình thì dễ hơn. đừng để nội dung chung chung. như kiểu hình 1 - mô tả hình 1 rồi đến hình 2 lưu trong database như vậy luôn.uk vậy á. xong khi load lên cái nào ko có thì nó ko load chứ ko lỗi j đâu
@@ -38,6 +53,8 @@ if(isset($_GET['tintuc']))
     // $hdv = "SELECT * FROM tourdulich INNER JOIN huongdanvien ON tourdulich.MaHDV = huongdanvien.MaHDV where MaTour='$matour'";
     // $result_hdv = mysqli_query($connection, $hdv);
     // $rows_hdv = @mysqli_fetch_array($result_hdv);
+=======
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 }
 ?>
 
@@ -159,6 +176,7 @@ if(isset($_GET['tintuc']))
     <!-- NỘI DUNG -->
 
     <div class="container tour-container">
+<<<<<<< HEAD
         <div class="tour-title"><h2 style="font-weight: bold; font-style: 50px;"><?php echo $rows['TenTinTuc'];?></h2></div>
         <div class="row">
             <div class="col">
@@ -218,6 +236,30 @@ if(isset($_GET['tintuc']))
                     <div class="w-guide"><h5>Hướng dẫn viên: </h5> <p><?php echo $rows_hdv['TenHDV'];?></p></div> -->
                 </div>
                 <!-- <button class="btn btn-success"><a href="dat-khach-san.php?tour=<?php echo $rows['MaKS'];?>">Đặt Khách Sạn</button> -->
+=======
+        <div class="tour-title">
+            <h3 style="font-weight: bold; font-style: 30px;"><?php echo $rows['TenTinTuc']; ?></h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="tour-content">
+                    <div class="w-type" style="font-size: 15px; font-style: italic"><?php echo $rows['MoTa']; ?></div>
+                    <div class="tour-image">
+                        <img src="admin/img/tin-tuc/<?php echo $rows['HinhAnh']; ?>"></div>
+                    <div class="tour-image-sub">
+                        <?php echo $rows['TenTinTuc']; ?>
+                    </div>
+                    <?php echo $rows['ChiTiet']; ?>
+                    <div style="text-align:right;font-weight: bold;"> Nguồn: <?php echo $rows['TaoBoi']; ?></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tour-widget">
+                    <h5 class="w-title">Thông tin</h5>
+                    <div><?php echo $rows_loaitt['TenTheLoai']?></div>
+                    <div class="fas fa-facebook"></div>
+                </div>
+>>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
             </div>
         </div>
     </div>
