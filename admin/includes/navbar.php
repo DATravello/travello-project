@@ -163,7 +163,7 @@
   </a>
   <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="danh-sach-huong-dan-vien.php">Danh Sách HDv</a>
+      <a class="collapse-item" href="danh-sach-huong-dan-vien.php">Danh Sách HDV</a>
       <a class="collapse-item" href="them-huong-dan-vien.php">Thêm Hướng Dẫn Viên</a>
     </div>
   </div>

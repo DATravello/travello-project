@@ -21,13 +21,44 @@
             $matt = $_POST['sua_matt'];
             $query = "SELECT * FROM tintuc WHERE MaTinTuc ='$matt'";
             $query_run = mysqli_query($connection, $query);
+            // $query1="SELECT * FROM theloai INNER JOIN tintuc ON theloai.MaTheLoai = tintuc.MaTheLoai";
+            // $result1 = mysqli_query($connection, $query1);
+            // $rows1=mysqli_fetch_array($result1);
             foreach($query_run as $row)
             {
     ?>
-                <form action="code.php" method="POST">
-                <div class="form-group">
+                <form action="code.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
                         <label> Mã Tin Tức </label>
                         <input type="text" name="sua_matt"  value="<?php echo $row['MaTinTuc'] ?>" class="form-control" placeholder="Enter MaTinTuc" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Loại Tin</label>
+                        <select class="form-control"  name="sua_matheloai">
+                        <?php
+                        $q_theloai = "SELECT * FROM theloai";
+                        $rs_theloai = mysqli_query($connection, $q_theloai);
+                        while ($TL = @mysqli_fetch_array($rs_theloai)) {
+                        ?>
+                            <option value="<?php echo $TL["MaTheLoai"] ?>"><?php echo $TL["TenTheLoai"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Nhân Viên</label>
+                        <select class="form-control"  name="sua_mannv">
+                        <?php
+                        $q_theloai = "SELECT * FROM nhanvien";
+                        $rs_theloai = mysqli_query($connection, $q_theloai);
+                        while ($TL = @mysqli_fetch_array($rs_theloai)) {
+                        ?>
+                            <option value="<?php echo $TL["MaNV"] ?>"><?php echo $TL["TenNV"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                     </div>
                     <div class="form-group">
                         <label> Tên Tin Tức </label>
@@ -43,7 +74,15 @@
                     </div>
                     <div class="form-group">
                         <label>Hình Ảnh </label>
-                        <input type="text" name="sua_hinhanh" value="<?php echo $row['HinhAnh'] ?>" class="form-control" placeholder="Enter HinhAnh">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                     </div>
                     </div>
                     <div class="form-group">
                         <label>Ngày </label>

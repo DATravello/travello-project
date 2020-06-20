@@ -50,6 +50,14 @@
                         <input type="number" name="sua_sophong" value="<?php echo $row['SoPhong'] ?>" class="form-control" placeholder="Enter SoPhong">
                     </div>
                     <div class="form-group">
+                        <label>Ngày Đến </label>
+                        <input type="date" name="sua_ngayden" value="<?php echo $row['NgayDen'] ?>" class="form-control" placeholder="Enter Ngày Đến">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày Đi </label>
+                        <input type="date" name="sua_ngaydi" value="<?php echo $row['NgayDi'] ?>" class="form-control" placeholder="Enter Ngày Đi">
+                    </div>
+                    <div class="form-group">
                         <label>WebSite </label>
                         <input type="text" name="sua_web" value="<?php echo $row['WebSite'] ?>" class="form-control" placeholder="Enter WebSite">
                     </div>

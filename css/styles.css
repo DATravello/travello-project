@@ -235,6 +235,10 @@ card-tour {
     overflow: hidden;
 }
 
+.card-deck .row .col-6 {
+    padding: 0!important;
+}
+
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;

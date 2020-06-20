@@ -24,10 +24,24 @@
             foreach($query_run as $row)
             {
     ?>
-                <form action="code.php" method="POST">
-                <div class="form-group">
+                <form action="code.php" method="POST" enctype="multipart/form-data">
+                 <div class="form-group">
                         <label> Mã Tour </label>
                         <input type="text" name="sua_matour"  value="<?php echo $row['MaTour'] ?>" class="form-control" placeholder="Enter MaTour" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Loại Tour</label>
+                        <select class="form-control"  name="sua_loaitour">
+                        <?php
+                        $q_loaitour = "SELECT * FROM loaitourdulich";
+                        $rs_loaitour = mysqli_query($connection, $q_loaitour);
+                        while ($TL = @mysqli_fetch_array($rs_loaitour)) {
+                        ?>
+                            <option value="<?php echo $TL["MaLoaiTour"] ?>"><?php echo $TL["TenLoaiTour"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                     </div>
                     <div class="form-group">
                         <label> Tên Tour </label>
@@ -46,8 +60,82 @@
                         <input type="date" name="sua_thoigian" value="<?php echo $row['ThoiGian'] ?>" class="form-control" placeholder="Enter ThoiGian">
                     </div>
                     <div class="form-group">
+                        <label> Tên Khách Sạn</label>
+                        <select class="form-control"  name="sua_khachsan">
+                        <?php
+                        $q_ks = "SELECT * FROM khachsan";
+                        $rs_ks = mysqli_query($connection, $q_ks);
+                        while ($TL = @mysqli_fetch_array($rs_ks)) {
+                        ?>
+                            <option value="<?php echo $TL["MaKS"] ?>"><?php echo $TL["TenKS"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Nhà Hàng</label>
+                        <select class="form-control"  name="sua_nhahang">
+                        <?php
+                        $q_nh = "SELECT * FROM nhahang";
+                        $rs_nh = mysqli_query($connection, $q_nh);
+                        while ($TL = @mysqli_fetch_array($rs_nh)) {
+                        ?>
+                            <option value="<?php echo $TL["MaNH"] ?>"><?php echo $TL["TenNhaHang"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Hướng Dẫn Viên</label>
+                        <select class="form-control"  name="sua_hdv">
+                        <?php
+                        $q_hdv = "SELECT * FROM huongdanvien";
+                        $rs_hdv = mysqli_query($connection, $q_hdv);
+                        while ($TL = @mysqli_fetch_array($rs_hdv)) {
+                        ?>
+                            <option value="<?php echo $TL["MaHDV"] ?>"><?php echo $TL["TenHDV"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Tên Phương Tiện</label>
+                        <select class="form-control"  name="sua_phuongtien">
+                        <?php
+                        $q_pt = "SELECT * FROM phuongtien";
+                        $rs_pt = mysqli_query($connection, $q_pt);
+                        while ($TL = @mysqli_fetch_array($rs_pt)) {
+                        ?>
+                            <option value="<?php echo $TL["MaPhuongTien"] ?>"><?php echo $TL["PhuongTien"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Dịch Vụ Đi Kèm</label>
+                        <select class="form-control"  name="sua_dichvu">
+                        <?php
+                        $q_dv = "SELECT * FROM dichvudikem";
+                        $rs_dv = mysqli_query($connection, $q_dv);
+                        while ($TL = @mysqli_fetch_array($rs_dv)) {
+                        ?>
+                            <option value="<?php echo $TL["MaDV"] ?>"><?php echo $TL["TenDV"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
                         <label>Giá Tiền </label>
                         <input type="number" name="sua_giatien" value="<?php echo $row['GiaTien'] ?>" class="form-control" placeholder="Enter GiaTien">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá Trẻ Em </label>
+                        <input type="number" name="sua_giatreem" value="<?php echo $row['GiaTreEm'] ?>" class="form-control" placeholder="Enter Giá Trẻ Em">
                     </div>
                     <div class="form-group">
                         <label>Hành Trình </label>
@@ -59,7 +147,15 @@
                     </div>
                     <div class="form-group">
                         <label>Ảnh </label>
-                        <input type="text" name="sua_anh" value="<?php echo $row['Anh'] ?>" class="form-control" placeholder="Enter Anh">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" src="<?php "img/tour-du-lich/"?>" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                    </div>
                     </div>
                     <a href="danh-sach-tour-du-lich.php" class="btn btn-danger">Huỷ Bỏ</a>
                     <button type="submit" name="btn_capnhat_tour" class="btn btn-primary">Lưu</button>

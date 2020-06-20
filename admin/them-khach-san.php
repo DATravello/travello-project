@@ -42,7 +42,7 @@
                 unset($_SESSION['status']);
             }
         ?>
-        <form action="code.php" method="POST">
+        <form action="code.php" method="POST" enctype="multipart/form-data">
 
         <div class="modal-body">
 
@@ -64,9 +64,34 @@
                 <label> Điện Thoại </label>
                 <input type="number" name="DienThoai" class="form-control" placeholder="Nhập SDT">
             </div>
+            <!-- <?php
+                    $q_lks = "SELECT * FROM loaiks";
+                    $r_lks = mysqli_query($connection, $q_lks);
+            ?>
+            <div class="form-group">
+                    <label> Loại Phòng </label>
+                    <select name="MaLoaiKS" class="form-control">
+                    <?php
+                        while($LKS=mysqli_fetch_array($r_lks))
+                        {
+                    ?>
+                        <option value="<?php echo $LSK["MaLoaiKS"]?>"><?php echo $LKS["TenLoaiPhong"]?></option>
+                    <?php
+                        }
+                    ?>
+                    </select>
+            </div> -->
             <div class="form-group">
                 <label> Số Phòng </label>
                 <input type="number" name="SoPhong" class="form-control" placeholder="Nhập Số Phòng">
+            </div>
+            <div class="form-group">
+                <label> Ngày Đến </label>
+                <input type="date" name="NgayDen" class="form-control" placeholder="Nhập Ngày Đến">
+            </div>
+            <div class="form-group">
+                <label> Ngày Đi </label>
+                <input type="date" name="NgayDi" class="form-control" placeholder="Nhập Ngày Đi">
             </div>
             <div class="form-group">
                 <label> WebSite </label>
@@ -74,7 +99,15 @@
             </div>
             <div class="form-group">
                 <label> Ảnh </label>
-                <input type="text" name="Anh" class="form-control" placeholder="Thêm Ảnh">
+                <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                    </div>
             </div>
         </div>
 

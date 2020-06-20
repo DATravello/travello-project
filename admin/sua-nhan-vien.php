@@ -24,7 +24,7 @@
             foreach($query_run as $row)
             {
     ?>
-                <form action="code.php" method="POST">
+                <form action="code.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                         <label> Mã Nhân Viên </label>
                         <input type="text" name="sua_manv" value="<?php echo $row['MaNV'] ?>" class="form-control" readonly>
@@ -51,7 +51,15 @@
                     </div>
                     <div class="form-group">
                         <label>Ảnh </label>
-                        <input type="text" name="sua_anh" value="<?php echo $row['Anh'] ?>" class="form-control" placeholder="Enter Ảnh Nhân Viên">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label>Quyền </label>

@@ -79,6 +79,14 @@ include('includes/navbar.php');
                     <label> Giá Nhà Hàng (VNĐ) </label>
                     <input type="number" name="GiaNH" class="form-control" placeholder="Nhập Giá Nhà Hàng">
                 </div>
+                <div class="form-group">
+                    <label> Ngày Đến </label>
+                    <input type="date" name="NgayDen" class="form-control" placeholder="Nhập Ngày Đến">
+                 </div>
+                <div class="form-group">
+                    <label> Ngày Đi </label>
+                    <input type="date" name="NgayDi" class="form-control" placeholder="Nhập Ngày Đi">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="reset" value="reset" class="btn btn-warning" data-dismiss="modal">Xoá Trường</button>

@@ -50,16 +50,26 @@
         $connection = mysqli_connect("localhost","root","","travello_db");
         $query = "SELECT * FROM tourdulich";
         $query_run = mysqli_query($connection, $query);
+        $query1="SELECT * FROM tourdulich, loaitourdulich, nhahang, khachsan, phuongtien, huongdanvien, dichvudikem
+         where tourdulich.MaLoaiTour = loaitourdulich.MaLoaiTour and nhahang.MaNH=tourdulich.MaNH AND khachsan.MaKS = tourdulich.MaKS AND huongdanvien.MaHDV = tourdulich.MaHDV AND phuongtien.MaPhuongTien = tourdulich.MaPhuongTien AND dichvudikem.MaDV = tourdulich.MaDV";
+        $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Mã Tour</th>
+            <th>Tên Loại Tour</th>
             <th>Tên Tour</th>
             <th>Nơi Khởi Hành</th>
             <th>Nơi Đến</th>
             <th>Thời Gian</th>
+            <th>Khách Sạn</th>
+            <th>Nhà Hàng</th>
+            <th>Hướng Dẫn Viên</th>
+            <th>Phương Tiện</th>
+            <th>Dịch Vụ Đi Kèm</th>
             <th>Giá Tiền</th>
+            <th>Giá Trẻ Em</th>
             <th>Hành Trình</th>
             <th>Số Ngày</th>
             <th>Ảnh</th>
@@ -70,18 +80,37 @@
         <tbody>
 
           <?php
-            if(mysqli_num_rows($query_run) > 0)
+            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0)
             {
-              while($row = mysqli_fetch_assoc($query_run))
+              while(($row = mysqli_fetch_assoc($query_run)) && $rows1 =mysqli_fetch_assoc($result1))
               {
           ?>
                 <tr>
                   <td><?php echo $row['MaTour']; ?></td>
+                  <td><?php
+                  echo $rows1['TenLoaiTour']; 
+                  ?></td>
                   <td> <?php echo $row['TenTour']; ?>  </td>
                   <td> <?php echo $row['NoiKhoiHanh']; ?>  </td>
                   <td> <?php echo $row['NoiDen']; ?>  </td>
                   <td> <?php echo $row['ThoiGian']; ?>  </td>
+                  <td><?php
+                  echo $rows1['TenKS']; 
+                  ?></td>
+                   <td><?php
+                  echo $rows1['TenNhaHang']; 
+                  ?></td>
+                  <td><?php
+                  echo $rows1['TenHDV']; 
+                  ?></td>
+                  <td><?php
+                  echo $rows1['PhuongTien']; 
+                  ?></td>
+                  <td><?php
+                  echo $rows1['TenDV']; 
+                  ?></td>
                   <td> <?php echo $row['GiaTien']; ?>  </td>
+                  <td> <?php echo $row['GiaTreEm']; ?>  </td>
                   <td> <?php echo $row['HanhTrinh']; ?>  </td>
                   <td> <?php echo $row['SoNgay']; ?>  </td>
                   <td> <?php echo $row['Anh']; ?>  </td>

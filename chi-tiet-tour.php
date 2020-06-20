@@ -149,7 +149,7 @@ if(isset($_GET['tour']))
             <div class="col-md-8">
                 <div class="tour-content">
                     <div class="tour-subtitle"><h5><?php echo $rows['TenTour'];?> - <?php echo $rows2['TenLoaiTour'];?></h5></div>
-                    <div class="tour-image"><img src="img/<?php echo $rows['Anh'];?>"></div>
+                    <div class="tour-image"><img src="admin/img/tour-du-lich/<?php echo $rows['Anh'];?>"></div>
                     <div class="tour-image-sub">
                         <?php echo $rows['TenTour'];?>
                     </div>

@@ -32,15 +32,20 @@ include('database/db_config.php');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Du Lịch</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Khách Sạn</a>
+                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Vận Chuyển</a>
                     </li>
@@ -264,82 +269,48 @@ include('database/db_config.php');
 
     <!-- TOUR ĐẶT NHIỀU -->
     <section class="tour-hot">
-        <h5>TOUR ĐẶT NHIỀU</h5>
+    <?php
+        $query="SELECT * from loaitourdulich";
+        $result = mysqli_query($connection, $query);
+        $query2="SELECT * from tourdulich where MaLoaiTour='1'";
+	    $result2=mysqli_query($connection, $query2);
+        $query3="SELECT * from loaitourdulich where MaLoaiTour='1'";
+		$result3=mysqli_query($connection, $query3);
+		$rows3=mysqli_fetch_array($result3);
+    ?>
+        <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
         <div class="card-deck">
-            <div class="card">
-                <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
+            <div class="row">
 
+            <?php
+			    while($rows=@mysqli_fetch_array($result2))
+			    {
+			?>
+            <div class="card col-6">
+                <img class="card-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
+                        <p class="card-text">Từ <?php echo $rows['GiaTien'] ?></p>
+                        <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour'];?>" class="btn btn-primary">Đặt Ngay</a>
+                    </div>
+                </div>
             </div>
-
+            
+            <?php
+                }
+            ?>
+            </div>
         </div>
-        <div class="card-deck">
-            <div class="card">
-                <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+    <?php
+    ?>
     </section>
 
     <!-- TOUR TRONG NƯỚC -->
     <section class="tour-hot">
         <h5>TOUR TRONG NƯỚC</h5>
         <div class="card-deck">
-            <div class="card">
+            <div class="card col-6">
                 <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
                 <div class="dark-overlay">
                     <div class="card-body">
@@ -477,43 +448,6 @@ include('database/db_config.php');
             </div>
 
         </div>
-    </section>
-
-
-    
-    <section class="tour-hot">
-    <?php
-        $query="SELECT * from loaitourdulich";
-        $result = mysqli_query($connection, $query);
-        $query2="SELECT * from tourdulich where MaLoaiTour='1'";
-	    $result2=mysqli_query($connection, $query2);
-        $query3="SELECT * from loaitourdulich where MaLoaiTour='1'";
-		$result3=mysqli_query($connection, $query3);
-		$rows3=mysqli_fetch_array($result3);
-    ?>
-        <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
-        <div class="card-deck">
-
-            <?php
-			    while($rows=@mysqli_fetch_array($result2))
-			    {
-			?>
-            <div class="card">
-                <img class="card-img-top" src="img/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                        <p class="card-text">Từ <?php echo $rows['GiaTien'] ?></p>
-                        <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour'];?>" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <?php
-                }
-            ?>
-        </div>
-    <?php
-    ?>
     </section>
 
 
