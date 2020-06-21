@@ -33,9 +33,16 @@ $(document).ready(function () {
         readURL(this);
     });
 
-    window.onload = function TienTe() {
-        var x = 1000;
-        x = x.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
-        console.log(x);
-    }
+
+});
+
+$(document).ready(function () {
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+
+      a = parseInt($("#Currency").text());
+      
+      formatter.format(a);
 });
