@@ -101,7 +101,6 @@ if (isset($_POST['btn_them_phuong_tien'])) {
     $noidi = $_POST['NoiDi'];
     $noiden = $_POST['NoiDen'];
     $gia = $_POST['Gia'];
-
     $sql_tenphuongtien = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
     $rstenphuongtien = mysqli_query($connection, $sql_tenphuongtien);
     if (!$tenphuongtien || !$noidi || !$noiden || !$gia) {
@@ -149,6 +148,7 @@ if (isset($_POST['btn_capnhat_pt'])) {
 // XÓA PHƯƠNG TIỆN (ĐƯỢC)
 if (isset($_POST['btn_xoa_phuongtien'])) {
     $mapt = $_POST['xoa_phuongtien'];
+
 
     $query = "DELETE FROM phuongtien WHERE MaPhuongTien='$mapt'";
     $query_run = mysqli_query($connection, $query);
@@ -530,20 +530,20 @@ if (isset($_POST['btn_them_tin_tuc'])) {
             if (mysqli_num_rows($rstentintuc) > 0) {
                 echo "Không thành công";
                 $_SESSION['status'] = "Tin Tức Đã Tồn Tại!";
-                header('location: them-tin-tuc.php');
-            } else {
-                $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
+            $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
             VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$anh','$ngay','$taoboi')";
-                $query_run = mysqli_query($connection, $query);
-                if ($query_run) {
-                    move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/" . $_FILES["Anh"]['name']);
-                    $_SESSION['success'] = "Thêm Thành Công!";
-                    header('location: danh-sach-tin-tuc.php');
-                } else {
-                    $_SESSION['status'] = "Thêm Thất Bại!";
-                    header('location: them-tin-tuc.php');
-                }
+            $query_run = mysqli_query($connection, $query);
+            if ($query_run) {
+                move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/".$_FILES["Anh"]['name']);
+                $_SESSION['success'] = "Thêm Thành Công!";
+                header('location: danh-sach-tin-tuc.php');
             }
+            else
+            {
+                $_SESSION['status'] = "Thêm Thất Bại!";
+                header('location: them-tin-tuc.php');
+            }
+          }
         }
     }
 }
