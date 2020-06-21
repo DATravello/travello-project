@@ -1,4 +1,14 @@
-<?php include('include/header.php'); ?>
+<?php include('include/header.php');
+
+function product_price($priceFloat)
+{
+    $symbol = ' đ';
+    $symbol_thousand = '.';
+    $decimal_place = 0;
+    $price = number_format($priceFloat, $decimal_place, '', $symbol_thousand);
+    return $price . $symbol;
+}
+?>
 
 <!-- SEARCH -->
 <div class="d-flex justify-content-center align-items-center ">
@@ -359,7 +369,7 @@
                     <div class="dark-overlay">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                            <p class="card-text">Từ <?php echo $rows['GiaTien'] ?></p>
+                            <p class="card-text">Từ <?php echo product_price($rows['GiaTien']) ?></p>
                             <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
                         </div>
                     </div>
@@ -397,7 +407,7 @@
                     <div class="dark-overlay">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                            <p class="card-text" id="Currency">Từ <?php echo $rows['GiaTien'] ?></p>
+                            Từ <p class="card-text"><?php echo product_price($rows['GiaTien']) ?></p>
                             <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
                         </div>
                     </div>
@@ -408,6 +418,56 @@
         </div>
     </div>
 </section>
+
+
+
+<!-- TEST -->
+
+<section class="tour-list">
+    <?php
+    $query = "SELECT * from loaitourdulich";
+    $result = mysqli_query($connection, $query);
+    $query2 = "SELECT * from tourdulich where MaLoaiTour='2'";
+    $result2 = mysqli_query($connection, $query2);
+    $query3 = "SELECT * from loaitourdulich where MaLoaiTour='2'";
+    $result3 = mysqli_query($connection, $query3);
+    $rows3 = mysqli_fetch_array($result3);
+    ?>
+    <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
+    <div class="cardd-deck">
+        <div class="row">
+            <?php
+            while ($rows = @mysqli_fetch_array($result2)) {
+            ?>
+
+                <div class="cardd col-4">
+                    <div class="cardd-inner">
+                        <div class="card-img">
+                            <img class="cardd-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                            <div class="sale">10%</div>
+                            <div class="tour-like"><i class="fa fa-heart"></i></div>
+                        </div>
+                        <div class="cardd-body">
+                            <h5 class="cardd-title"><?php echo $rows['TenTour'] ?></h5>
+                            <div class="card-bottom">
+                                <div class="left-bot-card">
+                                    <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
+                                </div>
+                                <div class="right-bot-card">
+                                    Từ <p class="cardd-text" style="display:inline"><?php echo product_price($rows['GiaTien']) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
+    </div>
+</section>
+
 
 <!-- FOOTER -->
 

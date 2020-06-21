@@ -291,8 +291,6 @@ card-tour {
     overflow: hidden;
 }
 
-
-
 .card-body h5 {
     font-size: 20px;
     letter-spacing: 1px;
@@ -332,6 +330,87 @@ card-tour {
 .card:hover img {
     transform: scale3d(1.1, 1.1, 1);
 }
+
+
+/* TOUR LIST */
+
+.tour-list {
+    margin: 50px;
+}
+.tour-list .cardd-deck .col-4 {
+    height: 400px;
+    margin: 10px 0;
+}
+.tour-list .cardd-deck {
+    overflow: hidden;
+}
+
+.tour-list .cardd-deck .cardd-inner {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    height: 100%;
+    margin: 0 10px;
+}
+
+.tour-list .cardd-deck .card-img {
+    position: relative;
+    
+
+    overflow: hidden;
+}
+
+.tour-list .cardd-deck img {
+    width: 100%;
+    height: 200px;
+
+}
+
+.tour-list .sale {
+    position: absolute;
+    padding: 10px 30px;
+    right: 0px;
+    top: 0px;
+    background: #cc0033;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.tour-list .tour-like {
+    position: absolute;
+    font-size: 20px;
+    z-index: 20;
+    top: 0px;
+    left: 0;
+    padding: 10px 30px;
+    color: #fff;
+    transition: .1s ease-in-out;
+}
+
+.tour-list .tour-like:hover {
+    color: #c0033d;
+    transform: scale(1.5);
+}
+
+
+.cardd-inner .cardd-title {
+    padding: 0 10px;
+    margin: 15px 0;
+}
+
+.cardd-inner .card-bottom {
+    padding: 0 10px;
+} 
+.tour-list .cardd-deck .cardd-inner .card-bottom .left-bot-card {
+    float: left;
+}
+
+.tour-list .cardd-deck .cardd-inner .card-bottom .right-bot-card {
+    float: right;
+    margin: auto 0;
+}
+
 
 /* INTRO */
 
