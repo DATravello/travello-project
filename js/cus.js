@@ -1,11 +1,11 @@
-$(document).ready(function () {
-    $(document).on('change', '.btn-file :file', function () {
+$(document).ready(function() {
+    $(document).on('change', '.btn-file :file', function() {
         var input = $(this),
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [label]);
     });
 
-    $('.btn-file :file').on('fileselect', function (event, label) {
+    $('.btn-file :file').on('fileselect', function(event, label) {
 
         var input = $(this).parents('.input-group').find(':text'),
             log = label;
@@ -17,11 +17,13 @@ $(document).ready(function () {
         }
 
     });
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 $('#img-upload').attr('src', e.target.result);
             }
 
@@ -29,20 +31,20 @@ $(document).ready(function () {
         }
     }
 
-    $("#imgInp").change(function () {
+    $("#imgInp").change(function() {
         readURL(this);
     });
 
 
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-      });
+    });
 
-      a = parseInt($("#Currency").text());
-      
-      formatter.format(a);
+    a = parseInt($("#Currency").text());
+
+    formatter.format(a);
 });

@@ -1,7 +1,7 @@
 <?php include('include/header.php'); ?>
 
 <!-- NỘI DUNG -->
-<section class="khach-san">
+<section class="container khach-san">
 	<?php
 	$query = "SELECT * from khachsan";
 	$result = mysqli_query($connection, $query);
@@ -21,7 +21,7 @@
 			?>
 
 				<div class="card col-md-6">
-					<img class="card-img-top" src="admin/img/khach-san/<?php echo $rows['Anh'] ?>?>" alt="Card image cap">
+					<img class="card-img-top" src="admin/img/khach-san/<?php echo $rows['Anh'] ?>" alt="Card image cap">
 					<div class="dark-overlay">
 						<div class="card-body">
 							<h5 class="card-title"><?php echo $rows['TenKS'] ?></h5>
@@ -38,11 +38,6 @@
 
 
 </section>
-</body>
-<script src="scripts/jquery-3.5.1.slim.min.js"></script>
-<script src="scripts/popper.min.js"></script>
-<script src="scripts/bootstrap.min.js"></script>
-<script src="scripts/fontawesome-kit.js"></script>
-<script src="scripts/scroll.js"></script>
 
-</html>
+
+<?php include('include/footer.php'); ?>

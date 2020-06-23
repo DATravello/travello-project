@@ -1,0 +1,57 @@
+.tour-type .card-img-top {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tour-type .dark-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s ease-out;
+    -moz-transition: opacity 0.2s ease-out;
+    -o-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+    color: #fff;
+}
+
+.tour-type .card:hover .dark-overlay {
+    opacity: 1;
+    transition: all .5s ease-in-out;
+}
+
+.tour-type .card:hover .card-body {
+    transform: translateY(100px);
+    transition: all .5s ease-in-out;
+}
+
+.tour-type .card img {
+    transition: all 0.3s ease;
+}
+
+.tour-type .card:hover img {
+    transform: scale3d(1.1, 1.1, 1);
+}
+
+.tour-type .card {
+    overflow: hidden;
+}
+
+.tour-type .card-body .btn-dark {
+    padding: 10px 30px;
+    border-radius: 20px;
+    background: #010101;
+    border-color: #010101;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.tour-type .card-body .btn-dark:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+    font-weight: 400;
+}
