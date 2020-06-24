@@ -36,10 +36,6 @@ p {
     font-size: 14px;
 }
 
-.container {
-    margin: 50px 0;
-}
-
 .fixed-top {
     padding: 20px 0!important;
 }
@@ -157,8 +153,6 @@ p {
 .w-100 {
     height: 100vh;
 }
-
-
 /* USER */
 
 .users-container {
@@ -170,76 +164,6 @@ p {
     text-align: center;
     font-size: 35px;
 }
-
-
-/* Card */
-
-
-/* 
-card-tour {
-display: flex;
-grid-template-columns: 1fr repeat(12, mimax(auto, 60px)) 1fr;
-grid-gap: 40px;
-padding: 60px 0;
-}
-
-.text-medium {
-font-size: 16px;
-line-height: 20px;
-font-weight: 400;
-}
-
-.cards {
-grid-column: 2 / span 12;
-display: grid;
-grid-template-columns: repeat(12, mimax(auto, 60px));
-grid-gap: 40px;
-}
-
-.card {
-grid-column-end: span 4;
-display: flex;
-flex-direction: column;
-cursor: pointer;
-transition: all .3s ease 0s;
-}
-
-.card_image-container {
-width: 100%;
-padding-top: 56.25%;
-overflow: hidden;
-position: relative;
-}
-
-.card_image-container img {
-width: 100%;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-}
-
-.card_content {
-padding: 20px;
-}
-
-.card_title {
-margin-bottom: 20px;
-}
-
-.card-info {
-display: flex;
-align-self: center;
-align-items: center;
-}
-
-.card_price {
-margin-left: auto;
-padding: 5px 20px;
-border-radius: 20px;
-} */
-
-
 /* SEARCH SECTION */
 
 .search {
@@ -263,8 +187,6 @@ border-radius: 20px;
     font-weight: 400;
     transform: translateY(10%);
 }
-
-
 /* TOUR TYPE */
 
 .tour-type .card {
@@ -277,11 +199,13 @@ border-radius: 20px;
     overflow: hidden;
 }
 
-.card-deck .card {
-    padding: 0!important;
+.tour-type .card-body .card-title {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 500;
 }
 
-.dark-overlay {
+.tour-type .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
     text-align: center;
@@ -332,8 +256,6 @@ border-radius: 20px;
     color: #000;
     font-weight: 400;
 }
-
-
 /* TOUR LISt */
 
 .tour-container {
@@ -435,8 +357,6 @@ border-radius: 20px;
     font-weight: bold;
     color: #1A2B50;
 }
-
-
 /* INTRO */
 
 .intro {
@@ -473,8 +393,6 @@ border-radius: 20px;
     color: #181818;
     font-weight: 400;
 }
-
-
 /* TOUR ĐẶT NHIỀU */
 
 .tour-hot {
@@ -529,8 +447,6 @@ border-radius: 20px;
     color: #000;
     font-weight: 400;
 }
-
-
 /* FOOTER */
 
 .to-top {
@@ -608,11 +524,187 @@ border-radius: 20px;
     margin: 0 5px;
     font-size: 35px;
 }
-
-
 /* END FOOTER */
+/* DESTINATION */
 
+.destination-content {
+    margin: 50px 0;
+}
 
+.destination-content .card {
+    height: 320px;
+    object-fit: cover;
+    position: relative;
+}
+
+.destination-content .card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+.destination-content .card .title {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+}
+/* END DESTINATION */
+/* Responsive */
+
+@media only screen and (max-width: 767px) {
+    .navbar-nav.ml-auto {
+        background: rgba(0, 0, 0, .2);
+    }
+    .navbar-toggler {
+        padding: 1px 5px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1A2B50;
+    }
+    /* INTRO */
+    .intro {
+        width: 100%;
+        background: #FFFFFF;
+        z-index: 1;
+        padding: 100px 70px;
+        border-bottom: 2px solid #f1f1f1;
+    }
+    .intro-container {
+        width: 100%;
+        border-bottom: solid 2px #e4e6e8;
+        padding-top: 142px;
+        padding-bottom: 121px;
+    }
+    .intro-icon {
+        width: 70px;
+        height: 71px;
+    }
+    .intro-icon img {
+        max-width: 100%;
+    }
+    .intro-content {
+        padding-left: 28px;
+    }
+    .intro-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 18px;
+        color: #181818;
+        font-weight: 400;
+    }
+    /* TOUR ĐẶT NHIỀU */
+    .tour-hot {
+        margin: 100px 0;
+    }
+    .tour-hot h5 {
+        text-align: center;
+        font-size: 30px;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+    .tour-hot .card-img-top {
+        overflow: hidden;
+        height: 200px;
+    }
+    .card-img-top {
+        width: 100%;
+    }
+    .tour-hot .card-body {
+        width: 100%;
+        height: 100%;
+        max-height: 200px;
+    }
+    .tour-hot .card-body h5 {
+        font-size: 20px;
+        letter-spacing: 1px;
+        font-weight: 400;
+    }
+    .tour-hot .card:hover .card-body {
+        transform: translateY(20px);
+        transition: all .3s ease-in-out;
+    }
+    .tour-hot .card-body .btn {
+        padding: 5px 20px;
+        border-radius: 20px;
+        background: #010101;
+        border-color: #010101;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .tour-hot .card-body .btn:hover {
+        background: #fff;
+        border-color: #fff;
+        color: #000;
+        font-weight: 400;
+    }
+    /* FOOTER */
+    .to-top {
+        color: #fff;
+        background: #2196F3;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 15px;
+        width: 35px;
+        height: 35px;
+        transition: all .3s;
+        opacity: 0;
+        pointer-events: none;
+    }
+    .to-top:hover {
+        text-decoration: none;
+        background: #212121;
+        color: #fff;
+    }
+    .to-top.active {
+        bottom: 20px;
+        pointer-events: auto;
+        opacity: 1;
+    }
+    .footer {
+        font-size: 20px;
+        background: #212121;
+        color: #fff;
+    }
+    .footer h3 {
+        font-size: 40px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .footer h5 {
+        font-weight: 600;
+        letter-spacing: 1px;
+        position: relative;
+        width: auto;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .footer h5::before {
+        content: " ";
+        position: absolute;
+        width: 100%;
+        background: #e8e8e8;
+        height: 1px;
+        bottom: -5px;
+        left: 0;
+    }
+    .footer .row {
+        padding: 50px 60px;
+    }
+    .footer-copyright {
+        padding: 10px 20px;
+        background: #111312;
+    }
+    .footer-copyright i {
+        margin: 0 5px;
+        font-size: 35px;
+    }
+    /* END FOOTER */
+}
 /* Responsive */
 
 @media only screen and (max-width: 767px) {
