@@ -1,13 +1,5 @@
 <?php include('include/header.php');
 
-function product_price($priceFloat)
-{
-    $symbol = ' đ';
-    $symbol_thousand = '.';
-    $decimal_place = 0;
-    $price = number_format($priceFloat, $decimal_place, '', $symbol_thousand);
-    return $price . $symbol;
-}
 ?>
 
 <!-- SEARCH -->
@@ -46,90 +38,36 @@ function product_price($priceFloat)
 </div>
 
 
-<<<<<<< HEAD
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Du Lịch</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Vận Chuyển</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Liên Hệ</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <?php
-                            if (isset($_SESSION['Email']) && $_SESSION['Email']){
-                                echo '<a class="nav-link" href="#"><i class="fas fa-user"></i></a>';
-                            }
-                            else{
-                                echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
-                            }
-                            // else
-                            // {
-                            //     echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
-                            // }
-                        ?>
-                    </li>
-                </ul>
-=======
+<!-- TOUR TYPE -->
 
-<div class="card-group">
-    <div class="card">
-        <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Đặt Nhiều</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Trong Nước</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Nước Ngoài</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This card has even longer content than the first to show that equal height
-                    action.</p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
-            </div>
-        </div>
+<?php
+$query_loaitour = "SELECT * FROM loaitourdulich";
+$result_loaitour = mysqli_query($connection, $query_loaitour);
+// $rows_loaitour = mysqli_fetch_array($result_loaitour);
+?>
 
+<section class="container tour-type">
+    <div class="card-group">
+        <?php
+        while ($rows_loaitour = mysqli_fetch_array($result_loaitour)) {
+        ?>
+            <div class="card">
+                <img class="card-img-top" src="img/<?php echo $rows_loaitour["Anh"]; ?>" alt="Card image cap">
+                <div class="dark-overlay">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $rows_loaitour["TenLoaiTour"] ?></h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <a href="loai-tour.php?loai-tour=<?php echo $rows_loaitour["MaLoaiTour"]; ?>" class="btn btn-dark">Xem Ngay</a>
+                    </div>
+                </div>
+            </div>
+
+        <?php
+        }
+        ?>
     </div>
-</div>
+</section>
 
 <div class="intro">
     <div class="row">
@@ -170,184 +108,9 @@ function product_price($priceFloat)
 </div>
 
 <!-- TOUR ĐẶT NHIỀU -->
-<section class="tour-hot">
-    <h5>TOUR ĐẶT NHIỀU</h5>
-    <div class="card-deck">
-        <div class="card">
-            <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    <div class="card-deck">
-        <div class="card">
-<<<<<<< HEAD
-          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
-          <div class="dark-overlay">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
-          <div class="dark-overlay">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          </div>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="/img/travello.jpg" alt="Card image cap">
-          <div class="dark-overlay">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          </div>
-          
-        </div> -->
-
-    <!-- </div> -->
-
-
-    <!-- TOUR ĐẶT NHIỀU -->
-    <section class="tour-hot">
-    <?php
-        $query="SELECT * from loaitourdulich";
-        $result = mysqli_query($connection, $query);
-        $query2="SELECT * from tourdulich where MaLoaiTour='1'";
-	    $result2=mysqli_query($connection, $query2);
-        $query3="SELECT * from loaitourdulich where MaLoaiTour='1'";
-		$result3=mysqli_query($connection, $query3);
-		$rows3=mysqli_fetch_array($result3);
-    ?>
-        <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
-        <div class="card-deck">
-            <div class="row">
-
-            <?php
-			    while($rows=@mysqli_fetch_array($result2))
-			    {
-			?>
-            <div class="card col-6">
-                <img class="card-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                        <p class="card-text">Từ <?php echo $rows['GiaTien'] ?></p>
-                        <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour'];?>" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            
-            <?php
-                }
-            ?>
-            </div>
-        </div>
-    <?php
-    ?>
-    </section>
-
-    <!-- TOUR TRONG NƯỚC -->
-    <section class="tour-hot">
-        <h5>TOUR TRONG NƯỚC</h5>
-        <div class="card-deck">
-            <div class="card col-6">
-                <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-                <div class="dark-overlay">
-                    <div class="card-body">
-                        <h5 class="card-title">Hawai</h5>
-                        <p class="card-text">Từ 5.000.000 VNĐ</p>
-                        <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                    </div>
-=======
-            <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
 
 <!-- TOUR TRONG NƯỚC -->
-<section class="tour-hot">
+<section class="container tour-container">
     <?php
     $query = "SELECT * from loaitourdulich";
     $result = mysqli_query($connection, $query);
@@ -357,35 +120,43 @@ function product_price($priceFloat)
     $result3 = mysqli_query($connection, $query3);
     $rows3 = mysqli_fetch_array($result3);
     ?>
-    <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
-    <div class="card-deck">
-        <div class="row">
-            <?php
-            while ($rows = @mysqli_fetch_array($result2)) {
-            ?>
-
-                <div class="card col-6">
-                    <img class="card-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                    <div class="dark-overlay">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                            <p class="card-text">Từ <?php echo product_price($rows['GiaTien']) ?></p>
-                            <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
-                        </div>
+    <h5 class="tour-title"><?php echo $rows3['TenLoaiTour'] ?></h5>
+    <div class="row">
+        <?php
+        while ($rows = @mysqli_fetch_array($result2)) {
+        ?>
+            <!-- Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                        <div class="feature">Đang Giảm Giá</div>
+                        <div class="like"><i class="fas fa-heart"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['NoiDen'] ?></p>
+                        <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
+                        <p class="card-text">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
+                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
                     </div>
                 </div>
-            <?php
-            }
-            ?>
-        </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </section>
 
 
-<<<<<<< HEAD
-=======
+
+
 <!-- TOUR NƯỚC NGOÀI -->
-<section class="tour-hot">
+<section class="container tour-container">
     <?php
     $query = "SELECT * from loaitourdulich";
     $result = mysqli_query($connection, $query);
@@ -395,78 +166,46 @@ function product_price($priceFloat)
     $result3 = mysqli_query($connection, $query3);
     $rows3 = mysqli_fetch_array($result3);
     ?>
-    <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
-    <div class="card-deck">
-        <div class="row">
-            <?php
-            while ($rows = @mysqli_fetch_array($result2)) {
-            ?>
-
-                <div class="card col-6">
-                    <img class="card-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                    <div class="dark-overlay">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $rows['TenTour'] ?></h5>
-                            Từ <p class="card-text"><?php echo product_price($rows['GiaTien']) ?></p>
-                            <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
-                        </div>
+    <h5 class="tour-title"><?php echo $rows3['TenLoaiTour'] ?></h5>
+    <div class="row">
+        <?php
+        while ($rows = @mysqli_fetch_array($result2)) {
+        ?>
+            <!-- Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                        <div class="feature">Đang Giảm Giá</div>
+                        <div class="like"><i class="fas fa-heart"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['NoiDen'] ?></p>
+                        <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
+                        <p class="card-text">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
+                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
                     </div>
                 </div>
-            <?php
-            }
-            ?>
-        </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </section>
 
 
 
-<!-- TEST -->
 
-<section class="tour-list">
-    <?php
-    $query = "SELECT * from loaitourdulich";
-    $result = mysqli_query($connection, $query);
-    $query2 = "SELECT * from tourdulich where MaLoaiTour='2'";
-    $result2 = mysqli_query($connection, $query2);
-    $query3 = "SELECT * from loaitourdulich where MaLoaiTour='2'";
-    $result3 = mysqli_query($connection, $query3);
-    $rows3 = mysqli_fetch_array($result3);
-    ?>
-    <h5><?php echo $rows3['TenLoaiTour'] ?></h5>
-    <div class="cardd-deck">
-        <div class="row">
-            <?php
-            while ($rows = @mysqli_fetch_array($result2)) {
-            ?>
 
-                <div class="cardd col-4">
-                    <div class="cardd-inner">
-                        <div class="card-img">
-                            <img class="cardd-img-top" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                            <div class="sale">10%</div>
-                            <div class="tour-like"><i class="fa fa-heart"></i></div>
-                        </div>
-                        <div class="cardd-body">
-                            <h5 class="cardd-title"><?php echo $rows['TenTour'] ?></h5>
-                            <div class="card-bottom">
-                                <div class="left-bot-card">
-                                    <a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>" class="btn btn-primary">Đặt Ngay</a>
-                                </div>
-                                <div class="right-bot-card">
-                                    Từ <p class="cardd-text" style="display:inline"><?php echo product_price($rows['GiaTien']) ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php
-            }
-            ?>
-        </div>
-    </div>
-    </div>
-</section>
+
+<a href="#" class="to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
 
 
 <!-- FOOTER -->
@@ -504,8 +243,19 @@ function product_price($priceFloat)
     </div>
 </div>
 
+<script>
+    const toTop = document.querySelector(".to-top");
 
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
+    window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 100) {
+            toTop.classList.add("active");
+        } else {
+            toTop.classList.remove("active");
+        }
+    })
+</script>
+
+
 </body>
 <script src="scripts/jquery-3.5.1.slim.min.js"></script>
 <script src="scripts/popper.min.js"></script>

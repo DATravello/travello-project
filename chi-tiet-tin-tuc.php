@@ -1,20 +1,6 @@
 <?php
 session_start();
 
-<<<<<<< HEAD
-if(isset($_GET['tintuc']))
-{
-    $matt=$_GET['tintuc'];
-    require_once('database/db_config.php');
-
-    $query="SELECT * from tintuc where MaTinTuc='$matt'";
-    $result=mysqli_query($connection, $query);
-    $rows=@mysqli_fetch_array($result);
-
-    $query2="SELECT * from theloai where MaTheLoai='6'";
-    $result2=mysqli_query($connection, $query2);
-    $rows2=@mysqli_fetch_array($result2);
-=======
 if (isset($_GET['tintuc'])) {
     $matt = $_GET['tintuc'];
     require_once('database/db_config.php');
@@ -26,35 +12,11 @@ if (isset($_GET['tintuc'])) {
     $query2 = "SELECT * from theloai where MaTheLoai='6'";
     $result2 = mysqli_query($connection, $query2);
     $rows2 = @mysqli_fetch_array($result2);
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 
     //Loại KS
     $loaitt = "SELECT * FROM tintuc INNER JOIN theloai ON tintuc.MaTheLoai = theloai.MaTheLoai where MaTinTuc='$matt'";
     $result_loaitt = mysqli_query($connection, $loaitt);
     $rows_loaitt = @mysqli_fetch_array($result_loaitt);
-<<<<<<< HEAD
-    //ý là nội dung cho xuất hình như mi gắng cứng à
-    // trong csdl phải có nh hình đã
-    //bỏ mô tả cho từng hình thì dễ hơn. đừng để nội dung chung chung. như kiểu hình 1 - mô tả hình 1 rồi đến hình 2 lưu trong database như vậy luôn.uk vậy á. xong khi load lên cái nào ko có thì nó ko load chứ ko lỗi j đâu
-    //trong csdl lưu hình 1, 2, 3
-    //rồi có 1 cột ddeeer lưu mô tả 1, 2, 3
-    //khi load
-    //mô tả 1
-    //hình 1
-    //tương tự mấy cái sau
-    //ko cứ ưa hình nào load qua trang chủ thì qua trang chủ goi thì đó thôi
-    //như ưa hình 1 thì gọi hình 1 mấy hình kia khỏi
-    // //Khách Sạn
-    // $khachsan = "SELECT * FROM tourdulich INNER JOIN khachsan ON tourdulich.MaKS = khachsan.MaKS where MaTour='$matour'";
-    // $result_ks = mysqli_query($connection, $khachsan);
-    // $rows_ks = @mysqli_fetch_array($result_ks);
-
-    // //Hướng dẫn viên
-    // $hdv = "SELECT * FROM tourdulich INNER JOIN huongdanvien ON tourdulich.MaHDV = huongdanvien.MaHDV where MaTour='$matour'";
-    // $result_hdv = mysqli_query($connection, $hdv);
-    // $rows_hdv = @mysqli_fetch_array($result_hdv);
-=======
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
 }
 ?>
 
@@ -176,67 +138,6 @@ if (isset($_GET['tintuc'])) {
     <!-- NỘI DUNG -->
 
     <div class="container tour-container">
-<<<<<<< HEAD
-        <div class="tour-title"><h2 style="font-weight: bold; font-style: 50px;"><?php echo $rows['TenTinTuc'];?></h2></div>
-        <div class="row">
-            <div class="col">
-                <div class="tour-content">
-                    <!-- <div class="tour-subtitle"><h5><?php echo $rows['TenTinTuc'];?>  <?php echo $rows2['TenTheLoai'];?></h5></div> -->
-                    <!-- ưa dễ thì cứ cho 3 cái load rồi dưới mỗi cái loadfile có 1 cái mô tả  như nhau ht á..hình đưa lên xong r ưa cái nào xài cái đó thôi, chứ ko ảnh hưởng j đâu -->
-                    <div class="tour-image"><img src="admin/img/tin-tuc/<?php echo $rows['HinhAnh'];?>"></div>
-                    <div class="tour-image-sub">
-                        <!-- <?php echo $rows['TenTinTuc'];?> -->
-                    </div>
-                <div class="tour-description">
-                        <!-- <h3>Giới Thiệu </h3> -->
-                        <!-- <div class="w-type"><h5>Hạng Sao: </h5> <p><?php echo $rows['HangSao'];?> * <p></div> -->
-                        <div class="w-type" style="font-weight: bold;font-size: 15px;"><?php echo $rows['MoTa'];?></div><br/>
-                        <table>
-                        <div><?php echo $rows['ChiTiet'];?><br/>
-                        <div class="tour-image">
-                            <img src="admin/img/tin-tuc/da-lat-2.jpg"/>
-                        </div>
-                        </div>
-                        </table><br/>
-                        <!-- <div class="tour-image"><img src="admin/img/tin-tuc/da-lat-2.jpg<?php echo $rows['HinhAnh'];?>"></div><br/> -->
-                        <div style="text-align:right;font-weight: bold;"><?php echo $rows['TaoBoi'];?></div><br/>
-                        <!-- <?php echo $rows['WebSite'];?><br/> -->
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col-md-4">
-                <div class="tour-widget">
-                    <h5 class="w-title">Thông tin đặt khách sạn</h5>
-                    <?php
-                            $q_LKS = "SELECT * FROM loaiks";
-                             $r_LKS = mysqli_query($connection, $q_LKS);
-                        ?>
-                <div class="form-group">
-                        <label> Loại Phòng </label>
-                    <select name="MaLoaiKS" class="form-control">
-                        <?php
-                        while($LKS=mysqli_fetch_array($r_LKS))
-                        {
-                        ?>
-                        <option value="<?php echo $LKS["MaLoaiKS"]?>"><?php echo $LKS["TenLoaiPhong"]?></option>
-                        <?php
-                        }
-                         ?>
-                    </select>
-                </div> -->
-                    <!-- <div class="w-type"><h5>Hạng Sao: </h5> <p><?php echo $rows['HangSao'];?> * <p></div>
-                    <div class="w-price"><h5>Giá: <h5> <p><?php echo $rows['GiaTien'];?> VNĐ <p></div>
-                    <div class="w-type"><h5>Loại KS: </h5> <p><?php echo $rows['TenLoaiKS'];?> <p></div>
-                    <div class="w-time"><h5>Địa Chỉ: </h5> <p><?php echo $rows['DiaChi'];?></p></div>
-                    <div class="w-place"><h5>Điện Thoại: </h5> <p><?php echo $rows['DienThoai'];?></p></div>
-                    <div class="w-catch"><h5>Số Phòng: </h5> <p><?php echo $rows['SoPhong'];?></p></div>
-                    <div class="w-day"><h5>Số ngày: </h5> <p><?php echo $rows['SoNgay'];?></p></div>
-                    <div class="w-vehicle"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiKS'];?></p></div>
-                    <div class="w-hotel"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiPhong'];?></p></div>
-                    <div class="w-guide"><h5>Hướng dẫn viên: </h5> <p><?php echo $rows_hdv['TenHDV'];?></p></div> -->
-                </div>
-                <!-- <button class="btn btn-success"><a href="dat-khach-san.php?tour=<?php echo $rows['MaKS'];?>">Đặt Khách Sạn</button> -->
-=======
         <div class="tour-title">
             <h3 style="font-weight: bold; font-style: 30px;"><?php echo $rows['TenTinTuc']; ?></h3>
         </div>
@@ -259,7 +160,6 @@ if (isset($_GET['tintuc'])) {
                     <div><?php echo $rows_loaitt['TenTheLoai']?></div>
                     <div class="fas fa-facebook"></div>
                 </div>
->>>>>>> 4525edfa2c5407c549ecb006f17a89dbf96cc8c3
             </div>
         </div>
     </div>

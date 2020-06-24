@@ -2,6 +2,7 @@
 session_start();
 
 include('database/db_config.php');
+include('function.php');
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +13,7 @@ include('database/db_config.php');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Travello</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tour.css">
     <link rel="stylesheet" href="css/animate/animate.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
@@ -22,7 +24,7 @@ include('database/db_config.php');
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">TRAVELLO</a>
+            <a class="navbar-brand" href="index.php">TRAVELLO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,22 +32,26 @@ include('database/db_config.php');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Du Lịch</a>
+                        <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
+                        <!-- <ul>
+                            <li>Du Lịch Tự Chọn</li>
+                            <li>Du Lịch</li>
+                        </ul> -->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="khach-san.php">Khách Sạn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Vận Chuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Liên Hệ</a>
@@ -80,7 +86,7 @@ include('database/db_config.php');
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-1.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>KHÁM PHÁ THẾ GIỚI</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -88,7 +94,7 @@ include('database/db_config.php');
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-2.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>Trải Nghiệm Mới</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -96,7 +102,7 @@ include('database/db_config.php');
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="img/home_slider.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-3.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>Tìm Chuyến Đi</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
