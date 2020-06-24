@@ -38,7 +38,6 @@
 </div>
 
 
-<<<<<<< Updated upstream
 <!-- TOUR TYPE -->
 
 <?php
@@ -62,41 +61,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         <a href="loai-tour.php?loai-tour=<?php echo $rows_loaitour["MaLoaiTour"]; ?>" class="btn btn-dark">Xem Ngay</a>
                     </div>
                 </div>
-=======
-
-<div class="card-group">
-    <div class="card">
-        <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Đặt Nhiều</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Trong Nước</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-        <div class="dark-overlay">
-            <div class="card-body">
-                <h5 class="card-title">Tour Nước Ngoài</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This card has even longer content than the first to show that equal height
-                    action.</p>
-                <a href="#" class="btn btn-primary">Xem Ngay</a>
->>>>>>> Stashed changes
             </div>
 
         <?php
@@ -144,80 +108,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 </div>
 
 <!-- TOUR ĐẶT NHIỀU -->
-<<<<<<< Updated upstream
-=======
-<section class="tour-hot">
-    <h5>TOUR ĐẶT NHIỀU</h5>
-    <div class="card-deck">
-        <div class="card">
-            <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    <div class="card-deck">
-        <div class="card">
-            <img class="card-img-top" src="img/travello.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-2.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="img/travel-1.jpg" alt="Card image cap">
-            <div class="dark-overlay">
-                <div class="card-body">
-                    <h5 class="card-title">Hawai</h5>
-                    <p class="card-text">Từ 5.000.000 VNĐ</p>
-                    <a href="#" class="btn btn-primary">Đặt Ngay</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
->>>>>>> Stashed changes
 
 <!-- TOUR TRONG NƯỚC -->
 <section class="container tour-container">
@@ -263,11 +153,8 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 </section>
 
 
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
 <!-- TOUR NƯỚC NGOÀI -->
 <section class="container tour-container">
     <?php

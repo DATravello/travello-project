@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <?php //include('include/header.php');
 session_start();
 
@@ -12,10 +11,6 @@ function product_price($priceFloat)
     return $price . $symbol;
 }
 ?>
-=======
-<!DOCTYPE html>
-<html lang="en">
->>>>>>> Stashed changes
 
 <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/test.css">
@@ -68,9 +63,5 @@ function product_price($priceFloat)
     <?php
     //include('include/footer.php');
 
-<<<<<<< Updated upstream
     include('include/scripts.php')
     ?>
-=======
-</html>
->>>>>>> Stashed changes

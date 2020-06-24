@@ -45,14 +45,7 @@ include('function.php');
                         <a class="nav-link" href="thuong-hieu.php">Khách Sạn</a>
                     </li>
                     <li class="nav-item">
-<<<<<<< Updated upstream
                         <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
-=======
-                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="thuong-hieu-nh.php">Nhà Hàng</a>
->>>>>>> Stashed changes
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Vận Chuyển</a>

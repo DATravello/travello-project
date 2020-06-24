@@ -277,21 +277,11 @@ border-radius: 20px;
     overflow: hidden;
 }
 
-<<<<<<< Updated upstream
-.tour-type .card-body .card-title {
-    color: #fff;
-    font-size: 25px;
-    font-weight: 500;
-}
-
-.tour-type .dark-overlay {
-=======
 .card-deck .card {
     padding: 0!important;
 }
 
 .dark-overlay {
->>>>>>> Stashed changes
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
     text-align: center;

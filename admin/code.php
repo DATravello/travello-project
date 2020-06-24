@@ -173,15 +173,8 @@ if (isset($_POST['btn_them_nh'])) {
         $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-nha-hang.php');
-<<<<<<< Updated upstream
     } else {
         if (!$anh || !$tennhahang || !$diachi || !$sdt || !$gioithieu || !$gianh || !$ngayden || !$ngaydi) {
-=======
-    }
-    else
-    {
-        if (!$thuonghieunh ||!$anh || !$tennhahang || !$vitri || !$diachi || !$sdt || !$gioithieu || !$gianh || !$ngayden || !$ngaydi) {
->>>>>>> Stashed changes
             echo "Không thành công!";
             $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-nha-hang.php');
@@ -226,17 +219,9 @@ if (isset($_POST['btn_capnhat_nh'])) {
         $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-nha-hang.php');
-<<<<<<< Updated upstream
     } else {
         $query = "UPDATE nhahang SET TenNhaHang='$tennh', DiaChi='$diachi', Anh='$anh', SDT='$sdt', GioiThieuNH='$gth', GiaNH='$gia', NgayDen='$ngayden', NgayDi='$ngaydi' WHERE MaNH='$manh'";
         $query_run = mysqli_query($connection, $query);
-=======
-    }
-    else
-    {
-    $query = "UPDATE nhahang SET MaThuongHieuNH='$thuonghieunh', TenNhaHang='$tennh', ViTri='$vitri', DiaChi='$diachi', Anh='$anh', SDT='$sdt', GioiThieuNH='$gth', GiaNH='$gia', NgayDen='$ngayden', NgayDi='$ngaydi' WHERE MaNH='$manh'";
-    $query_run = mysqli_query($connection, $query);
->>>>>>> Stashed changes
 
         if ($query_run) {
             move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/nha-hang/" . $_FILES["Anh"]["name"]);
@@ -270,10 +255,6 @@ if (isset($_POST['btn_them_phuong_tien'])) {
     $noidi = $_POST['NoiDi'];
     $noiden = $_POST['NoiDen'];
     $gia = $_POST['Gia'];
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     $sql_tenphuongtien = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
     $rstenphuongtien = mysqli_query($connection, $sql_tenphuongtien);
     if (!$tenphuongtien || !$noidi || !$noiden || !$gia) {
@@ -322,10 +303,6 @@ if (isset($_POST['btn_capnhat_pt'])) {
 if (isset($_POST['btn_xoa_phuongtien'])) {
     $mapt = $_POST['xoa_phuongtien'];
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     $query = "DELETE FROM phuongtien WHERE MaPhuongTien='$mapt'";
     $query_run = mysqli_query($connection, $query);
 
@@ -760,37 +737,15 @@ if (isset($_POST['btn_them_khach_san'])) {
         $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-khach-san.php');
-<<<<<<< Updated upstream
-=======
-    }
-    else
-    {
-    if (!$thuonghieu || !$tenkhachsan || !$hangsao || !$vitri || !$diachi || !$dienthoai || !$loaiphong || !$sophong || !$ngayden || !$ngaydi || !$website || !$anh) {
-        echo "Không thành công!";
-        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
-        header('location: them-khach-san.php');
->>>>>>> Stashed changes
     } else {
         if (!$tenkhachsan || !$hangsao || !$diachi || !$dienthoai || !$sophong || !$ngayden || !$ngaydi || !$website || !$anh) {
             echo "Không thành công!";
             $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-khach-san.php');
         } else {
-<<<<<<< Updated upstream
             if (mysqli_num_rows($rstenks) > 0) {
                 echo "Không thành công";
                 $_SESSION['status'] = "Khách Sạn Đã Tồn Tại!";
-=======
-            $query = "INSERT INTO khachsan (`MaThuongHieuKS`,`TenKS`,`HangSao`,`ViTri`,`DiaChi`,`DienThoai`,`MaLoaiPhong`,`SoPhongDat`,`NgayDen`,`NgayDi`,`WebSite`,`Anh`)
-             VALUES ('$thuonghieu','$tenkhachsan','$hangsao','$vitri','$diachi','$dienthoai','$loaiphong','$sophong','$ngayden','$ngaydi','$website','$anh')";
-            $query_run = mysqli_query($connection, $query);
-            if ($query_run) {
-                move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/khach-san/".$_FILES["Anh"]["name"]);
-                $_SESSION['success'] = "Thêm Thành Công!";
-                header('location: danh-sach-khach-san.php');
-            } else {
-                $_SESSION['status'] = "Thêm Thất Bại!";
->>>>>>> Stashed changes
                 header('location: them-khach-san.php');
             } else {
                 $query = "INSERT INTO khachsan (`TenKS`,`HangSao`,`DiaChi`,`DienThoai`,`SoPhong`,`NgayDen`,`NgayDi`,`WebSite`,`Anh`)
@@ -872,33 +827,15 @@ if (isset($_POST['btn_them_tin_tuc'])) {
     $mota = $_POST['MoTa'];
     $nhanvien = $_POST['NhanVien'];
     $chitiet = $_POST['ChiTiet'];
-<<<<<<< Updated upstream
-=======
-    $hinhanh = $_FILES["HinhAnh"]['name'];
->>>>>>> Stashed changes
     $ngay = $_POST['Ngay'];
     $taoboi = $_POST['TaoBoi'];
 
     $sql_tentintuc = "SELECT * FROM tintuc WHERE TenTinTuc = '$tentintuc'";
     $rstentintuc = mysqli_query($connection, $sql_tentintuc);
-<<<<<<< Updated upstream
     if (file_exists("img/tin-tuc/" . $_FILES["Anh"]['name'])) {
         $store = $_FILES["Anh"]['name'];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-tin-tuc.php');
-=======
-    if (file_exists("img/tin-tuc/" . $_FILES["HinhAnh"]["name"])) {
-        $store = $_FILES["HinhAnh"]["name"];
-        $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
-        header('location: them-tin-tuc.php');
-    }
-    else
-    {
-    if (!$tentintuc || !$theloai || !$mota || !$nhanvien || !$chitiet || !$hinhanh || !$ngay || !$taoboi) {
-        echo "Không thành công!";
-        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
-        header('location: them-tin-tuc.php');
->>>>>>> Stashed changes
     } else {
         if (!$tentintuc || !$theloai || !$mota || !$nhanvien || !$chitiet || !$anh || !$ngay || !$taoboi) {
             echo "Không thành công!";
@@ -909,17 +846,10 @@ if (isset($_POST['btn_them_tin_tuc'])) {
                 echo "Không thành công";
                 $_SESSION['status'] = "Tin Tức Đã Tồn Tại!";
             $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
-<<<<<<< Updated upstream
             VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$anh','$ngay','$taoboi')";
             $query_run = mysqli_query($connection, $query);
             if ($query_run) {
                 move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/".$_FILES["Anh"]['name']);
-=======
-            VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$hinhanh','$ngay','$taoboi')";
-            $query_run = mysqli_query($connection, $query);
-            if ($query_run) {
-                move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/tin-tuc/".$_FILES["HinhAnh"]["name"]);
->>>>>>> Stashed changes
                 $_SESSION['success'] = "Thêm Thành Công!";
                 header('location: danh-sach-tin-tuc.php');
             }
