@@ -107,9 +107,13 @@
   </a>
   <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="danh-sach-thuong-hieu-ks.php">Danh Sách Thương Hiệu</a>
       <a class="collapse-item" href="danh-sach-khach-san.php">Danh Sách Khách Sạn</a>
       <a class="collapse-item" href="danh-sach-loai-khach-san.php">Danh Sách Loại KS</a>
+      <a class="collapse-item" href="danh-sach-loai-phong.php">Danh Sách Loại Phòng</a>
+      <a class="collapse-item" href="them-thuong-hieu-ks.php">Thêm Thương Hiệu</a>
       <a class="collapse-item" href="them-loai-khach-san.php">Thêm Loại Khách Sạn</a>
+      <a class="collapse-item" href="them-loai-phong.php">Thêm Loại Khách Sạn</a>
       <a class="collapse-item" href="them-khach-san.php">Thêm Khách Sạn</a>
     </div>
   </div>
@@ -122,7 +126,11 @@
   </a>
   <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
+    <a class="collapse-item" href="danh-sach-thuong-hieu-nh.php">Danh Sách Thương Hiệu NH</a>
+      <a class="collapse-item" href="danh-sach-loai-nha-hang.php">Danh Sách Loại Nhà Hàng</a>
       <a class="collapse-item" href="danh-sach-nha-hang.php">Danh Sách Nhà Hàng</a>
+      <a class="collapse-item" href="them-thuong-hieu-nh.php">Thêm Thương Hiệu</a>
+      <a class="collapse-item" href="them-loai-nha-hang.php">Thêm Loại Nhà Hàng</a>
       <a class="collapse-item" href="them-nha-hang.php">Thêm Nhà Hàng</a>
     </div>
   </div>

@@ -24,8 +24,36 @@
             foreach($query_run as $row)
             {
     ?>
-                <form action="code.php" method="POST">
-                <div class="form-group">
+                <form action="code.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                    <label> Tên Thương Hiệu</label>
+                    <select class="form-control"  name="sua_mathks">
+                        <?php
+                        $q_thuonghieuks = "SELECT * FROM thuonghieuks";
+                        $rs_thuonghieuks = mysqli_query($connection, $q_thuonghieuks);
+                        while ($TL = @mysqli_fetch_array($rs_thuonghieuks)) {
+                        ?>
+                            <option value="<?php echo $TL["MaThuongHieuKS"] ?>"><?php echo $TL["TenThuongHieuKS"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label> Tên Loại Khách Sạn</label>
+                        <select class="form-control"  name="sua_loaiks">
+                        <?php
+                        $q_loaiks = "SELECT * FROM loaikhachsan";
+                        $rs_loaiks = mysqli_query($connection, $q_loaiks);
+                        while ($TL = @mysqli_fetch_array($rs_loaiks)) {
+                        ?>
+                            <option value="<?php echo $TL["MaLoaiKS"] ?>"><?php echo $TL["TenLoaiKS"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select> -->
+                    </div>
+                     <div class="form-group">
                         <label> Mã Khách Sạn </label>
                         <input type="text" name="sua_maks"  value="<?php echo $row['MaKS'] ?>" class="form-control" placeholder="Enter MaKS" readonly>
                     </div>
@@ -38,6 +66,10 @@
                         <input type="number" name="sua_hangsao"  value="<?php echo $row['HangSao'] ?>" class="form-control" placeholder="Enter HangSao">
                     </div>
                     <div class="form-group">
+                        <label> Vị Trí </label>
+                        <input type="number" name="sua_vitri"  value="<?php echo $row['ViTri'] ?>" class="form-control" placeholder="Enter HangSao">
+                    </div>
+                    <div class="form-group">
                         <label>Địa Chỉ Khách Sạn </label>
                         <input type="text" name="sua_diachiks" value="<?php echo $row['DiaChi'] ?>" class="form-control" placeholder="Enter DiaChi">
                     </div>
@@ -46,8 +78,22 @@
                         <input type="number" name="sua_sdtks" value="<?php echo $row['DienThoai'] ?>" class="form-control" placeholder="Enter DienThoai">
                     </div>
                     <div class="form-group">
-                        <label>Số Phòng </label>
-                        <input type="number" name="sua_sophong" value="<?php echo $row['SoPhong'] ?>" class="form-control" placeholder="Enter SoPhong">
+                        <label> Loại Phòng</label>
+                        <select class="form-control"  name="sua_loaiphong">
+                        <?php
+                        $q_loaiphong = "SELECT * FROM loaiphong";
+                        $rs_loaiphong = mysqli_query($connection, $q_loaiphong);
+                        while ($TL = @mysqli_fetch_array($rs_loaiphong)) {
+                        ?>
+                            <option value="<?php echo $TL["MaLoaiPhong"] ?>"><?php echo $TL["TenLoaiPhong"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Phòng Đặt </label>
+                        <input type="number" name="sua_sophong" value="<?php echo $row['SoPhongDat'] ?>" class="form-control" placeholder="Enter SoPhong">
                     </div>
                     <div class="form-group">
                         <label>Ngày Đến </label>

@@ -9,9 +9,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khách Sạn
-            <a href="them-khach-san.php">
-              <button type="button" class="btn btn-primary">Thêm Khách Sạn</button>
+    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Thương Hiệu NH
+            <a href="them-thuong-hieu-nh.php">
+              <button type="button" class="btn btn-primary">Thêm Thương Hiệu</button>
             </a>
     </h6>
   </div>
@@ -48,27 +48,19 @@
     <div class="table-responsive">
       <?php
         $connection = mysqli_connect("localhost","root","","travello_db");
-        $query="SELECT * FROM khachsan";
+        $query = "SELECT * FROM thuonghieunh";
         $query_run = mysqli_query($connection, $query);
-        $query1="SELECT * FROM khachsan, thuonghieuks,  loaiphong where khachsan.MaThuongHieuKS = thuonghieuks.MaThuongHieuKS and loaiphong.MaLoaiPhong=khachsan.MaLoaiPhong" ;
-       $result1 = mysqli_query($connection, $query1);
+        $query1="SELECT * FROM thuonghieunh, loainhahang where thuonghieunh.MaLoaiNH = loainhahang.MaLoaiNH";
+        $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
+            <th>Mã Thương Hiệu</th>
+            <th>Tên Loại NH</th>
             <th>Tên Thương Hiệu</th>
-            <th>Mã KS</th>
-            <th>Hạng Sao</th>
-            <th>Tên Khách Sạn</th>
-            <th>Vị Trí</th>
-            <th>Địa Chỉ</th>
-            <th>Điện Thoại</th>
-            <th>Loại Phòng</th>
-            <th>Số Phòng Đặt</th>
-            <th>Ngày Đến</th>
-            <th>Ngày Đi</th>
-            <th>WebSite</th>
-            <th>Ảnh</th>
+            <th>Mô Tả</th>
+            <th>Hình Ảnh</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -78,37 +70,27 @@
           <?php
             if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) 
             {
-              while(($rows = mysqli_fetch_assoc($query_run)) && $rows1 =mysqli_fetch_assoc($result1))
+              while(($row = mysqli_fetch_assoc($query_run))&& $rows1 =mysqli_fetch_assoc($result1))
               {
           ?>
                 <tr>
+                  <td> <?php echo $row['MaThuongHieuNH']; ?>  </td>
                   <td><?php
-                  echo $rows1['TenThuongHieuKS']; 
+                  echo $rows1['TenLoaiNH']; 
                   ?></td>
-                  <td><?php echo $rows['MaKS']; ?></td>
-                  <td> <?php echo $rows['HangSao']; ?>  </td>
-                  <td> <?php echo $rows['TenKS']; ?>  </td>
-                  <td><?php echo $rows['ViTri']; ?></td>
-                  <td> <?php echo $rows['DiaChi']; ?>  </td>
-                  <td> <?php echo $rows['DienThoai']; ?>  </td>
-                  <td><?php
-                  echo $rows1['TenLoaiPhong']; 
-                  ?></td>
-                  <td> <?php echo $rows['SoPhongDat']; ?>  </td>
-                  <td> <?php echo $rows['NgayDen']; ?>  </td>
-                  <td> <?php echo $rows['NgayDi']; ?>  </td>
-                  <td> <?php echo $rows['WebSite']; ?>  </td>
-                  <td> <?php echo $rows['Anh']; ?>  </td>
+                  <td> <?php echo $row['TenThuongHieuNH']; ?>  </td>
+                  <td><?php echo $row['MoTa']; ?></td>
+                  <td> <?php echo $row['HinhAnh']; ?>  </td>
                   <td>
-                    <form action="sua-khach-san.php" method="post">
-                      <input type="hidden" name="sua_maks" value="<?php echo $rows['MaKS']; ?>">
+                    <form action="sua-thuong-hieu-nh.php" method="post">
+                      <input type="hidden" name="sua_mathuonghieu" value="<?php echo $row['MaThuongHieuNH']; ?>">
                       <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button> 
                     </form>
                   </td>
                   <td>
                     <form action="code.php" method="post">
-                      <input type="hidden" name="xoa_khachsan" value="<?php echo $rows['MaKS']; ?>">
-                      <button type="submit" name="btn_xoa_ks" class="btn btn-danger"><i class="fas fa-ban"></i></button> 
+                      <input type="hidden" name="xoa_thuonghieu" value="<?php echo $row['MaThuongHieuNH']; ?>">
+                      <button type="submit" name="btn_xoa_thuonghieu" class="btn btn-danger"><i class="fas fa-ban"></i></button> 
                     </form>
                   </td>
                 </tr>

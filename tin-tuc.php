@@ -1,8 +1,11 @@
 <?php
 include('include/header.php')
 ?>
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 <!-- NỘI DUNG -->
 <section class="container tin-tuc">
 	<?php
@@ -50,6 +53,15 @@ include('include/header.php')
 	?>
 
 </section>
+<<<<<<< Updated upstream
+=======
+</body>
+<script src="scripts/jquery-3.5.1.slim.min.js"></script>
+<script src="scripts/popper.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/fontawesome-kit.js"></script>
+<script src="scripts/scroll.js"></script>
+>>>>>>> Stashed changes
 
 
 <?php include('include/footer.php'); ?>

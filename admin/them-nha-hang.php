@@ -43,11 +43,30 @@ include('includes/navbar.php');
         <form action="code.php" method="POST" enctype="multipart/form-data">
 
             <div class="modal-body">
-
+                <div class="form-group">
+                    <label>Tên Thương Hiệu</label>
+                    <select class="form-control" name="ThuongHieuNH">
+                        <!-- <div class="form-group" name="LoaiTin"> -->
+                        <?php
+                        $q_thuonghieu = "SELECT * FROM thuonghieunh";
+                        $rs_thuonghieu = mysqli_query($connection, $q_thuonghieu);
+                        while ($TL = @mysqli_fetch_array($rs_thuonghieu)) {
+                        ?>
+                            <option value="<?php echo $TL["MaThuongHieuNH"] ?>"><?php echo $TL["TenThuongHieuNH"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label> Tên Nhà Hàng </label>
                     <input type="text" name="TenNhaHang" class="form-control" placeholder="Nhập Tên Nhà Hàng">
+                </div>
+                <div class="form-group">
+                    <label> Vị Trí </label>
+                    <input type="text" name="ViTri" class="form-control" placeholder="Nhập Vị Trí">
                 </div>
                 <div class="form-group">
                     <label> Địa Chỉ </label>
@@ -82,7 +101,7 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label> Ngày Đến </label>
                     <input type="date" name="NgayDen" class="form-control" placeholder="Nhập Ngày Đến">
-                 </div>
+                </div>
                 <div class="form-group">
                     <label> Ngày Đi </label>
                     <input type="date" name="NgayDi" class="form-control" placeholder="Nhập Ngày Đi">

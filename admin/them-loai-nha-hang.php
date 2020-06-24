@@ -7,9 +7,9 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Thêm Loại Khách Sạn
-            <a href="danh-sach-loai-khach-san.php">
-              <button type="button" class="btn btn-success">Danh Sách Loại Khách Sạn</button>
+            <h6 class="m-0 font-weight-bold text-primary">Thêm Loại Nhà Hàng
+            <a href="danh-sach-loai-nha-hang.php">
+              <button type="button" class="btn btn-success">Danh Sách Loại Nhà Hàng</button>
             </a>
             </h6>
         </div>
@@ -48,15 +48,15 @@
 
 
             <div class="form-group">
-                <label> Tên Loại Khách Sạn </label>
-                <input type="text" name="TenLoaiKS" class="form-control" placeholder="Nhập Tên Loại Khách Sạn">
+                <label> Tên Loại Nhà Hàng </label>
+                <input type="text" name="TenLoaiNH" class="form-control" placeholder="Nhập Tên Loại Nhà Hàng">
             </div>
             
         </div>
 
         <div class="modal-footer">
             <button type="reset" value="reset" class="btn btn-warning" data-dismiss="modal">Xoá Trường</button>
-            <button type="submit" name="btn_them_loai_ks" class="btn btn-primary">Lưu</button>
+            <button type="submit" name="btn_them_loai_nh" class="btn btn-primary">Lưu</button>
         </div>
 
         </form>

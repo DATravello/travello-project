@@ -50,12 +50,16 @@
         $conn = mysqli_connect("localhost","root","","travello_db");
         $query = "SELECT * FROM nhahang";
         $query_run = mysqli_query($conn, $query);
+        $query1="SELECT * FROM nhahang, thuonghieunh where nhahang.MaThuongHieuNH = thuonghieunh.MaThuongHieuNH" ;
+       $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Mã NH</th>
+            <th>Thương Hiệu</th>
             <th>Tên Nhà Hàng</th>
+            <th>Vị Trí</th>
             <th>Địa Chỉ</th>
             <th>Ảnh</th>
             <th>SDT</th>
@@ -70,14 +74,18 @@
         <tbody>
 
           <?php
-            if(mysqli_num_rows($query_run) > 0)
+            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0)
             {
-              while($row = mysqli_fetch_assoc($query_run))
+              while(($row = mysqli_fetch_assoc($query_run)) && $rows1 =mysqli_fetch_assoc($result1))
               {
           ?>
                 <tr>
+                <td><?php
+                  echo $rows1['TenThuongHieuNH']; 
+                  ?></td>
                   <td><?php echo $row['MaNH']; ?></td>
                   <td> <?php echo $row['TenNhaHang']; ?>  </td>
+                  <td> <?php echo $row['ViTri']; ?>  </td>
                   <td> <?php echo $row['DiaChi']; ?>  </td>
                   <td> <?php echo $row['Anh']; ?>  </td>
                   <td> <?php echo $row['SDT']; ?>  </td>
