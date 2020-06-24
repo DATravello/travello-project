@@ -166,11 +166,7 @@ if (isset($_POST['btn_DatTour'])) {
     }
 </style>
 
-<<<<<<< HEAD
-<section class="container tour-book content">
-=======
 <section class="container tour-book">
->>>>>>> daa925163f4acce22b1010e106e8214f2d9835ed
     <div class="row">
         <!-- LEFT CONTENT -->
         <div class="col-md-8 tour-content">
