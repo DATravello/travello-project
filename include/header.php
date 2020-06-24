@@ -35,7 +35,11 @@ include('function.php');
                         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Du Lịch</a>
+                        <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
+                        <!-- <ul>
+                            <li>Du Lịch Tự Chọn</li>
+                            <li>Du Lịch</li>
+                        </ul> -->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="khach-san.php">Khách Sạn</a>
