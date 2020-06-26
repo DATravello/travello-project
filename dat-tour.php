@@ -35,9 +35,6 @@ if (isset($_POST['btn_DatTour'])) {
     $maKhachHang = $r_kh["MaKH"];
     $sl = $soTreEm + $soNguoiLon;
 
-    // if (!$soTreEm || !$soNguoiLon) {
-    //     header("Location: dat-tour.php?tour=" . $matour);
-    // } else {
     $query = "INSERT INTO hoadon (`MaHD`, `MaTT`, `MaKH`,`MaTour`,`SoNguoiLon`, `SoTreEm`, `NgayDat`, `TongTien`, `TinhTrang`) 
                     VALUES ('$maHD','$thanhToan', '$maKhachHang', '$matour', '$soNguoiLon', '$soTreEm', '$ngayDat', '$TongTien', '$tinhTrang')";
     $query_run = mysqli_query($connection, $query);
@@ -62,7 +59,6 @@ if (isset($_POST['btn_DatTour'])) {
     } else {
         header("Location: dat-tour.php?tour=" . $matour);
     }
-    // }
 }
 
 ?>
@@ -177,7 +173,7 @@ if (isset($_POST['btn_DatTour'])) {
                 <a class="nav-item nav-link inactive col-md-3" id="tab-4">4. Xác Nhận</a>
 
             </div>
-            <form method="post">
+            <form id="form-dat-tour" method="post">
                 <div class="tab-content" id="nav-tabContent">
 
                     <div class="tab-pane fade show active" id="nav-tab-1" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -395,8 +391,22 @@ if (isset($_POST['btn_DatTour'])) {
 </script>
 
 
+<!-- <script>
+$(document).ready(function() {
+    $("#form-dat-tour").validate({
+        rules: {
+            TenHK1 : "required"
+        },
+        messages: {
+            TenHK1 : "Vui lòng điền tên hành khách"
+        }
+    });
+});
+</script> -->
+
 
 </body>
-
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
 <?php include('include/footer.php'); ?>
