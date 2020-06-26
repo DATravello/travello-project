@@ -46,8 +46,18 @@ include('includes/navbar.php');
                         <input type="text" name="sua_tennh" value="<?php echo $row['TenNhaHang'] ?>" class="form-control" placeholder="Nhập Tên Nhà Hàng">
                     </div>
                     <div class="form-group">
-                        <label> Vị Trí </label>
-                        <input type="text" name="sua_vitri" value="<?php echo $row['ViTri'] ?>" class="form-control" placeholder="Nhập Địa Chỉ">
+                        <label> Vị Trí</label>
+                        <select class="form-control" name="sua_vitrinh">
+                            <?php
+                            $q_vitri = "SELECT * FROM vitri";
+                            $rs_vitri = mysqli_query($connection, $q_vitri);
+                            while ($TL = @mysqli_fetch_array($rs_vitri)) {
+                            ?>
+                                <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label> Địa Chỉ </label>
@@ -74,16 +84,24 @@ include('includes/navbar.php');
                         <input type="text" name="sua_gtnh" value="<?php echo $row['GioiThieuNH'] ?>" class="form-control" placeholder="Nhập Giới Thiệu">
                     </div>
                     <div class="form-group">
-                        <label> Giá </label>
-                        <input type="number" name="sua_gianh" value="<?php echo $row['GiaNH'] ?>" class="form-control" placeholder="Nhập Giá">
+                        <label> Giá Trẻ Em </label>
+                        <input type="number" name="sua_giatreem" value="<?php echo $row['GiaTreEm'] ?>" class="form-control" placeholder="Nhập Giá">
+                    </div>
+                    <div class="form-group">
+                        <label> Giá Người Lớn </label>
+                        <input type="number" name="sua_gianguoilon" value="<?php echo $row['GiaNguoiLon'] ?>" class="form-control" placeholder="Nhập Giá">
+                    </div>
+                    <div class="form-group">
+                        <label> Mô Tả Thực Đơn </label>
+                        <input type="text" name="sua_thucdon" value="<?php echo $row['MoTaThucDon'] ?>" class="form-control" placeholder="Nhập Thực Đơn">
                     </div>
                     <div class="form-group">
                         <label> Ngày Đến </label>
-                        <input type="date" name="sua_ngayden" value="<?php echo $row['NgayDen'] ?>" class="form-control" placeholder="Nhập Ngày Đến">
+                        <input type="date" name="sua_ngayden" value="<?php echo $row['NgayDen']?>" class="form-control" placeholder="Nhập Ngày Đến">
                     </div>
                     <div class="form-group">
                         <label> Ngày Đi </label>
-                        <input type="date" name="sua_ngaydi" value="<?php echo $row['NgayDi'] ?>" class="form-control" placeholder="Nhập Ngày Đi">
+                        <input type="date" name="sua_ngaydi" value="<?php echo $row['NgayDen']?>" class="form-control" placeholder="Nhập Ngày Đi">
                     </div>
 
                     <a href="danh-sach-nha-hang.php" class="btn btn-danger">Huỷ Bỏ</a>

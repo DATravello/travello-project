@@ -72,6 +72,7 @@
             <th>Giá Trẻ Em</th>
             <th>Hành Trình</th>
             <th>Số Ngày</th>
+            <th>Sức Chứa</th>
             <th>Ảnh</th>
             <th>EDIT</th>
             <th>DELETE</th>
@@ -113,6 +114,7 @@
                   <td> <?php echo $row['GiaTreEm']; ?>  </td>
                   <td> <?php echo $row['HanhTrinh']; ?>  </td>
                   <td> <?php echo $row['SoNgay']; ?>  </td>
+                  <td> <?php echo $row['SucChua']; ?>  </td>
                   <td> <?php echo $row['Anh']; ?>  </td>
                   <td>
                     <form action="sua-tour-du-lich.php" method="post">

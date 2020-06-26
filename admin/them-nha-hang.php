@@ -65,8 +65,20 @@ include('includes/navbar.php');
                     <input type="text" name="TenNhaHang" class="form-control" placeholder="Nhập Tên Nhà Hàng">
                 </div>
                 <div class="form-group">
-                    <label> Vị Trí </label>
-                    <input type="text" name="ViTri" class="form-control" placeholder="Nhập Vị Trí">
+                    <label>Vị Trí</label>
+                    <select class="form-control" name="ViTriNH">
+                        <!-- <div class="form-group" name="LoaiTin"> -->
+                        <?php
+                        $q_vitri = "SELECT * FROM vitri";
+                        $rs_vitri = mysqli_query($connection, $q_vitri);
+                        while ($TL = @mysqli_fetch_array($rs_vitri)) {
+                        ?>
+                            <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                    </select>
                 </div>
                 <div class="form-group">
                     <label> Địa Chỉ </label>
@@ -95,8 +107,16 @@ include('includes/navbar.php');
                     <input type="text" name="GioiThieuNH" class="form-control" placeholder="Nhập Giới Thiệu">
                 </div>
                 <div class="form-group">
-                    <label> Giá Nhà Hàng (VNĐ) </label>
-                    <input type="number" name="GiaNH" class="form-control" placeholder="Nhập Giá Nhà Hàng">
+                    <label> Giá Trẻ Em (VNĐ) </label>
+                    <input type="number" name="GiaTreEm" class="form-control" placeholder="Nhập Giá Cho Trẻ Em">
+                </div>
+                <div class="form-group">
+                    <label> Giá Người Lớn (VNĐ) </label>
+                    <input type="number" name="GiaNguoiLon" class="form-control" placeholder="Nhập Giá Cho Người Lớn">
+                </div>
+                <div class="form-group">
+                    <label> Mô Tả Thực Đơn </label>
+                    <input type="text" name="MoTaThucDon" class="form-control" placeholder="Nhập Mô Tả Thực Đơn">
                 </div>
                 <div class="form-group">
                     <label> Ngày Đến </label>

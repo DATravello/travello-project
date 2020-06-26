@@ -56,8 +56,7 @@
           <tr>
             <th>Mã Loại Phòng</th>
             <th>Tên Loại Phòng</th>
-            <th>Giá</th>
-            <th>Số Lượng Phòng</th>
+            <th>Mô Tả</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -73,8 +72,7 @@
                 <tr>
                   <td><?php echo $row['MaLoaiPhong']; ?></td>
                   <td> <?php echo $row['TenLoaiPhong']; ?> </td>
-                  <td> <?php echo $row['Gia']; ?> </td>
-                  <td> <?php echo $row['SoLuongPhong']; ?> </td>
+                  <td> <?php echo $row['MoTa']; ?> </td>
                   <td>
                     <form action="sua-loai-phong.php" method="post">
                       <input type="hidden" name="edit_MaLoaiPhong" value="<?php echo $row['MaLoaiPhong']; ?>">

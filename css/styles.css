@@ -36,6 +36,36 @@ p {
     font-size: 14px;
 }
 
+.btn-book {
+    background: #CF1011;
+    color: #FFF;
+    padding: 5px 30px;
+    margin-top: 20px;
+    border-radius: 0;
+    border: 1px solid #CF1011;
+    text-transform: uppercase;
+    transition: .3s ease-in-out;
+    outline: none;
+}
+
+.btn-book:hover,
+.btn-book:active,
+.btn-book:visited,
+.btn-book:focus {
+    border: 1px solid #CF1011;
+    background: #fff;
+    color: #CF1011;
+}
+
+.btn-book:hover a {
+    color: #CF1011;
+}
+
+.btn-book a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .fixed-top {
     padding: 20px 0!important;
 }
@@ -153,6 +183,8 @@ p {
 .w-100 {
     height: 100vh;
 }
+
+
 /* USER */
 
 .users-container {
@@ -164,6 +196,8 @@ p {
     text-align: center;
     font-size: 35px;
 }
+
+
 /* SEARCH SECTION */
 
 .search {
@@ -187,6 +221,8 @@ p {
     font-weight: 400;
     transform: translateY(10%);
 }
+
+
 /* TOUR TYPE */
 
 .tour-type .card {
@@ -256,6 +292,8 @@ p {
     color: #000;
     font-weight: 400;
 }
+
+
 /* TOUR LISt */
 
 .tour-container {
@@ -271,6 +309,7 @@ p {
 .card {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    margin-bottom: 25px;
 }
 
 .card-img-top {
@@ -357,6 +396,8 @@ p {
     font-weight: bold;
     color: #1A2B50;
 }
+
+
 /* INTRO */
 
 .intro {
@@ -393,6 +434,8 @@ p {
     color: #181818;
     font-weight: 400;
 }
+
+
 /* TOUR ĐẶT NHIỀU */
 
 .tour-hot {
@@ -447,6 +490,8 @@ p {
     color: #000;
     font-weight: 400;
 }
+
+
 /* FOOTER */
 
 .to-top {
@@ -524,7 +569,11 @@ p {
     margin: 0 5px;
     font-size: 35px;
 }
+
+
 /* END FOOTER */
+
+
 /* DESTINATION */
 
 .destination-content {
@@ -532,23 +581,173 @@ p {
 }
 
 .destination-content .card {
+    border: none;
     height: 320px;
     object-fit: cover;
     position: relative;
+}
+
+.destination-content .card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.destination-content .card:hover img {
+    transform: scale(1.1);
 }
 
 .destination-content .card img {
     width: 100%;
     height: 320px;
     object-fit: cover;
+    transition: all .3s;
 }
 
 .destination-content .card .title {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
+    bottom: 0;
+    color: #fff;
+    padding: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
 }
+
+
 /* END DESTINATION */
+
+
+/* KHÁCH SẠN */
+
+.hotel-content {
+    margin: 50px 0;
+}
+
+.hotel-content .title-hotel {
+    text-align: center;
+    font-size: 35px;
+    margin: 40px 0;
+}
+
+.self-booking {
+    margin: 50px 0;
+}
+
+.self-booking .title-booking {
+    font-size: 35px;
+}
+
+.self-booking .self-star {
+    margin-bottom: 5px;
+}
+
+.self-booking .self-star i {
+    color: #FFDC00;
+    padding-right: 2px;
+}
+
+.self-booking .self-location {
+    color: #2196F3;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.self-booking .self-location i {
+    color: #768092;
+}
+
+.self-booking .nav-self .list-group-item {
+    padding: 20px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #1A2B48;
+}
+
+.self-booking .nav-self .active {
+    color: #fff;
+}
+
+.self-booking .content-self .self-hotel-des {
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.content-self .self-hotel-des p {
+    font-size: 17px;
+}
+
+.content-self .book {
+    margin: 40px 0;
+}
+
+
+/* Tour Guide */
+
+.tour-guide {
+    text-align: center;
+}
+
+.tour-guide h5 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #212121;
+    margin: 15px 0;
+}
+
+.tour-guide p {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.tour-guide .guide {
+    font-weight: bold;
+    color: #FA5636;
+}
+
+.tour-guide .card {
+    transition: .2s all;
+    overflow: visible;
+}
+
+.tour-guide .card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.tour-guide .img-guide {
+    border: 2px solid #2196F3;
+    height: 80px;
+    object-fit: cover;
+}
+
+.tour-guide .btn-book {
+    text-transform: unset;
+}
+
+
+/* End Tour Guide */
+
+
+/* TOUR VIHICLE */
+
+.tour-vehicle .img-vehicle {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
+/* END TOUR VIHICLE */
+
+
+/* TOUR RESTAURANT */
+
+.tour-restaurant .img-restaurant {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
 /* Responsive */
 
 @media only screen and (max-width: 767px) {
@@ -705,6 +904,8 @@ p {
     }
     /* END FOOTER */
 }
+
+
 /* Responsive */
 
 @media only screen and (max-width: 767px) {

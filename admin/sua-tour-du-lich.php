@@ -146,6 +146,10 @@
                         <input type="number" name="sua_songay" value="<?php echo $row['SoNgay'] ?>" class="form-control" placeholder="Enter SoNgay">
                     </div>
                     <div class="form-group">
+                        <label>Sức Chứa </label>
+                        <input type="number" name="sua_succhua" value="<?php echo $row['SoNgay'] ?>" class="form-control" placeholder="Enter SoNgay">
+                    </div>
+                    <div class="form-group">
                         <label>Ảnh </label>
                         <div class="input-group">
                         <div class="input-group-prepend">

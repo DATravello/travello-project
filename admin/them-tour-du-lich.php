@@ -173,6 +173,10 @@ include('includes/navbar.php');
                     <input type="number" name="SoNgay" class="form-control" placeholder="Nhập Số Ngày">
                 </div>
                 <div class="form-group">
+                    <label> Sức Chứa </label>
+                    <input type="number" name="SucChua" class="form-control" placeholder="Nhập Số Ngày">
+                </div>
+                <div class="form-group">
                     <label> Ảnh </label>
                     <div class="input-group">
                         <div class="input-group-prepend">

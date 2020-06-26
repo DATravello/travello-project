@@ -50,7 +50,7 @@
         $connection = mysqli_connect("localhost","root","","travello_db");
         $query="SELECT * FROM khachsan";
         $query_run = mysqli_query($connection, $query);
-        $query1="SELECT * FROM khachsan, thuonghieuks,  loaiphong where khachsan.MaThuongHieuKS = thuonghieuks.MaThuongHieuKS and loaiphong.MaLoaiPhong=khachsan.MaLoaiPhong" ;
+        $query1="SELECT * FROM khachsan, thuonghieuks,  loaiphong, vitri where khachsan.MaThuongHieuKS = thuonghieuks.MaThuongHieuKS and loaiphong.MaLoaiPhong=khachsan.MaLoaiPhong and vitri.MaViTri=khachsan.MaViTri" ;
        $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -58,17 +58,20 @@
           <tr>
             <th>Tên Thương Hiệu</th>
             <th>Mã KS</th>
+            <th>Vị Trí</th>
             <th>Hạng Sao</th>
             <th>Tên Khách Sạn</th>
-            <th>Vị Trí</th>
             <th>Địa Chỉ</th>
             <th>Điện Thoại</th>
             <th>Loại Phòng</th>
-            <th>Số Phòng Đặt</th>
+            <th>Số Phòng</th>
             <th>Ngày Đến</th>
             <th>Ngày Đi</th>
             <th>WebSite</th>
             <th>Ảnh</th>
+            <th>Ảnh</th>
+            <th>Ảnh Loại Phòng</th>
+            <th>Giá</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -85,20 +88,23 @@
                   <td><?php
                   echo $rows1['TenThuongHieuKS']; 
                   ?></td>
+                  <td><?php
+                  echo $rows1['TenViTri']; 
+                  ?></td>
                   <td><?php echo $rows['MaKS']; ?></td>
                   <td> <?php echo $rows['HangSao']; ?>  </td>
                   <td> <?php echo $rows['TenKS']; ?>  </td>
-                  <td><?php echo $rows['ViTri']; ?></td>
                   <td> <?php echo $rows['DiaChi']; ?>  </td>
                   <td> <?php echo $rows['DienThoai']; ?>  </td>
                   <td><?php
                   echo $rows1['TenLoaiPhong']; 
                   ?></td>
-                  <td> <?php echo $rows['SoPhongDat']; ?>  </td>
+                  <td> <?php echo $rows['SoPhong']; ?>  </td>
                   <td> <?php echo $rows['NgayDen']; ?>  </td>
                   <td> <?php echo $rows['NgayDi']; ?>  </td>
                   <td> <?php echo $rows['WebSite']; ?>  </td>
                   <td> <?php echo $rows['Anh']; ?>  </td>
+                  <td> <?php echo $rows['Gia']; ?>  </td>
                   <td>
                     <form action="sua-khach-san.php" method="post">
                       <input type="hidden" name="sua_maks" value="<?php echo $rows['MaKS']; ?>">

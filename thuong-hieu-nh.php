@@ -45,13 +45,5 @@ include('include/header.php')
 		echo '	</div>
 	</div>'
 	?>
-
-</section>
-</body>
-<script src="scripts/jquery-3.5.1.slim.min.js"></script>
-<script src="scripts/popper.min.js"></script>
-<script src="scripts/bootstrap.min.js"></script>
-<script src="scripts/fontawesome-kit.js"></script>
-<script src="scripts/scroll.js"></script>
-
-</html>
+	</section>
+<?php include('include/footer.php'); ?>

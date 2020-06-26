@@ -71,7 +71,7 @@ if (isset($_POST['btn_xoa_loainh'])) {
 if (isset($_POST['btn_them_thuong_hieu'])) {
     $theloai = $_POST['LoaiNhaHang'];
     $tenthuonghieunh = $_POST['TenThuongHieuNH'];
-    $mota= $_POST['MoTa'];
+    $mota = $_POST['MoTa'];
     $anh = $_FILES["HinhAnh"]['name'];
 
     $sql_tenthuonghieunh = "SELECT * FROM thuonghieunh WHERE TenThuongHieuNH = '$tenthuonghieunh'";
@@ -80,59 +80,55 @@ if (isset($_POST['btn_them_thuong_hieu'])) {
         $store = $_FILES["HinhAnh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-thuong-hieu-nh.php');
-    }
-    else
-    {
-    if (!$theloai || !$tenthuonghieunh || !$mota || !$anh) {
-        echo "Không thành công!";
-        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
-        header('location: them-thuong-hieu-nh.php');
     } else {
-        if (mysqli_num_rows($rstenthuonghieunh) > 0) {
-            echo "Không thành công";
-            $_SESSION['status'] = "Thương Hiệu Đã Tồn Tại!";
+        if (!$theloai || !$tenthuonghieunh || !$mota || !$anh) {
+            echo "Không thành công!";
+            $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-thuong-hieu-nh.php');
         } else {
-            $query = "INSERT INTO thuonghieunh (`MaLoaiNH`,`TenThuongHieuNH`,`MoTa`,`HinhAnh`)
-             VALUES ('$theloai','$tenthuonghieu','$mota','$anh')";
-            $query_run = mysqli_query($connection, $query);
-            if ($query_run) {
-                move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-nh/".$_FILES["HinhAnh"]["name"]);
-                $_SESSION['success'] = "Thêm Thành Công!";
-                header('location: danh-sach-thuong-hieu-nh.php');
-            } else {
-                $_SESSION['status'] = "Thêm Thất Bại!";
+            if (mysqli_num_rows($rstenthuonghieunh) > 0) {
+                echo "Không thành công";
+                $_SESSION['status'] = "Thương Hiệu Đã Tồn Tại!";
                 header('location: them-thuong-hieu-nh.php');
+            } else {
+                $query = "INSERT INTO thuonghieunh (`MaLoaiNH`,`TenThuongHieuNH`,`MoTa`,`HinhAnh`)
+             VALUES ('$theloai','$tenthuonghieu','$mota','$anh')";
+                $query_run = mysqli_query($connection, $query);
+                if ($query_run) {
+                    move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-nh/" . $_FILES["HinhAnh"]["name"]);
+                    $_SESSION['success'] = "Thêm Thành Công!";
+                    header('location: danh-sach-thuong-hieu-nh.php');
+                } else {
+                    $_SESSION['status'] = "Thêm Thất Bại!";
+                    header('location: them-thuong-hieu-nh.php');
+                }
             }
         }
-    }
     }
 }
 //SỬA THƯƠNG HIỆU (ĐƯỢC)
 if (isset($_POST['btn_capnhat_thuonghieu'])) {
     $mathnh = $_POST['sua_mathnh'];
     $theloainh = $_POST['sua_maloainh'];
-    $tenthnh= $_POST['sua_tenthnh'];
+    $tenthnh = $_POST['sua_tenthnh'];
     $mota = $_POST['sua_mota'];
     $anhthnh = $_FILES["Anh"]['name'];
     if (file_exists("img/thuong-hieu-nh/" . $_FILES["HinhAnh"]["name"])) {
         $store = $_FILES["HinhAnh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-thuong-hieu-nh.php');
-    }
-    else
-    {
-    $query = "UPDATE thuonghieunh SET MaLoaiNH='$theloainh', TenThuongHieuNH='$tenthnh', MoTa='$mota', HinhAnh='$anhthnh' WHERE MaThuongHieuNH='$mathnh'";
-    $query_run = mysqli_query($connection, $query);
-
-    if ($query_run) {
-        move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-nh/".$_FILES["HinhAnh"]["name"]);
-        $_SESSION['success'] = "Update Successed!";
-        header('location: danh-sach-thuong-hieu-nh.php');
     } else {
-        $_SESSION['status'] = "Update Failed!";
-        header('location: sua-thuong-hieu-nh.php');
-    }
+        $query = "UPDATE thuonghieunh SET MaLoaiNH='$theloainh', TenThuongHieuNH='$tenthnh', MoTa='$mota', HinhAnh='$anhthnh' WHERE MaThuongHieuNH='$mathnh'";
+        $query_run = mysqli_query($connection, $query);
+
+        if ($query_run) {
+            move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-nh/" . $_FILES["HinhAnh"]["name"]);
+            $_SESSION['success'] = "Update Successed!";
+            header('location: danh-sach-thuong-hieu-nh.php');
+        } else {
+            $_SESSION['status'] = "Update Failed!";
+            header('location: sua-thuong-hieu-nh.php');
+        }
     }
 }
 
@@ -157,12 +153,14 @@ if (isset($_POST['btn_xoa_thuonghieu'])) {
 if (isset($_POST['btn_them_nh'])) {
     $thuonghieunh = $_POST['ThuongHieuNH'];
     $tennhahang = $_POST['TenNhaHang'];
-    $vitri = $_POST['ViTri'];
+    $vitri = $_POST['ViTriNH'];
     $diachi = $_POST['DiaChi'];
     $sdt = $_POST['SDT'];
     $anh = $_FILES["Anh"]['name'];
     $gioithieu = $_POST['GioiThieuNH'];
-    $gianh = $_POST['GiaNH'];
+    $giatreem = $_POST['GiaTreEm'];
+    $gianguoilon = $_POST['GiaNguoiLon'];
+    $thucdon = $_POST['MoTaThucDon'];
     $ngayden = $_POST['NgayDen'];
     $ngaydi = $_POST['NgayDi'];
 
@@ -174,7 +172,7 @@ if (isset($_POST['btn_them_nh'])) {
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-nha-hang.php');
     } else {
-        if (!$anh || !$tennhahang || !$diachi || !$sdt || !$gioithieu || !$gianh || !$ngayden || !$ngaydi) {
+        if (!$thuonghieunh || !$anh || !$tennhahang || !$vitri || !$diachi || !$sdt || !$gioithieu || !$giatreem || !$gianguoilon || !$thucdon || !$ngayden || !$ngaydi) {
             echo "Không thành công!";
             $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-nha-hang.php');
@@ -185,8 +183,8 @@ if (isset($_POST['btn_them_nh'])) {
                 $_SESSION['status'] = "Nhà Hàng Đã Tồn Tại!";
                 header('location: them-nha-hang.php');
             } else {
-                $query = "INSERT INTO nhahang (`MaThuongHieuNH`,`TenNhaHang`,`ViTri`,`DiaChi`,`Anh`,`SDT`,`GioiThieuNH`,`GiaNH`,`NgayDen`,`NgayDi`)
-                 VALUES ('$thuonghieunh','$tennhahang','$vitri','$diachi','$anh','$sdt','$gioithieu','$gianh','$ngayden','$ngaydi')";
+                $query = "INSERT INTO nhahang (`MaThuongHieuNH`,`TenNhaHang`,`MaViTri`,`DiaChi`,`Anh`,`SDT`,`GioiThieuNH`,`GiaTreEm`,`GiaNguoiLon`,`MoTaThucDon`,`NgayDen`,`NgayDi`)
+                 VALUES ('$thuonghieunh','$tennhahang','$vitri','$diachi','$anh','$sdt','$gioithieu','$giatreem','$gianguoilon','$thucdon','$ngayden','$ngaydi')";
                 $query_run = mysqli_query($connection, $query);
 
                 if ($query_run) {
@@ -204,31 +202,34 @@ if (isset($_POST['btn_them_nh'])) {
 
 //SỬA NHÀ HÀNG (ĐƯỢC)
 if (isset($_POST['btn_capnhat_nh'])) {
-    $thuonghieunh = $_POST['sua_mathnh'];
     $manh = $_POST['sua_mnh'];
+    $thuonghieunh = $_POST['sua_mathnh'];
     $tennh = $_POST['sua_tennh'];
-    $vitri = $_POST['sua_vitri'];
-    $diachi = $_POST['sua_diachinh'];
-    $anh = $_FILES["Anh"]['name'];
-    $sdt = $_POST['sua_sdtnh'];
-    $gth = $_POST['sua_gtnh'];
-    $gia = $_POST['sua_gianh'];
+    $vitrinh = $_POST['sua_vitrinh'];
+    $diachinh = $_POST['sua_diachinh'];
+    $dtnh = $_POST['sua_sdtnh'];
+    $gioithieu = $_POST['sua_gtnh'];
+    $giatreem = $_POST['sua_giatreem'];
+    $gianguoilon = $_POST['sua_gianguoilon'];
+    $thucdon = $_POST['sua_thucdon'];
     $ngayden = $_POST['sua_ngayden'];
+    $anhnh = $_FILES["Anh"]['name'];
     $ngaydi = $_POST['sua_ngaydi'];
     if (file_exists("img/nha-hang/" . $_FILES["Anh"]["name"])) {
         $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
-        header('location: them-nha-hang.php');
+        header('location: sua-nha-hang.php');
     } else {
-        $query = "UPDATE nhahang SET TenNhaHang='$tennh', DiaChi='$diachi', Anh='$anh', SDT='$sdt', GioiThieuNH='$gth', GiaNH='$gia', NgayDen='$ngayden', NgayDi='$ngaydi' WHERE MaNH='$manh'";
+        $query = "UPDATE nhahang 
+        SET MaThuongHieuNH='$thuonghieunh', MaViTri='$vitrinh', TenNhaHang='$tennh', DiaChi='$diachinh', SDT='$dtnh', GioiThieuNH='$gioithieu', GiaTreEm='$giatreem', GiaNguoiLon='$gianguoilon', MoTaThucDon='$thucdon', NgayDen='$ngayden', Anh='$anhnh', NgayDi='$ngaydi' WHERE MaNH='$manh'";
         $query_run = mysqli_query($connection, $query);
 
         if ($query_run) {
             move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/nha-hang/" . $_FILES["Anh"]["name"]);
-            $_SESSION['success'] = "Cập Nhật Thành Công!";
+            $_SESSION['success'] = "Update Successed!";
             header('location: danh-sach-nha-hang.php');
         } else {
-            $_SESSION['status'] = "Cập Nhật Thất Bại!";
+            $_SESSION['status'] = "Update Failed!";
             header('location: sua-nha-hang.php');
         }
     }
@@ -249,33 +250,43 @@ if (isset($_POST['btn_xoa_nh'])) {
         header('location: danh-sach-nha-hang.php');
     }
 }
-// * THÊM PHƯƠNG TIỆN *// (ĐƯỢC)
+// * THÊM PHƯƠNG TIỆN *// 
 if (isset($_POST['btn_them_phuong_tien'])) {
+    $loaipt = $_POST['loaipt'];
     $tenphuongtien = $_POST['PhuongTien'];
-    $noidi = $_POST['NoiDi'];
+    $noikhoihanh = $_POST['NoiDi'];
     $noiden = $_POST['NoiDen'];
-    $gia = $_POST['Gia'];
-    $sql_tenphuongtien = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
-    $rstenphuongtien = mysqli_query($connection, $sql_tenphuongtien);
-    if (!$tenphuongtien || !$noidi || !$noiden || !$gia) {
-        echo "Không thành công!";
-        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
+    $giatien = $_POST['Gia'];
+    $anhpt = $_FILES["HinhAnh"]['name'];
+
+    $sql_tenpt = "SELECT * FROM phuongtien WHERE PhuongTien = '$tenphuongtien'";
+    $rstenpt = mysqli_query($connection, $sql_tenpt);
+    if (file_exists("img/phuong-tien/" . $_FILES["HinhAnh"]["name"])) {
+        $store = $_FILES["HinhAnh"]["name"];
+        $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-phuong-tien.php');
     } else {
-        if (mysqli_num_rows($rstendichvu) > 0) {
-            echo "Không thành công";
-            $_SESSION['status'] = "Dịch Vụ Đã Tồn Tại!";
+        if (!$loaipt || !$tenphuongtien || !$noikhoihanh || !$noiden || !$giatien || !$anhpt) {
+            echo "Không thành công!";
+            $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-phuong-tien.php');
         } else {
-            $query = "INSERT INTO phuongtien (`PhuongTien`, `NoiDi`,`NoiDen`, `Gia`) VALUES ('$tenphuongtien','$noidi','$noiden','$gia')";
-            $query_run = mysqli_query($connection, $query);
-
-            if ($query_run) {
-                $_SESSION['success'] = "Thêm Thành Công!";
-                header('location: danh-sach-phuong-tien.php');
-            } else {
-                $_SESSION['status'] = "Thêm Thất Bại!";
+            if (mysqli_num_rows($rstenpt) > 0) {
+                echo "Không thành công";
+                $_SESSION['status'] = "Phương Tiện Đã Tồn Tại!";
                 header('location: them-phuong-tien.php');
+            } else {
+                $query = "INSERT INTO phuongtien (`MaTLPhuongTien`,`PhuongTien`,`NoiDi`,`NoiDen`,`Gia`,`HinhAnh`)
+             VALUES ('$loaipt','$tenphuongtien','$noikhoihanh','$noiden','$giatien','$anhpt')";
+                $query_run = mysqli_query($connection, $query);
+                if ($query_run) {
+                    move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/phuong-tien/" . $_FILES["HinhAnh"]["name"]);
+                    $_SESSION['success'] = "Thêm Thành Công!";
+                    header('location: danh-sach-phuong-tien.php');
+                } else {
+                    $_SESSION['status'] = "Thêm Thất Bại!";
+                    header('location: them-phuong-tien.php');
+                }
             }
         }
     }
@@ -283,20 +294,29 @@ if (isset($_POST['btn_them_phuong_tien'])) {
 //SỬA PHƯƠNG TIỆN (ĐƯỢC)
 if (isset($_POST['btn_capnhat_pt'])) {
     $mapt = $_POST['sua_MaPhuongTien'];
+    $loaipt = $_POST['sua_loaiphuongtien'];
     $tenpt = $_POST['sua_tenphuongtien'];
     $noidi = $_POST['sua_noidi'];
     $noiden = $_POST['sua_noiden'];
     $gia = $_POST['sua_gia'];
+    $anhpt = $_FILES["HinhAnh"]['name'];
 
-    $query = "UPDATE phuongtien SET PhuongTien='$tenpt', NoiDi='$noidi', NoiDen='$noiden', Gia='$gia' WHERE MaPhuongTien='$mapt'";
-    $query_run = mysqli_query($connection, $query);
-
-    if ($query_run) {
-        $_SESSION['success'] = "Sửa Thành Công!";
-        header('location: danh-sach-phuong-tien.php');
+    if (file_exists("img/phuong-tien/" . $_FILES["HinhAnh"]["name"])) {
+        $store = $_FILES["HinhAnh"]["name"];
+        $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
+        header('location: them-phuong-tien.php');
     } else {
-        $_SESSION['status'] = "Sửa Thất Bại!";
-        header('location: sua-phuong-tien.php');
+        $query = "UPDATE phuongtien SET MaTLPhuongTien='$loaipt',PhuongTien='$tenpt', NoiDi='$noidi', NoiDen='$noiden', Gia='$gia', HinhAnh='$anhpt' WHERE MaPhuongTien='$mapt'";
+        $query_run = mysqli_query($connection, $query);
+
+        if ($query_run) {
+            move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/phuong-tien/" . $_FILES["HinhAnh"]["name"]);
+            $_SESSION['success'] = "Sửa Thành Công!";
+            header('location: danh-sach-phuong-tien.php');
+        } else {
+            $_SESSION['status'] = "Sửa Thất Bại!";
+            header('location: sua-phuong-tien.php');
+        }
     }
 }
 // XÓA PHƯƠNG TIỆN (ĐƯỢC)
@@ -333,6 +353,7 @@ if (isset($_POST['btn_them_tour'])) {
     $giatreem = $_POST['GiaTreEm'];
     $hanhtrinh = $_POST['HanhTrinh'];
     $songay = $_POST['SoNgay'];
+    $succhua = $_POST['SucChua'];
     $anhtour = $_FILES["Anh"]['name'];
 
     $sql_tentour = "SELECT * FROM tourdulich WHERE TenTour = '$tentour'";
@@ -342,7 +363,7 @@ if (isset($_POST['btn_them_tour'])) {
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-tour-du-lich.php');
     } else {
-        if (!$loaitour || !$tentour || !$noikhoihanh || !$noiden || !$thoigian || !$khachsan || !$nhahang || !$huongdv || !$phuongtien || !$dichvu || !$giatien || !$giatreem || !$hanhtrinh || !$songay || !$anhtour) {
+        if (!$loaitour || !$tentour || !$noikhoihanh || !$noiden || !$thoigian || !$khachsan || !$nhahang || !$huongdv || !$phuongtien || !$dichvu || !$giatien || !$giatreem || !$hanhtrinh || !$songay || !$succhua || !$anhtour) {
             echo "Không thành công!";
             $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-tour-du-lich.php');
@@ -352,8 +373,8 @@ if (isset($_POST['btn_them_tour'])) {
                 $_SESSION['status'] = "Tour Đã Tồn Tại!";
                 header('location: them-tour-du-lich.php');
             } else {
-                $query = "INSERT INTO tourdulich (`MaLoaiTour`,`TenTour`,`NoiKhoiHanh`,`NoiDen`,`ThoiGian`,`MaKS`,`MaNH`,`MaHDV`,`MaPhuongTien`,`MaDV`,`GiaTien`,`GiaTreEm`,`HanhTrinh`,`SoNgay`,`Anh`)
-             VALUES ('$loaitour','$tentour','$noikhoihanh','$noiden','$thoigian','$khachsan','$nhahang','$huongdv','$phuongtien','$dichvu','$giatien','$giatreem','$hanhtrinh', '$songay' ,'$anhtour')";
+                $query = "INSERT INTO tourdulich (`MaLoaiTour`,`TenTour`,`NoiKhoiHanh`,`NoiDen`,`ThoiGian`,`MaKS`,`MaNH`,`MaHDV`,`MaPhuongTien`,`MaDV`,`GiaTien`,`GiaTreEm`,`HanhTrinh`,`SoNgay`,`SucChua`,`Anh`)
+             VALUES ('$loaitour','$tentour','$noikhoihanh','$noiden','$thoigian','$khachsan','$nhahang','$huongdv','$phuongtien','$dichvu','$giatien','$giatreem','$hanhtrinh', '$songay' ,'$succhua','$anhtour')";
                 $query_run = mysqli_query($connection, $query);
                 if ($query_run) {
                     move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tour-du-lich/" . $_FILES["Anh"]["name"]);
@@ -387,13 +408,14 @@ if (isset($_POST['btn_capnhat_tour'])) {
     $giatreem = $_POST['sua_giatreem'];
     $hanhtrinh = $_POST['sua_hanhtrinh'];
     $songay = $_POST['sua_songay'];
+    $succhua = $_POST['sua_succhua'];
     $anhtour = $_FILES["Anh"]['name'];
     if (file_exists("img/tour-du-lich/" . $_FILES["Anh"]["name"])) {
         $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-tour-du-lich.php');
     } else {
-        $query = "UPDATE tourdulich SET MaLoaiTour='$loaitour', TenTour='$tentour', NoiKhoiHanh='$noikhoihanh', NoiDen='$noiden', ThoiGian='$thoigian', GiaTien='$giatien',MaKS='$khachsan',MaNH='$nhahang',MaHDV='$hdv',MaPhuongTien='$phuongtien',MaDV='$dichvu', GiaTreEm='$giatreem', HanhTrinh='$hanhtrinh', SoNgay='$songay', Anh='$anhtour' WHERE MaTour='$matour'";
+        $query = "UPDATE tourdulich SET MaLoaiTour='$loaitour', TenTour='$tentour', NoiKhoiHanh='$noikhoihanh', NoiDen='$noiden', ThoiGian='$thoigian', GiaTien='$giatien',MaKS='$khachsan',MaNH='$nhahang',MaHDV='$hdv',MaPhuongTien='$phuongtien',MaDV='$dichvu', GiaTreEm='$giatreem', HanhTrinh='$hanhtrinh', SoNgay='$songay', SucChua='$succhua', Anh='$anhtour' WHERE MaTour='$matour'";
         $query_run = mysqli_query($connection, $query);
 
         if ($query_run) {
@@ -566,13 +588,11 @@ if (isset($_POST['btn_xoa_loaiks'])) {
 // * THÊM LOẠI PHÒNG *// (ĐƯỢC)
 if (isset($_POST['btn_them_loai_phong'])) {
     $tenloaiphong = $_POST['TenLoaiPhong'];
-    $gia = $_POST['Gia'];
-    $soluongphong = $_POST['SoLuongPhong'];
-
+    $mota = $_POST['MoTa'];
     $sql_tenloaiphong = "SELECT * FROM loaiphong WHERE TenLoaiPhong = '$tenloaiphong'";
     $rstenloaiphong = mysqli_query($connection, $sql_tenloaiphong);
 
-    if (!$tenloaiphong || !$gia || !$soluongphong) {
+    if (!$tenloaiphong) {
         echo "Không thành công!";
         $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
         header('location: them-loai-khach-san.php');
@@ -582,7 +602,7 @@ if (isset($_POST['btn_them_loai_phong'])) {
             $_SESSION['status'] = "Loại Phòng Đã Tồn Tại!";
             header('location: them-loai-khach-san.php');
         } else {
-            $query = "INSERT INTO loaiphong (`TenLoaiPhong`, `Gia`, `SoLuongPhong`) VALUES ('$tenloaiphong','$gia','$soluongphong')";
+            $query = "INSERT INTO loaiphong (`TenLoaiPhong`,`MoTa`) VALUES ('$tenloaiphong','$mota')";
             $query_run = mysqli_query($connection, $query);
 
             if ($query_run) {
@@ -599,10 +619,8 @@ if (isset($_POST['btn_them_loai_phong'])) {
 if (isset($_POST['btn_update_loaiphong'])) {
     $maloai = $_POST['sua_maloai'];
     $tenloaiphong = $_POST['sua_tenloai'];
-    $gia= $_POST['sua_gia'];
-    $soluongphong= $_POST['sua_slp'];
-
-    $query = "UPDATE loaiphong SET TenLoaiPhong='$tenloaiphong', Gia='$gia', SoLuongPhong='$soluongphong' WHERE MaLoaiPhong='$maloai'";
+    $mota = $_POST['sua_mota'];
+    $query = "UPDATE loaiphong SET TenLoaiPhong='$tenloaiphong', MoTa='$mota' WHERE MaLoaiPhong='$maloai'";
     $query_run = mysqli_query($connection, $query);
 
     if ($query_run) {
@@ -613,7 +631,7 @@ if (isset($_POST['btn_update_loaiphong'])) {
         header('location: sua-loai-phong.php');
     }
 }
- // XÓA LOẠI PHÒNG (ĐƯỢC)
+// XÓA LOẠI PHÒNG (ĐƯỢC)
 if (isset($_POST['btn_xoa_loaiphong'])) {
     $maloaiphong = $_POST['xoa_loaiphong'];
 
@@ -634,7 +652,7 @@ if (isset($_POST['btn_xoa_loaiphong'])) {
 if (isset($_POST['btn_them_thuong_hieu'])) {
     $theloai = $_POST['LoaiKhachSan'];
     $tenthuonghieu = $_POST['TenThuongHieuKS'];
-    $mota= $_POST['MoTa'];
+    $mota = $_POST['MoTa'];
     $anh = $_FILES["HinhAnh"]['name'];
 
     $sql_tenthuonghieu = "SELECT * FROM thuonghieuks WHERE TenThuongHieuKS = '$tenthuonghieu'";
@@ -643,59 +661,55 @@ if (isset($_POST['btn_them_thuong_hieu'])) {
         $store = $_FILES["HinhAnh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-thuong-hieu-ks.php');
-    }
-    else
-    {
-    if (!$theloai ||!$tenthuonghieu || !$mota || !$anh) {
-        echo "Không thành công!";
-        $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
-        header('location: them-thuong-hieu-ks.php');
     } else {
-        if (mysqli_num_rows($rstenthuonghieu) > 0) {
-            echo "Không thành công";
-            $_SESSION['status'] = "Thương Hiệu Đã Tồn Tại!";
+        if (!$theloai || !$tenthuonghieu || !$mota || !$anh) {
+            echo "Không thành công!";
+            $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-thuong-hieu-ks.php');
         } else {
-            $query = "INSERT INTO thuonghieuks (`MaLoaiKS`,`TenThuongHieuKS`,`MoTa`,`HinhAnh`)
-             VALUES ('$theloai','$tenthuonghieu','$mota','$anh')";
-            $query_run = mysqli_query($connection, $query);
-            if ($query_run) {
-                move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-ks/".$_FILES["HinhAnh"]["name"]);
-                $_SESSION['success'] = "Thêm Thành Công!";
-                header('location: danh-sach-thuong-hieu-ks.php');
-            } else {
-                $_SESSION['status'] = "Thêm Thất Bại!";
+            if (mysqli_num_rows($rstenthuonghieu) > 0) {
+                echo "Không thành công";
+                $_SESSION['status'] = "Thương Hiệu Đã Tồn Tại!";
                 header('location: them-thuong-hieu-ks.php');
+            } else {
+                $query = "INSERT INTO thuonghieuks (`MaLoaiKS`,`TenThuongHieuKS`,`MoTa`,`HinhAnh`)
+             VALUES ('$theloai','$tenthuonghieu','$mota','$anh')";
+                $query_run = mysqli_query($connection, $query);
+                if ($query_run) {
+                    move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-ks/" . $_FILES["HinhAnh"]["name"]);
+                    $_SESSION['success'] = "Thêm Thành Công!";
+                    header('location: danh-sach-thuong-hieu-ks.php');
+                } else {
+                    $_SESSION['status'] = "Thêm Thất Bại!";
+                    header('location: them-thuong-hieu-ks.php');
+                }
             }
         }
-    }
     }
 }
 //SỬA THƯƠNG HIỆU (ĐƯỢC)
 if (isset($_POST['btn_capnhat_thuonghieu'])) {
     $loaiks = $_POST['sua_maloaiks'];
     $mathks = $_POST['sua_mathks'];
-    $tenthks= $_POST['sua_tenthks'];
+    $tenthks = $_POST['sua_tenthks'];
     $mota = $_POST['sua_mota'];
     $anhthks = $_FILES["Anh"]['name'];
     if (file_exists("img/thuong-hieu-ks/" . $_FILES["HinhAnh"]["name"])) {
         $store = $_FILES["HinhAnh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-thuong-hieu-ks.php');
-    }
-    else
-    {
-    $query = "UPDATE thuonghieuks SET MaLoaiKS='$loaiks', TenThuongHieuKS='$tenthks', MoTa='$mota', HinhAnh='$anhthks' WHERE MaThuongHieuKS='$mathks'";
-    $query_run = mysqli_query($connection, $query);
-
-    if ($query_run) {
-        move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-ks/".$_FILES["HinhAnh"]["name"]);
-        $_SESSION['success'] = "Update Successed!";
-        header('location: danh-sach-thuong-hieu-ks.php');
     } else {
-        $_SESSION['status'] = "Update Failed!";
-        header('location: sua-thuong-hieu-ks.php');
-    }
+        $query = "UPDATE thuonghieuks SET MaLoaiKS='$loaiks', TenThuongHieuKS='$tenthks', MoTa='$mota', HinhAnh='$anhthks' WHERE MaThuongHieuKS='$mathks'";
+        $query_run = mysqli_query($connection, $query);
+
+        if ($query_run) {
+            move_uploaded_file($_FILES["HinhAnh"]["tmp_name"], "img/thuong-hieu-ks/" . $_FILES["HinhAnh"]["name"]);
+            $_SESSION['success'] = "Update Successed!";
+            header('location: danh-sach-thuong-hieu-ks.php');
+        } else {
+            $_SESSION['status'] = "Update Failed!";
+            header('location: sua-thuong-hieu-ks.php');
+        }
     }
 }
 
@@ -718,18 +732,18 @@ if (isset($_POST['btn_xoa_thuonghieu'])) {
 // * THÊM KhÁCH SẠN *// (ĐƯỢC)
 if (isset($_POST['btn_them_khach_san'])) {
     $thuonghieu = $_POST['ThuongHieu'];
-    // $loaiks = $_POST['LoaiKS'];
     $tenkhachsan = $_POST['TenKS'];
     $hangsao = $_POST['HangSao'];
     $vitri = $_POST['ViTri'];
     $diachi = $_POST['DiaChi'];
     $dienthoai = $_POST['DienThoai'];
-    $loaiphong= $_POST['LoaiPhong'];
-    $sophong = $_POST['SoPhongDat'];
+    $loaiphong = $_POST['LoaiPhong'];
+    $sophong = $_POST['SoPhong'];
     $ngayden = $_POST['NgayDen'];
     $ngaydi = $_POST['NgayDi'];
     $website = $_POST['WebSite'];
     $anh = $_FILES["Anh"]['name'];
+    $gia = $_POST['Gia'];
 
     $sql_tenkhachsan = "SELECT * FROM khachsan WHERE TenKS = '$tenkhachsan'";
     $rstenks = mysqli_query($connection, $sql_tenkhachsan);
@@ -738,7 +752,7 @@ if (isset($_POST['btn_them_khach_san'])) {
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-khach-san.php');
     } else {
-        if (!$tenkhachsan || !$hangsao || !$diachi || !$dienthoai || !$sophong || !$ngayden || !$ngaydi || !$website || !$anh) {
+        if (!$thuonghieu || !$vitri || !$tenkhachsan || !$hangsao || !$diachi || !$dienthoai || !$loaiphong || !$sophong || !$ngayden || !$ngaydi || !$website || !$anh || !$gia) {
             echo "Không thành công!";
             $_SESSION['status'] = "Vui lòng không bỏ trống trường!";
             header('location: them-khach-san.php');
@@ -748,8 +762,8 @@ if (isset($_POST['btn_them_khach_san'])) {
                 $_SESSION['status'] = "Khách Sạn Đã Tồn Tại!";
                 header('location: them-khach-san.php');
             } else {
-                $query = "INSERT INTO khachsan (`TenKS`,`HangSao`,`DiaChi`,`DienThoai`,`SoPhong`,`NgayDen`,`NgayDi`,`WebSite`,`Anh`)
-             VALUES ('$tenkhachsan','$hangsao','$diachi','$dienthoai','$sophong','$ngayden','$ngaydi','$website','$anh')";
+                $query = "INSERT INTO khachsan (`MaThuongHieuKS`,`MaViTri`,`TenKS`,`HangSao`,`DiaChi`,`DienThoai`,`MaLoaiPhong`,`SoPhong`,`NgayDen`,`NgayDi`,`WebSite`,`Anh`,`Gia`)
+             VALUES ('$thuonghieu','$vitri','$tenkhachsan','$hangsao','$diachi','$dienthoai','$loaiphong','$sophong','$ngayden','$ngaydi','$website','$anh','$gia')";
                 $query_run = mysqli_query($connection, $query);
                 if ($query_run) {
                     move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/khach-san/" . $_FILES["Anh"]["name"]);
@@ -768,7 +782,6 @@ if (isset($_POST['btn_them_khach_san'])) {
 if (isset($_POST['btn_capnhat_ks'])) {
     $maks = $_POST['sua_maks'];
     $thuonghieuks = $_POST['sua_mathks'];
-    // $loaiks = $_POST['sua_loaiks'];
     $tenks = $_POST['sua_tenks'];
     $hangsao = $_POST['sua_hangsao'];
     $vitri = $_POST['sua_vitri'];
@@ -780,24 +793,23 @@ if (isset($_POST['btn_capnhat_ks'])) {
     $ngaydi = $_POST['sua_ngaydi'];
     $website = $_POST['sua_web'];
     $anhks = $_FILES["Anh"]['name'];
-    if (file_exists("img/tin-tuc/" . $_FILES["Anh"]["name"])) {
-        $store = $_FILES["HinhAnh"]["name"];
+    $gia = $_POST['sua_gia'];
+    if (file_exists("img/khach-san/" . $_FILES["Anh"]["name"])) {
+        $store = $_FILES["Anh"]["name"];
         $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
         header('location: them-khach-san.php');
-    }
-    else
-    {
-    $query = "UPDATE khachsan SET  MaThuongHieuKS='$thuonghieuks', TenKS='$tenks', HangSao='$hangsao', ViTri='$vitri', DiaChi='$diachiks', DienThoai='$dtks', MaLoaiPhong='$loaiphong', SoPhongDat='$sophong', NgayDen='$ngayden', NgayDi='$ngaydi', WebSite='$website', Anh='$anhks' WHERE MaKS='$maks'";
-    $query_run = mysqli_query($connection, $query);
-
-    if ($query_run) {
-        move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/".$_FILES["Anh"]["name"]);
-        $_SESSION['success'] = "Update Successed!";
-        header('location: danh-sach-khach-san.php');
     } else {
-        $_SESSION['status'] = "Update Failed!";
-        header('location: sua-khach-san.php');
-    }
+        $query = "UPDATE khachsan SET  MaThuongHieuKS='$thuonghieuks', MaViTri='$vitri', TenKS='$tenks', HangSao='$hangsao', DiaChi='$diachiks', DienThoai='$dtks', MaLoaiPhong='$loaiphong', SoPhong='$sophong', NgayDen='$ngayden', NgayDi='$ngaydi', WebSite='$website', Anh='$anhks', Gia='$gia' WHERE MaKS='$maks'";
+        $query_run = mysqli_query($connection, $query);
+
+        if ($query_run) {
+            move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/khach-san/" . $_FILES["Anh"]["name"]);
+            $_SESSION['success'] = "Update Successed!";
+            header('location: danh-sach-khach-san.php');
+        } else {
+            $_SESSION['status'] = "Update Failed!";
+            header('location: sua-khach-san.php');
+        }
     }
 }
 
@@ -845,20 +857,18 @@ if (isset($_POST['btn_them_tin_tuc'])) {
             if (mysqli_num_rows($rstentintuc) > 0) {
                 echo "Không thành công";
                 $_SESSION['status'] = "Tin Tức Đã Tồn Tại!";
-            $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
+                $query = "INSERT INTO tintuc (`TenTinTuc`,`MaTheLoai`, `MoTa`,`MaNV`,`ChiTiet`,`HinhAnh`,`Ngay`,`TaoBoi`) 
             VALUES ('$tentintuc','$theloai','$mota', '$nhanvien' ,'$chitiet','$anh','$ngay','$taoboi')";
-            $query_run = mysqli_query($connection, $query);
-            if ($query_run) {
-                move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/".$_FILES["Anh"]['name']);
-                $_SESSION['success'] = "Thêm Thành Công!";
-                header('location: danh-sach-tin-tuc.php');
+                $query_run = mysqli_query($connection, $query);
+                if ($query_run) {
+                    move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/tin-tuc/" . $_FILES["Anh"]['name']);
+                    $_SESSION['success'] = "Thêm Thành Công!";
+                    header('location: danh-sach-tin-tuc.php');
+                } else {
+                    $_SESSION['status'] = "Thêm Thất Bại!";
+                    header('location: them-tin-tuc.php');
+                }
             }
-            else
-            {
-                $_SESSION['status'] = "Thêm Thất Bại!";
-                header('location: them-tin-tuc.php');
-            }
-          }
         }
     }
 }

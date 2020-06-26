@@ -62,20 +62,6 @@
                         <!-- </div> -->
                 </select>
             </div>
-            <!-- <div class="form-group">
-                <label>Loại Khách Sạn</label>
-                <select class="form-control"  name="LoaiKS">
-                        //<?php
-                       // $q_loaiks = "SELECT * FROM loaikhachsan";
-                       // $rs_loaiks = mysqli_query($connection, $q_loaiks);
-                       // while ($TL = @mysqli_fetch_array($rs_loaiks)) {
-                       // ?>
-                            <option value="<?php echo $TL["MaLoaiKS"] ?>"><?php echo $TL["TenLoaiKS"] ?></option>
-                       // <?php
-                       // }
-                       // ?>
-                </select>
-            </div> -->
             <div class="form-group">
                 <label> Tên Khách Sạn </label>
                 <input type="text" name="TenKS" class="form-control" placeholder="Nhập Tên Khách Sạn">
@@ -85,12 +71,22 @@
                 <input type="text" name="HangSao" class="form-control" placeholder="Nhập Hạng Sao">
             </div>
             <div class="form-group">
-                <label> Vị Trí </label>
-                <input type="text" name="ViTri" class="form-control" placeholder="Nhập Vị Trí">
+                <label>Vị Trí</label>
+                <select class="form-control"  name="ViTri">
+                        <?php
+                        $q_vitri = "SELECT * FROM vitri";
+                        $rs_vitri = mysqli_query($connection, $q_vitri);
+                        while ($VT = @mysqli_fetch_array($rs_vitri)) {
+                        ?>
+                            <option value="<?php echo $VT["MaViTri"] ?>"><?php echo $VT["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                </select>
             </div>
             <div class="form-group">
                 <label> Địa Chỉ </label>
-                <!-- <input type="file" name="images" id="images" class="form-control" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"> -->
                 <input type="text" name="DiaChi" class="form-control" placeholder="Địa Chỉ">
             </div>
             <div class="form-group">
@@ -114,8 +110,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label> Số Phòng Đặt</label>
-                <input type="number" name="SoPhongDat" class="form-control" placeholder="Nhập Số Phòng">
+                <label> Số Phòng</label>
+                <input type="number" name="SoPhong" class="form-control" placeholder="Nhập Số Phòng">
             </div>
             <div class="form-group">
                 <label> Ngày Đến </label>
@@ -140,6 +136,10 @@
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                     </div>
+            </div>
+            <div class="form-group">
+                <label> Giá </label>
+                <input type="number" name="Gia" class="form-control" placeholder="Nhập Link WebSite">
             </div>
         </div>
 

@@ -1,125 +1,126 @@
 <?php
-  include('security.php');
-  include('includes/header.php'); 
-  include('includes/navbar.php');
+include('security.php');
+include('includes/header.php');
+include('includes/navbar.php');
 ?>
 
 <div class="container-fluid">
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Nhà Hàng
-            <a href="them-nha-hang.php">
-              <button type="button" class="btn btn-primary">Thêm Nhà Hàng</button>
-            </a>
-    </h6>
-  </div>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Danh Sách Nhà Hàng
+        <a href="them-nha-hang.php">
+          <button type="button" class="btn btn-primary">Thêm Nhà Hàng</button>
+        </a>
+      </h6>
+    </div>
 
-  <div class="card-body">
-  <?php
-            if(isset($_SESSION['success']) && $_SESSION['success'] !='')
-            {
-                echo    '<div class="btn btn-success btn-icon-split">
+    <div class="card-body">
+      <?php
+      if (isset($_SESSION['success']) && $_SESSION['success'] != '') {
+        echo    '<div class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-check"></i>
                         </span>
                         <span class="text">
-                        '.$_SESSION['success'].'
+                        ' . $_SESSION['success'] . '
                         </span>
                         </div>';
-                unset($_SESSION['success']);
-            }
+        unset($_SESSION['success']);
+      }
 
-            if(isset($_SESSION['status']) && $_SESSION['status'] !='')
-            {
-                echo '<div class="btn btn-warning btn-icon-split">
+      if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
+        echo '<div class="btn btn-warning btn-icon-split">
                      <span class="icon text-white-50">
                         <i class="fas fa-exclamation-triangle"></i>
                      </span>
                      <span class="text">
-                        '.$_SESSION['status'].'
+                        ' . $_SESSION['status'] . '
                      </span>
                      </div>';
-                unset($_SESSION['status']);
-            }
-        ?>
+        unset($_SESSION['status']);
+      }
+      ?>
 
-    <div class="table-responsive">
-      <?php
-        $conn = mysqli_connect("localhost","root","","travello_db");
+      <div class="table-responsive">
+        <?php
+        $conn = mysqli_connect("localhost", "root", "", "travello_db");
         $query = "SELECT * FROM nhahang";
         $query_run = mysqli_query($conn, $query);
-        $query1="SELECT * FROM nhahang, thuonghieunh where nhahang.MaThuongHieuNH = thuonghieunh.MaThuongHieuNH" ;
-       $result1 = mysqli_query($connection, $query1);
-      ?>
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Mã NH</th>
-            <th>Thương Hiệu</th>
-            <th>Tên Nhà Hàng</th>
-            <th>Vị Trí</th>
-            <th>Địa Chỉ</th>
-            <th>Ảnh</th>
-            <th>SDT</th>
-            <th>Giới Thiệu</th>
-            <th>Giá Nhà Hàng</th>
-            <th>Ngày Đến</th>
-            <th>Ngày Đi</th>
-            <th>EDIT</th>
-            <th>DELETE</th>
-          </tr>
-        </thead>
-        <tbody>
+        $query1 = "SELECT * FROM nhahang, thuonghieunh, vitri where nhahang.MaThuongHieuNH = thuonghieunh.MaThuongHieuNH and vitri.MaViTri=nhahang.MaViTri";
+        $result1 = mysqli_query($connection, $query1);
+        ?>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Mã NH</th>
+              <th>Thương Hiệu</th>
+              <th>Tên Nhà Hàng</th>
+              <th>Vị Trí</th>
+              <th>Địa Chỉ</th>
+              <th>Ảnh</th>
+              <th>SDT</th>
+              <th>Giới Thiệu</th>
+              <th>Giá Trẻ Em</th>
+              <th>Giá Người Lớn</th>
+              <th>Mô Tả Thực Đơn</th>
+              <th>Ngày Đến</th>
+              <th>Ngày Đi</th>
+              <th>EDIT</th>
+              <th>DELETE</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <?php
-            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0)
-            {
-              while(($row = mysqli_fetch_assoc($query_run)) && $rows1 =mysqli_fetch_assoc($result1))
-              {
-          ?>
+            <?php
+            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
+              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            ?>
                 <tr>
-                <td><?php
-                  echo $rows1['TenThuongHieuNH']; 
-                  ?></td>
                   <td><?php echo $row['MaNH']; ?></td>
-                  <td> <?php echo $row['TenNhaHang']; ?>  </td>
-                  <td> <?php echo $row['ViTri']; ?>  </td>
-                  <td> <?php echo $row['DiaChi']; ?>  </td>
-                  <td> <?php echo $row['Anh']; ?>  </td>
-                  <td> <?php echo $row['SDT']; ?>  </td>
-                  <td> <?php echo $row['GioiThieuNH']; ?>  </td>
-                  <td> <?php echo $row['GiaNH']; ?>  </td>
-                  <td> <?php echo $row['NgayDen']; ?>  </td>
-                  <td> <?php echo $row['NgayDi']; ?>  </td>
+                  <td><?php
+                      echo $rows1['TenThuongHieuNH'];
+                      ?></td>
+                  <td> <?php echo $row['TenNhaHang']; ?> </td>
+                  <td><?php
+                      echo $rows1['TenViTri'];
+                      ?></td>
+                  <td> <?php echo $row['DiaChi']; ?> </td>
+                  <td> <?php echo $row['Anh']; ?> </td>
+                  <td> <?php echo $row['SDT']; ?> </td>
+                  <td> <?php echo $row['GioiThieuNH']; ?> </td>
+                  <td> <?php echo $row['GiaTreEm']; ?> </td>
+                  <td> <?php echo $row['GiaNguoiLon']; ?> </td>
+                  <td> <?php echo $row['MoTaThucDon']; ?> </td>
+                  <td> <?php echo $row['NgayDen']; ?> </td>
+                  <td> <?php echo $row['NgayDi']; ?> </td>
                   <td>
                     <form action="sua-nha-hang.php" method="post">
                       <input type="hidden" name="sua_mnh" value="<?php echo $row['MaNH']; ?>">
-                      <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button> 
+                      <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button>
                     </form>
                   </td>
                   <td>
                     <form action="code.php" method="post">
                       <input type="hidden" name="xoa_nhahang" value="<?php echo $row['MaNH']; ?>">
-                      <button type="submit" name="btn_xoa_nh" class="btn btn-danger"><i class="fas fa-ban"></i></button> 
+                      <button type="submit" name="btn_xoa_nh" class="btn btn-danger"><i class="fas fa-ban"></i></button>
                     </form>
                   </td>
                 </tr>
-          <?php
+            <?php
               }
-            }
-            else {
+            } else {
               echo "không có bản ghi nào";
             }
-          ?>
-        
-        </tbody>
-      </table>
+            ?>
 
+          </tbody>
+        </table>
+
+      </div>
     </div>
   </div>
-</div>
 
 </div>
 <!-- /.container-fluid -->
@@ -128,4 +129,3 @@
 include('includes/scripts.php');
 include('includes/footer.php');
 ?>
-
