@@ -36,6 +36,11 @@ p {
     font-size: 14px;
 }
 
+.hr {
+    height: 2px;
+    background: #eee;
+}
+
 .btn-book {
     background: #CF1011;
     color: #FFF;
@@ -678,6 +683,13 @@ p {
 
 .content-self .book {
     margin: 40px 0;
+}
+
+.self-booking .room-name {
+    font-size: 17px;
+    font-weight: bold;
+    color: #1A2B48;
+    display: inline;
 }
 
 

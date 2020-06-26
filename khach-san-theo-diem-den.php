@@ -14,10 +14,6 @@ if (isset($_GET['diem-den'])) {
     $q_diemden = "SELECT * FROM vitri WHERE MaViTri='$madiemdien'";
     $rs_diemden = mysqli_query($connection, $q_diemden);
     $rw_dd = mysqli_fetch_array($rs_diemden);
-
-    // $maloaiphong = 1;
-    // $q_loaiphong = "SELECT * FROM loaiphong WHERE MaLoaiPhong = '1'";
-    // $rw_lp = mysqli_fetch_array($q_loaiphong);
 }
 ?>
 
@@ -46,7 +42,7 @@ if (isset($_GET['diem-den'])) {
                     </div>
                     <div class="card-footer d-flex">
                         <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoPhong'] ?> Phòng</div>
-                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price(550000)//($rw_lp['Gia']) ?></span></div>
+                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['Gia']) ?></span></div>
                     </div>
                 </div>
             </div>

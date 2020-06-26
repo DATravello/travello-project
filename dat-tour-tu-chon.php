@@ -11,6 +11,8 @@ if (isset($_GET['khach-san'])) {
     $result = mysqli_query($connection, $query);
     $rw_ks = mysqli_fetch_array($result);
 
+
+
     // // Querry Điểm đến
     // $q_diemden = "SELECT * FROM diemden WHERE MaDD='$madiemdien'";
     // $rs_diemden = mysqli_query($connection, $q_diemden);
@@ -20,6 +22,12 @@ if (isset($_GET['khach-san'])) {
     $q_hdv = "SELECT * FROM huongdanvien";
     $rs_hdv = mysqli_query($connection, $q_hdv);
     //$rw_hdv = mysqli_fetch_array($rs_hdv);
+
+    //Query Loại Phòng
+    $malp = $rw_ks['MaLoaiPhong'];
+    $q_lp = "SELECT * FROM loaiphong p WHERE p.MaLoaiPhong = '$malp'";
+    $rs_lp = mysqli_query($connection, $q_lp);
+    $rw_lp = mysqli_fetch_array($rs_lp);
 }
 ?>
 
@@ -48,6 +56,14 @@ if (isset($_GET['khach-san'])) {
                 <div class="list-group-item self-sum"><i class="fas fa-dollar-sign"></i> Tổng: </div>
             </div>
         </div>
+
+        <script>
+            function tienphong() {
+                var a = $('#sophong').val();
+                var sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
+                $('#tongtienphong').text(sumlp.toLocaleString('it-IT',{style:'currency',currency:'VND'}));
+            }
+        </script>
         <div class="col-9 content-self">
             <div class="tab-content" id="nav-tabContent">
                 <!-- CHỌN KHÁCH SẠN -->
@@ -57,12 +73,14 @@ if (isset($_GET['khach-san'])) {
                         <p>Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
                         <p>SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
                         <p>Website: <?php echo $rw_ks["WebSite"]; ?></p>
+                        <?php echo $rw_ks["MoTa"]; ?>
                     </div>
-
+                    <div class="hr"></div>
                     <div class="book">
                         <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
                             <div class="col-md-6">
-                                Giá chỉ từ: 5.000.000đ
+                                <p style="margin-top:30px;font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?></p>
+                                </p>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-row">
@@ -72,8 +90,29 @@ if (isset($_GET['khach-san'])) {
                             </div>
                         </div>
 
-                        <h5>Loại Phòng</h5>
+                        <h5 style="margin: 20px 0;">Loại Phòng: <p class="room-name"><?php echo $rw_lp["TenLoaiPhong"]; ?></p>
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="admin/img/loai-phong/<?php echo $rw_ks["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
+
+                            </div>
+                            <div class="col-md-5">
+                                <?php echo $rw_ks["MoTaLoaiPhong"]; ?>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="" id="lable">Số Lượng</label>
+                                    <input type="number" class="form-control" onclick="tienphong()" name="" id="sophong" value="1">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Thành Tiền</p>
+                                <p style="color:red;font-weight:bold" id="tongtienphong"><?php echo product_price($rw_ks['Gia']) ?></p>
+                            </div>
+                        </div>
                     </div>
+                    <div class="hr"></div>
                 </div>
                 <!-- CHỌN HƯỚNG DẪN VIÊN -->
                 <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
