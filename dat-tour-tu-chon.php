@@ -28,6 +28,14 @@ if (isset($_GET['khach-san'])) {
     $q_lp = "SELECT * FROM loaiphong p WHERE p.MaLoaiPhong = '$malp'";
     $rs_lp = mysqli_query($connection, $q_lp);
     $rw_lp = mysqli_fetch_array($rs_lp);
+
+    //Query Phương Tiện
+    $q_pt = "SELECT * FROM phuongtien";
+    $rs_pt = mysqli_query($connection, $q_pt);
+
+    $q_soxe = "SELECT COUNT(*) AS total FROM phuongtien";
+    $rs_soxe = mysqli_query($connection, $q_soxe);
+    $soxe = mysqli_fetch_assoc($rs_soxe);
 }
 ?>
 
@@ -61,7 +69,10 @@ if (isset($_GET['khach-san'])) {
             function tienphong() {
                 var a = $('#sophong').val();
                 var sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
-                $('#tongtienphong').text(sumlp.toLocaleString('it-IT',{style:'currency',currency:'VND'}));
+                $('#tongtienphong').text(sumlp.toLocaleString('it-IT', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
             }
         </script>
         <div class="col-9 content-self">
@@ -140,75 +151,66 @@ if (isset($_GET['khach-san'])) {
                     </section>
                 </div>
 
+
                 <!-- CHỌN PHƯƠNG TIỆN -->
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <section class="tour-vehicle">
                         <!-- Card vehicle -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/phuong-tien/xe-4-cho.png" class="img-vehicle" alt="">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <h5 class="name-vehicle">Xe 4 chỗ tham quan nội thành Hà nội</h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
+                        <?php
+                        $i = 0;
+                        while ($rw_pt = mysqli_fetch_array($rs_pt)) {
+                        ?>
+                            <script>
+                                function tienxetheosoluong() {
+                                    var soxe = <?php echo $soxe['total'] ?>;
+                                    for (var i = 0; i < soxe; i++) {
+                                        var a = $('#soluongxe' + i).val();
+                                        var b = $('#songay' + i).val();
+                                        var dongia = $('#dongia' + i).text();
+                                        var sum = parseInt(a) * parseInt(b) * parseInt(dongia);
+                                        $('#tongtienxe' + i).text(sum.toLocaleString('it-IT', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }));
+                                    }
+
+                                }
+                            </script>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            <img src="admin/img/phuong-tien/<?php echo $rw_pt["HinhAnh"] ?>" class="img-vehicle" alt="">
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        Đơn giá: <p style="color:red;font-weight: bold">5.000.000đ</p>
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            <h5 class="name-vehicle"><?php echo $rw_pt["PhuongTien"] ?></h5>
+                                        </div>
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            <div class="form-group">
+                                                <label for="label">Số Lượng Xe</label>
+                                                <input type="number" class="form-control" onclick="tienxetheosoluong()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            <div class="form-group">
+                                                <label for="label">Số Ngày</label>
+                                                <input type="number" class="form-control" onclick="tienxetheosoluong()" name="songay" id="songay<?php echo $i ?>" value="1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p> 
+                                            <p id="dongia<?php echo $i ?>" style="visibility: hidden;"><?php echo $rw_pt["Gia"]?></p>
+                                        </div>
+                                        <div class="col-md-2" style="padding-right:0;">
+                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienxe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Card vehicle -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/phuong-tien/xe-4-cho.png" class="img-vehicle" alt="">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <h5 class="name-vehicle">Xe 4 chỗ tham quan nội thành Hà nội</h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        Đơn giá: <p style="color:red;font-weight: bold">5.000.000đ</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card vehicle -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/phuong-tien/xe-4-cho.png" class="img-vehicle" alt="">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <h5 class="name-vehicle">Xe 4 chỗ tham quan nội thành Hà nội</h5>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        Đơn giá: <p style="color:red;font-weight: bold">5.000.000đ</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <?php
+                            $i++;
+                        } ?>
                     </section>
                 </div>
 
