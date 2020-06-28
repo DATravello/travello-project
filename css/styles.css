@@ -678,7 +678,13 @@ p {
 }
 
 .content-self .self-hotel-des p {
-    font-size: 17px;
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.content-self .self-hotel-des p i {
+    margin-right: 5px;
+    font-size: 15px;
 }
 
 .content-self .book {

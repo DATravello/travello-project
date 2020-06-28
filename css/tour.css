@@ -165,14 +165,12 @@
 
 .tour-book .img-travello img {
     width: 100%;
-    height: 100%;
 }
 
 .tour-book .subtour-info {
     padding: 20px;
     background: #f1f1f1;
     box-shadow: 2px;
-    margin-bottom: 20px;
 }
 
 .tour-book .subtour-info p {

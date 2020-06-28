@@ -35,7 +35,7 @@ if (isset($_GET['diem-den'])) {
                     </div>
                     <div class="card-body">
                         <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rw_dd['TenViTri'] ?></p>
-                        <h5 class="card-title"><a href="dat-tour-tu-chon.php?khach-san=<?php echo $rows['MaKS']; ?>"><?php echo $rows['TenKS'] ?></a></h5>
+                        <h5 class="card-title"><a href="chi-tiet-tour-tu-chon.php?tour=<?php echo $rows['MaKS']; ?>"><?php echo $rows['TenKS'] ?></a></h5>
                         <p class="card-text">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
                         </p>

@@ -2,8 +2,8 @@
 include('include/header.php');
 
 
-if (isset($_GET['khach-san'])) {
-    $maks = $_GET['khach-san'];
+if (isset($_GET['tour'])) {
+    $maks = $_GET['tour'];
     require_once('database/db_config.php');
 
     // Querry Khách sạn
@@ -57,7 +57,8 @@ if (isset($_GET['khach-san'])) {
     <div class="row">
         <div class="col-3 nav-self">
             <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Khách Sạn</a>
+                <a class="list-group-item list-group-item-action active" id="list-lich-trinh-list" data-toggle="list" href="#list-lich-trinh" role="tab" aria-controls="lich-trinh">Lịch Trình Tour</a>
+                <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Khách Sạn</a>
                 <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
                 <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
                 <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
@@ -77,20 +78,25 @@ if (isset($_GET['khach-san'])) {
         </script>
         <div class="col-9 content-self">
             <div class="tab-content" id="nav-tabContent">
+                <!-- LỊCH TRÌNH TOUR -->
+                <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
+
+                </div>
                 <!-- CHỌN KHÁCH SẠN -->
-                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                     <div class="self-hotel-img"><img src="admin/img/khach-san/<?php echo $rw_ks["Anh"]; ?>" width="100%"></div>
                     <div class="self-hotel-des">
-                        <p>Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
-                        <p>SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
-                        <p>Website: <?php echo $rw_ks["WebSite"]; ?></p>
-                        <?php echo $rw_ks["MoTa"]; ?>
+                        <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
+                        <p><i class="fas fa-mobile"></i> SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
+                        <p><i class="fas fa-globe-americas"></i> Website: <?php echo $rw_ks["WebSite"]; ?></p>
+                        <p><?php echo $rw_ks["MoTa"]; ?></p>
                     </div>
                     <div class="hr"></div>
                     <div class="book">
                         <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
                             <div class="col-md-6">
-                                <p style="margin-top:30px;font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?></p>
+                                <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_ks["SoPhong"]; ?></span> phòng</p>
+                                <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?></p>
                                 </p>
                             </div>
                             <div class="col-md-6">
@@ -198,8 +204,8 @@ if (isset($_GET['khach-san'])) {
                                             </div>
                                         </div>
                                         <div class="col-md-2" style="padding-right:0;">
-                                            Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p> 
-                                            <p id="dongia<?php echo $i ?>" style="visibility: hidden;"><?php echo $rw_pt["Gia"]?></p>
+                                            Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
+                                            <p id="dongia<?php echo $i ?>" style="visibility: hidden;"><?php echo $rw_pt["Gia"] ?></p>
                                         </div>
                                         <div class="col-md-2" style="padding-right:0;">
                                             Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienxe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>

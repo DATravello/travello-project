@@ -28,6 +28,12 @@ if (isset($_GET['tour'])) {
     $hdv = "SELECT * FROM tourdulich INNER JOIN huongdanvien ON tourdulich.MaHDV = huongdanvien.MaHDV where MaTour='$matour'";
     $result_hdv = mysqli_query($connection, $hdv);
     $rows_hdv = @mysqli_fetch_array($result_hdv);
+
+    //Vị trí
+    $vitri = $rows['MaViTri'];
+    $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
+    $rs_vitri = mysqli_query($connection, $q_vitri);
+    $rw_vitri = mysqli_fetch_array($rs_vitri);
 }
 ?>
 <!-- NỘI DUNG -->
@@ -57,7 +63,7 @@ if (isset($_GET['tour'])) {
                 <h5 class="w-title">Thông tin tour</h5>
                 <div class="w-price">
                     <h5>Giá: <h5>
-                            <p><?php echo $rows['GiaTien']; ?> VNĐ <p>
+                            <p><?php echo product_price($rows['GiaTien']); ?> <p>
                 </div>
                 <div class="w-type">
                     <h5>Loại tour: </h5>
@@ -69,7 +75,7 @@ if (isset($_GET['tour'])) {
                 </div>
                 <div class="w-place">
                     <h5>Nơi đến: </h5>
-                    <p><?php echo $rows['NoiDen']; ?></p>
+                    <p><?php echo $rw_vitri['TenViTri'] ?></p>
                 </div>
                 <div class="w-catch">
                     <h5>Nơi đi: </h5>
