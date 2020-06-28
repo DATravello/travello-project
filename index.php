@@ -134,7 +134,15 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         <div class="like"><i class="fas fa-heart"></i></div>
                     </div>
                     <div class="card-body">
-                        <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['NoiDen'] ?></p>
+                        <p class="card-location"><i class="fas fa-map-marker-alt"></i>
+                            <?php
+                            $vitri = $rows['MaViTri'];
+                            $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
+                            $rs_vitri = mysqli_query($connection, $q_vitri);
+                            $rw_vitri = mysqli_fetch_array($rs_vitri);
+                            ?>
+                            <?php echo $rw_vitri['TenViTri'] 
+                            ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
@@ -180,7 +188,16 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         <div class="like"><i class="fas fa-heart"></i></div>
                     </div>
                     <div class="card-body">
-                        <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['NoiDen'] ?></p>
+                        <p class="card-location"><i class="fas fa-map-marker-alt"></i>
+                            <?php
+                            $vitri = $rows['MaViTri'];
+                            $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
+                            $rs_vitri = mysqli_query($connection, $q_vitri);
+                            $rw_vitri = mysqli_fetch_array($rs_vitri);
+                            ?>
+                            <?php echo $rw_vitri['TenViTri'] 
+                            ?>
+                        </p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>

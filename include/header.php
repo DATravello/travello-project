@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include('database/db_config.php');
 include('function.php');
 ?>
@@ -36,10 +35,6 @@ include('function.php');
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
-                        <!-- <ul>
-                            <li>Du Lịch Tự Chọn</li>
-                            <li>Du Lịch</li>
-                        </ul> -->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="khach-san.php">Khách Sạn</a>
