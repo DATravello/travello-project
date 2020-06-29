@@ -17,10 +17,10 @@ $result = mysqli_query($connection, $query);
         while ($rows = mysqli_fetch_array($result)) {
         ?>
             <div class="col-md-3">
-                <a href="tour-tu-chon.php?diem-den=<?php echo $rows["MaViTri"]; ?>">
+                <a href="tour-tu-chon.php?diem-den=<?php echo $rows["MaViTri"]?>">
                     <div class="card">
-                        <img class="card-img-top" src="admin/img/diem-den/<?php echo $rows["Anh"]; ?>" alt="Card image cap">
-                        <h5 class="title"><?php echo $rows["TenViTri"]; ?></h5>
+                        <img class="card-img-top" src="admin/img/diem-den/<?php echo $rows["Anh"];?>" alt="Card image cap">
+                        <h5 class="title"><?php echo $rows["TenViTri"];?></h5>
                     </div>
                 </a>
 
