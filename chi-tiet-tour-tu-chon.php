@@ -43,8 +43,13 @@ if (isset($_GET['tour'])) {
     $soxe = mysqli_fetch_assoc($rs_soxe);
 
     //Query Nhà Hàng
-    $q_nh = "SELECT * FROM nhahang";
+
+    $q_nh = "SELECT * FROM nhahang WHERE MaViTri='$mavt'";
     $rs_nh = mysqli_query($connection, $q_nh);
+
+    $q_sonh = "SELECT COUNT(*) AS total FROM nhahang";
+    $rs_sonh = mysqli_query($connection, $q_sonh);
+    $sonh = mysqli_fetch_assoc($rs_sonh);
 }
 ?>
 
@@ -70,18 +75,35 @@ if (isset($_GET['tour'])) {
                 <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
                 <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
                 <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
-                <div class="list-group-item self-sum"><i class="fas fa-dollar-sign"></i> Tổng: </div>
+                <div class="list-group-item self-sum" style="background:#ffcd3c;color:#fff"><i class="fas fa-dollar-sign"></i> Tổng: <p id="tongTienTour" style="color:red;display:inline;font-weight:bold"><?php echo product_price($rw_tour["ChiPhiTour"]); ?></p>
+                </div>
+                <script>
+                    function tongTien() {
+                        var tienKS = parseInt($("#tongtienks").val());
+                        var tienXe = parseInt($('#tongtienxe').val());
+                        var tienNH = parseInt($('#tongtiennh').val());
+                        var tongTienTour = <?php echo $rw_tour["ChiPhiTour"] ?> + tienKS + tienXe;
+                        $("#tongTienTour").text(tongTienTour.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }));
+                    }
+                </script>
             </div>
         </div>
 
         <script>
+            $('#tongtienks').val(0);
+
             function tienphong() {
                 var a = $('#sophong').val();
-                var sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
+                var sumlp = 0;
+                sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
                 $('#tongtienphong').text(sumlp.toLocaleString('it-IT', {
                     style: 'currency',
                     currency: 'VND'
                 }));
+                $('#tongtienks').val(sumlp);
             }
         </script>
         <div class="col-9 content-self">
@@ -90,6 +112,7 @@ if (isset($_GET['tour'])) {
                 <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
                     <div class="self-tour-img"><img src="admin/img/tour-du-lich/<?php echo $rw_tour['Anh'] ?>" alt="" width="100%"></div>
                     <div class="self-tour-des">
+                        <h3>Lịch Trình Tour (Dự Kiến)</h3>
                         <p><?php echo $rw_tour["HanhTrinh"] ?></p>
                     </div>
                 </div>
@@ -131,12 +154,13 @@ if (isset($_GET['tour'])) {
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="" id="lable">Số Lượng</label>
-                                    <input type="number" class="form-control" onclick="tienphong()" name="" id="sophong" value="1">
+                                    <input type="number" class="form-control" onclick="tienphong(),tongTien()" name="" id="sophong">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <p>Thành Tiền</p>
-                                <p style="color:red;font-weight:bold" id="tongtienphong"><?php echo product_price($rw_ks['Gia']) ?></p>
+                                <p style="color:red;font-weight:bold" id="tongtienphong"></p>
+                                <input type="number" id="tongtienks" style="visibility:hidden;height:0;margin:0" value="0">
                             </div>
                         </div>
                     </div>
@@ -178,22 +202,28 @@ if (isset($_GET['tour'])) {
                             <script>
                                 function tienxetheosoluong() {
                                     var soxe = <?php echo $soxe['total'] ?>;
+                                    var sumXe = 0;
+                                    var sum = 0;
+
                                     for (var i = 0; i < soxe; i++) {
                                         var a = $('#soluongxe' + i).val();
                                         var b = $('#songay' + i).val();
                                         var dongia = $('#dongia' + i).text();
-                                        var sum = parseInt(a) * parseInt(b) * parseInt(dongia);
-                                        $('#tongtienxe' + i).text(sum.toLocaleString('it-IT', {
+                                        sum = parseInt(a) * parseInt(b) * parseInt(dongia);
+                                        $('#tongtienXe' + i).text(sum.toLocaleString('it-IT', {
                                             style: 'currency',
                                             currency: 'VND'
                                         }));
+                                        $("#tienXe" + i).val(sum);
+                                        sumXe = sumXe + parseInt($('#tienXe' + i).val());
+                                        $('#tongtienxe').val(sumXe);
                                     }
-
                                 }
                             </script>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
+
                                         <div class="col-md-2" style="padding-right:0;">
                                             <img src="admin/img/phuong-tien/<?php echo $rw_pt["HinhAnh"] ?>" class="img-vehicle" alt="">
                                         </div>
@@ -203,21 +233,23 @@ if (isset($_GET['tour'])) {
                                         <div class="col-md-2" style="padding-right:0;">
                                             <div class="form-group">
                                                 <label for="label">Số Lượng Xe</label>
-                                                <input type="number" class="form-control" onclick="tienxetheosoluong()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="1">
+                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="0">
                                             </div>
                                         </div>
                                         <div class="col-md-2" style="padding-right:0;">
                                             <div class="form-group">
                                                 <label for="label">Số Ngày</label>
-                                                <input type="number" class="form-control" onclick="tienxetheosoluong()" name="songay" id="songay<?php echo $i ?>" value="1">
+                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>" value="0">
                                             </div>
                                         </div>
                                         <div class="col-md-2" style="padding-right:0;">
                                             Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
-                                            <p id="dongia<?php echo $i ?>" style="visibility: hidden;"><?php echo $rw_pt["Gia"] ?></p>
+                                            <p id="dongia<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
                                         </div>
                                         <div class="col-md-2" style="padding-right:0;">
-                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienxe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
+                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
+                                            <p id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
+                                            <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
                                         </div>
                                     </div>
                                 </div>
@@ -234,16 +266,37 @@ if (isset($_GET['tour'])) {
                     <section class="tour-restaurant">
 
                         <?php
+                        $i = 0;
                         while ($rw_nh = mysqli_fetch_array($rs_nh)) {
                         ?>
+
+                            <script>
+                                function TienNhaHang() {
+                                    var soNH = <?php echo $sonh['total']; ?>;
+                                    var sumNH = 0;
+                                    for (var i = 0; i < soNH; i++) {
+                                        var soNL = $("#songuoilon" + i).val();
+                                        var soTE = $("#sotreem" + i).val();
+                                        var giaNL = $('#gianguoilon' + i).text();
+                                        var giaTE = $('#giatreem' + i).text();
+                                        sumNH = (parseInt(soNL) * parseInt(giaNL)) + (parseInt(soTE) * parseInt(giaTE));
+                                        $("#sumtiennhahang" + i).text(sumNH.toLocaleString('it-IT', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }));
+
+                                    }
+                                }
+                            </script>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh'];?>" class="img-restaurant" alt="">
+                                        <div class="col-md-3" style="padding: 0 10px 0 10px;">
+                                            <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh']; ?>" class="img-restaurant" alt="">
+
                                         </div>
-                                        <div class="col-md-4">
-                                            <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang'] ?></h5>
+                                        <div class="col-md-3" style="padding: 0 10px 0 0;">
+                                            <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang']; ?></h5>
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                                 Xem Thực Đơn
@@ -259,32 +312,38 @@ if (isset($_GET['tour'])) {
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h5 style="font-weight:600">Thực Đơn Người Lớn</h5>
-                                                            <p><?php echo $rw_nh['MoTaThucDon'];?></p>
+                                                            <p><?php echo $rw_nh['MoTaThucDon']; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
                                             <div class="form-group">
-                                                <label for="lbsoluong4cho">Số Lượng Người Lớn</label>
-                                                <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
+                                                <label for="label">Số Lượng Người Lớn</label>
+                                                <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="songuoilon<?php echo $i ?>" id="songuoilon<?php echo $i ?>">
                                             </div>
                                             <div class="form-group">
-                                                <label for="lbsoluong4cho">Số Lượng Trẻ Em</label>
-                                                <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
+                                                <label for="label">Số Lượng Trẻ Em</label>
+                                                <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="sotreem<?php echo $i ?>" id="sotreem<?php echo $i ?>">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
                                             Đơn giá:
-                                            <p style="color:red;font-weight: bold"><?php echo product_price($rw_nh['GiaNguoiLon']);?>/Người Lớn</p>
-                                            <p style="color:red;font-weight: bold"><?php echo product_price($rw_nh['GiaTreEm']);?>/Trẻ Em</p>
+                                            <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaNguoiLon']); ?>/Người Lớn</p>
+                                            <p id="gianguoilon<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
+                                            <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaTreEm']); ?>/Trẻ Em</p>
+                                            <p id="giatreem<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
+                                        </div>
+                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                            Tổng tiền:
+                                            <p id="sumtiennhahang<?php echo $i ?>" style="color:red;font-weight:bold;font-size:13px"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         <?php
+                            $i++;
                         } ?>
                     </section>
                 </div>

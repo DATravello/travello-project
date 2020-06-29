@@ -41,6 +41,12 @@ p {
     background: #eee;
 }
 
+h3 {
+    font-size: 17;
+    color: #1A2B48;
+    font-weight: 600;
+}
+
 .btn-book {
     background: #CF1011;
     color: #FFF;
@@ -772,6 +778,7 @@ p {
     width: 100%;
     height: 100%;
     border-radius: 5px;
+    object-fit: cover;
 }
 
 
