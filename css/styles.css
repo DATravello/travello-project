@@ -672,6 +672,15 @@ p {
     color: #fff;
 }
 
+.self-booking p {
+    font-size: 15px;
+}
+
+.self-booking .content-self .self-tour-des {
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
 .self-booking .content-self .self-hotel-des {
     margin: 20px 0;
     padding: 0 20px;

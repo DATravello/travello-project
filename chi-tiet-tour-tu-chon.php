@@ -3,20 +3,25 @@ include('include/header.php');
 
 
 if (isset($_GET['tour'])) {
-    $maks = $_GET['tour'];
+    $matour = $_GET['tour'];
     require_once('database/db_config.php');
 
+    //Query Tour
+    $q_tour = "SELECT * FROM tourdulich WHERE MaTour='$matour'";
+    $rs_tour = mysqli_query($connection, $q_tour);
+    $rw_tour = mysqli_fetch_array($rs_tour);
+
     // Querry Khách sạn
-    $query = "SELECT * FROM khachsan WHERE MaKS='$maks'";
-    $result = mysqli_query($connection, $query);
-    $rw_ks = mysqli_fetch_array($result);
+    $mks = $rw_tour['MaKS'];
+    $q_ks = "SELECT * FROM khachsan WHERE MaKS='$mks'";
+    $rs_ks = mysqli_query($connection, $q_ks);
+    $rw_ks = mysqli_fetch_array($rs_ks);
 
-
-
-    // // Querry Điểm đến
-    // $q_diemden = "SELECT * FROM diemden WHERE MaDD='$madiemdien'";
-    // $rs_diemden = mysqli_query($connection, $q_diemden);
-    // $rw_dd = mysqli_fetch_array($rs_diemden);
+    // Querry Điểm đến
+    $mavt = $rw_tour['MaViTri'];
+    $q_diemden = "SELECT * FROM vitri WHERE MaViTri='$mavt'";
+    $rs_diemden = mysqli_query($connection, $q_diemden);
+    $rw_dd = mysqli_fetch_array($rs_diemden);
 
     //Query Hướng Dẫn Viên
     $q_hdv = "SELECT * FROM huongdanvien";
@@ -36,6 +41,10 @@ if (isset($_GET['tour'])) {
     $q_soxe = "SELECT COUNT(*) AS total FROM phuongtien";
     $rs_soxe = mysqli_query($connection, $q_soxe);
     $soxe = mysqli_fetch_assoc($rs_soxe);
+
+    //Query Nhà Hàng
+    $q_nh = "SELECT * FROM nhahang";
+    $rs_nh = mysqli_query($connection, $q_nh);
 }
 ?>
 
@@ -43,7 +52,7 @@ if (isset($_GET['tour'])) {
 
 <section class="container self-booking">
 
-    <h5 class="title-booking"><?php echo $rw_ks["TenKS"]; ?></h5>
+    <h5 class="title-booking"><?php echo $rw_tour["TenTour"]; ?> - <?php echo $rw_ks["TenKS"]; ?></h5>
     <div class="self-star">
         <?php
         $s = $rw_ks["HangSao"];
@@ -52,8 +61,7 @@ if (isset($_GET['tour'])) {
         }
         ?>
     </div>
-    <div class="self-location"><i class="fas fa-map-marker-alt"></i> Sài Gòn<?php //echo $rw_ks["MaDD"] 
-                                                                            ?></div>
+    <div class="self-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rw_dd["TenViTri"] ?></div>
     <div class="row">
         <div class="col-3 nav-self">
             <div class="list-group" id="list-tab" role="tablist">
@@ -80,7 +88,10 @@ if (isset($_GET['tour'])) {
             <div class="tab-content" id="nav-tabContent">
                 <!-- LỊCH TRÌNH TOUR -->
                 <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
-
+                    <div class="self-tour-img"><img src="admin/img/tour-du-lich/<?php echo $rw_tour['Anh'] ?>" alt="" width="100%"></div>
+                    <div class="self-tour-des">
+                        <p><?php echo $rw_tour["HanhTrinh"] ?></p>
+                    </div>
                 </div>
                 <!-- CHỌN KHÁCH SẠN -->
                 <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
@@ -156,8 +167,6 @@ if (isset($_GET['tour'])) {
                         </div>
                     </section>
                 </div>
-
-
                 <!-- CHỌN PHƯƠNG TIỆN -->
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <section class="tour-vehicle">
@@ -219,136 +228,64 @@ if (isset($_GET['tour'])) {
                         } ?>
                     </section>
                 </div>
-
                 <!-- CHỌN NHÀ HÀNG -->
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
                     <!-- Card Nhà Hàng -->
                     <section class="tour-restaurant">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/nha-hang/nha-hang-2.jpg" class="img-restaurant" alt="">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5 class="name-vehicle">Nhà Hàng Khách Sạn Green Deluxe</h5>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                            Xem Thực Đơn
-                                        </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Thực Đơn Nhà Hàng</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h5 style="font-weight:600">Thực Đơn Người Lớn</h5>
-                                                        <p>1/ Gỏi gà trộn bắp cải<br>
-                                                            2/ Bò xào cải thìa<br>
-                                                            3/ Tôm rim thịt<br>
-                                                            4/ Canh cải thit bằm<br>
-                                                            5/ Tráng miệng trái cây<br>
-                                                            6/ Cơm trắng<br>
-                                                            7/ Miễn phí trà đá.<br>
-                                                        </p>
-                                                        <h5 style="font-weight:600">Thực Đơn Trẻ Em</h5>
-                                                        <p>
-                                                            1/ Cơm trắng<br>
-                                                            2/ Miễn phí trà đá.
-                                                        </p>
+                        <?php
+                        while ($rw_nh = mysqli_fetch_array($rs_nh)) {
+                        ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh'];?>" class="img-restaurant" alt="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang'] ?></h5>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                Xem Thực Đơn
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Thực Đơn Nhà Hàng</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h5 style="font-weight:600">Thực Đơn Người Lớn</h5>
+                                                            <p><?php echo $rw_nh['MoTaThucDon'];?></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng Người Lớn</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng Trẻ Em</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Đơn giá:
-                                        <p style="color:red;font-weight: bold">300.000đ/Người Lớn</p>
-                                        <p style="color:red;font-weight: bold">100.000đ/Trẻ Em</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/nha-hang/green-deluxe.jpg" class="img-restaurant" alt="">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5 class="name-vehicle">Nhà Hàng Khách Sạn Green Deluxe</h5>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                            Xem Thực Đơn
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Thực Đơn Nhà Hàng</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h5 style="font-weight:600">Thực Đơn Người Lớn</h5>
-                                                        <p>1/ Gỏi gà trộn bắp cải<br>
-                                                            2/ Bò xào cải thìa<br>
-                                                            3/ Tôm rim thịt<br>
-                                                            4/ Canh cải thit bằm<br>
-                                                            5/ Tráng miệng trái cây<br>
-                                                            6/ Cơm trắng<br>
-                                                            7/ Miễn phí trà đá.<br>
-                                                        </p>
-                                                        <h5 style="font-weight:600">Thực Đơn Trẻ Em</h5>
-                                                        <p>
-                                                            1/ Cơm trắng<br>
-                                                            2/ Miễn phí trà đá.
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="lbsoluong4cho">Số Lượng Người Lớn</label>
+                                                <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lbsoluong4cho">Số Lượng Trẻ Em</label>
+                                                <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng Người Lớn</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
+                                        <div class="col-md-3">
+                                            Đơn giá:
+                                            <p style="color:red;font-weight: bold"><?php echo product_price($rw_nh['GiaNguoiLon']);?>/Người Lớn</p>
+                                            <p style="color:red;font-weight: bold"><?php echo product_price($rw_nh['GiaTreEm']);?>/Trẻ Em</p>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="lbsoluong4cho">Số Lượng Trẻ Em</label>
-                                            <input type="number" class="form-control" name="soluong4cho" id="soluong4cho">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        Đơn giá:
-                                        <p style="color:red;font-weight: bold">300.000đ/Người Lớn</p>
-                                        <p style="color:red;font-weight: bold">100.000đ/Trẻ Em</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
+                        <?php
+                        } ?>
                     </section>
                 </div>
 
