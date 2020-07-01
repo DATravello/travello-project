@@ -21,9 +21,6 @@
             $matt = $_POST['sua_matt'];
             $query = "SELECT * FROM tintuc WHERE MaTinTuc ='$matt'";
             $query_run = mysqli_query($connection, $query);
-            // $query1="SELECT * FROM theloai INNER JOIN tintuc ON theloai.MaTheLoai = tintuc.MaTheLoai";
-            // $result1 = mysqli_query($connection, $query1);
-            // $rows1=mysqli_fetch_array($result1);
             foreach($query_run as $row)
             {
     ?>
@@ -47,16 +44,18 @@
                     </select>
                     </div>
                     <div class="form-group">
+                    
                         <label> Tên Nhân Viên</label>
-                        <select class="form-control"  name="sua_mannv">
                         <?php
-                        $q_theloai = "SELECT * FROM nhanvien";
-                        $rs_theloai = mysqli_query($connection, $q_theloai);
-                        while ($TL = @mysqli_fetch_array($rs_theloai)) {
+                            $manv = $row["MaNV"];
+                            $nv = "SELECT * FROM nhanvien WHERE MaNV = $manv";
+                            $rs_n = mysqli_query($connection, $nv);
+                            $rw_nv = mysqli_fetch_array($rs_n);
                         ?>
-                            <option value="<?php echo $TL["MaNV"] ?>"><?php echo $TL["TenNV"] ?></option>
+                        <select class="form-control" name="sua_mannv"  disabled>
+                            <option value="<?php echo $rw_nv["MaNV"] ?>" selected><?php echo $rw_nv["TenNV"] ?></option>
                         <?php
-                        }
+                        //}
                         ?>
                     </select>
                     </div>
@@ -66,11 +65,11 @@
                     </div>
                     <div class="form-group">
                         <label> Mô Tả </label>
-                        <input type="text" name="sua_mota"  value="<?php echo $row['MoTa'] ?>" class="form-control" placeholder="Enter MoTa">
+                        <textarea name="sua_mota" rows="3" class="form-control"><?php echo $row['MoTa'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Chi Tiết </label>
-                        <input type="text" name="sua_chitiet" value="<?php echo $row['ChiTiet'] ?>" class="form-control" placeholder="Enter ChiTiet">
+                        <textarea name="sua_chitiet" rows="10" class="form-control"><?php echo $row['ChiTiet'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Hình Ảnh </label>
@@ -79,14 +78,10 @@
                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <input type="file" name="HinhAnh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                      </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Ngày </label>
-                        <input type="date" name="sua_ngay" value="<?php echo $row['Ngay'] ?>" class="form-control" placeholder="Enter Ngay">
                     </div>
                     <div class="form-group">
                         <label>Tác Giả </label>

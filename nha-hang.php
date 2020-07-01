@@ -1,38 +1,62 @@
 <?php include('include/header.php'); ?>
 
 <!-- NỘI DUNG -->
+<section class="nha-hang">
+	<?php
 
-	<section class="nha-hang">
+	$conn = mysqli_connect("localhost", "root", "", "travello_db");
+	$query = "SELECT * FROM nhahang";
+	$query_run = mysqli_query($conn, $query);
+	$query1 = "SELECT * FROM thuonghieunh , nhahang  WHERE thuonghieunh.MaThuongHieuNH = nhahang.MaThuongHieuNH and thuonghieunh.MaThuongHieuNH=".$_GET['thuonghieunh'];
+	$query_run1 = mysqli_query($conn, $query1);
+	$temp = " ";
+
+
+	?>
+	
+	<?php
+	while ($row = mysqli_fetch_assoc($query_run1)) {
+
+	?>
+
 		<?php
-		$query = "SELECT * from nhahang";
-		$result = mysqli_query($connection, $query);
-		$rows = mysqli_fetch_array($result);
+		if ($temp != $row['MaThuongHieuNH']) {
+			echo '</div></div><h3 style="text-align:center; margin: 20px">' . $row['TenThuongHieuNH'] . '</h3>
+			
+				<div class="row">';
+			echo '</div></div><h5 style="text-align:center; margin: 10px;">' . $row['MoTa'] . '</h5>
+			<div class="card-deck">
+				<div class="row">';
+			$temp = $row['MaThuongHieuNH'];
+		}
 		?>
-		<!-- <h5><?php echo $rows['TenNhaHang'] ?></h5> -->
-		<div class="card-deck">
-		<div class="row">
 
-			<?php
-			while ($rows = @mysqli_fetch_array($result)) {
-			?>
-				<div class="card col-6">
-					<img class="card-img-top" src="admin/img/nha-hang/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-					<div class="dark-overlay">
-						<div class="card-body">
-							<h5 class="card-title"><?php echo $rows['TenNhaHang'] ?></h5>
-							<p class="card-text">Giá: <?php echo $rows['GiaNH'] ?> VNĐ</p>
-							<a href="chi-tiet-nha-hang.php?nhahang=<?php echo $rows['MaNH']; ?>" class="btn btn-primary">Đặt Ngay</a>
-						</div>
-					</div>
+		<?php
+			//Query Vị Trí
+			$vt = $row['MaViTri'];
+			$q_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
+			$rs_vt = mysqli_query($connection, $q_vt);
+			$rw_vt = mysqli_fetch_array($rs_vt);
+		?>
+
+		<div class="card col-6">
+			<img class="card-img-top" src="admin/img/nha-hang/<?php echo $row['Anh'] ?>?>" alt="Card image cap">
+			<div class="dark-overlay">
+				<div class="card-body">
+					<h5 class="card-title"><?php echo $row['TenNhaHang'] ?></h5>
+					<h8 class="card-title"><?php echo $rw_vt['TenViTri'] ?></h8> <br />
+					<a href="chi-tiet-nha-hang.php?nhahang=<?php echo $row['MaNH']; ?>" class="btn btn-primary">Đặt Ngay</a>
 				</div>
-			<?php
-			}
-			?>
+			</div>
 		</div>
-		</div>
-		<?php
-		?>
-	</section>
 
+	<?php
+	}
+	echo '	</div>
+	</div>
+	</div>
+	</div>'
+
+	?>
+</section>
 <?php include('include/footer.php'); ?>
-

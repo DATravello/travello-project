@@ -112,8 +112,23 @@ if (isset($_GET['tour'])) {
                 <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
                     <div class="self-tour-img"><img src="admin/img/tour-du-lich/<?php echo $rw_tour['Anh'] ?>" alt="" width="100%"></div>
                     <div class="self-tour-des">
-                        <h3>Lịch Trình Tour (Dự Kiến)</h3>
-                        <p><?php echo $rw_tour["HanhTrinh"] ?></p>
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a style="width:100%" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <h3>Lịch Trình Tour (Dự Kiến)</h3>
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p><?php echo $rw_tour["HanhTrinh"] ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- CHỌN KHÁCH SẠN -->

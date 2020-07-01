@@ -46,7 +46,20 @@
 
         <div class="modal-body">
 
-
+            <div class="form-group">
+                <label>Tên Thương Hiệu</label>
+                <select class="form-control"  name="ThuongHieu">
+                        <?php
+                        $q_thuonghieu = "SELECT * FROM thuonghieuks";
+                        $rs_thuonghieu = mysqli_query($connection, $q_thuonghieu);
+                        while ($TL = @mysqli_fetch_array($rs_thuonghieu)) {
+                        ?>
+                            <option value="<?php echo $TL["MaThuongHieuKS"] ?>"><?php echo $TL["TenThuongHieuKS"] ?></option>
+                        <?php
+                        }
+                        ?>
+                </select>
+            </div>
             <div class="form-group">
                 <label> Tên Khách Sạn </label>
                 <input type="text" name="TenKS" class="form-control" placeholder="Nhập Tên Khách Sạn">
@@ -56,46 +69,57 @@
                 <input type="text" name="HangSao" class="form-control" placeholder="Nhập Hạng Sao">
             </div>
             <div class="form-group">
+                <label>Vị Trí</label>
+                <select class="form-control" name="ViTri">
+                        <?php
+                        $q_vitri = "SELECT * FROM vitri";
+                        $rs_vitri = mysqli_query($connection, $q_vitri);
+                        while ($VT = @mysqli_fetch_array($rs_vitri)) {
+                        ?>
+                            <option value="<?php echo $VT["MaViTri"] ?>"><?php echo $VT["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                </select>
+            </div>
+            <div class="form-group">
                 <label> Địa Chỉ </label>
-                <!-- <input type="file" name="images" id="images" class="form-control" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"> -->
                 <input type="text" name="DiaChi" class="form-control" placeholder="Địa Chỉ">
             </div>
             <div class="form-group">
                 <label> Điện Thoại </label>
                 <input type="number" name="DienThoai" class="form-control" placeholder="Nhập SDT">
             </div>
-            <!-- <?php
-                    $q_lks = "SELECT * FROM loaiks";
-                    $r_lks = mysqli_query($connection, $q_lks);
-            ?>
             <div class="form-group">
-                    <label> Loại Phòng </label>
-                    <select name="MaLoaiKS" class="form-control">
-                    <?php
-                        while($LKS=mysqli_fetch_array($r_lks))
-                        {
-                    ?>
-                        <option value="<?php echo $LSK["MaLoaiKS"]?>"><?php echo $LKS["TenLoaiPhong"]?></option>
-                    <?php
+                <label>Loại Phòng</label>
+                <select class="form-control"  name="LoaiPhong">
+                        <?php
+                        $q_loaiphong = "SELECT * FROM loaiphong";
+                        $rs_loaiphong = mysqli_query($connection, $q_loaiphong);
+                        while ($TL = @mysqli_fetch_array($rs_loaiphong)) {
+                        ?>
+                            <option value="<?php echo $TL["MaLoaiPhong"] ?>"><?php echo $TL["TenLoaiPhong"] ?></option>
+                        <?php
                         }
-                    ?>
-                    </select>
-            </div> -->
+                        ?>
+                </select>
+            </div>
             <div class="form-group">
-                <label> Số Phòng </label>
+                <label> Số Phòng</label>
                 <input type="number" name="SoPhong" class="form-control" placeholder="Nhập Số Phòng">
-            </div>
-            <div class="form-group">
-                <label> Ngày Đến </label>
-                <input type="date" name="NgayDen" class="form-control" placeholder="Nhập Ngày Đến">
-            </div>
-            <div class="form-group">
-                <label> Ngày Đi </label>
-                <input type="date" name="NgayDi" class="form-control" placeholder="Nhập Ngày Đi">
             </div>
             <div class="form-group">
                 <label> WebSite </label>
                 <input type="text" name="WebSite" class="form-control" placeholder="Nhập Link WebSite">
+            </div>
+            <div class="form-group">
+                <label> Mô Tả </label>
+                <textarea rows="5" name="MoTa" class="form-control" placeholder="Nhập Mô Tả Khách Sạn"></textarea>
+            </div>
+            <div class="form-group">
+                <label> Mô Tả Loại Phòng </label>
+                <textarea rows="5" name="MoTaLoaiPhong" class="form-control" placeholder="Nhập Mô Tả Loại Phòng"></textarea>
             </div>
             <div class="form-group">
                 <label> Ảnh </label>
@@ -108,6 +132,22 @@
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                     </div>
+            </div>
+            <div class="form-group">
+                <label> Ảnh Loại Phòng</label>
+                <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="AnhLoaiPhong" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label> Giá </label>
+                <input type="number" name="Gia" class="form-control" placeholder="Nhập Giá Phòng">
             </div>
         </div>
 

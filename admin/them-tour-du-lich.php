@@ -4,7 +4,6 @@ include('includes/header.php');
 include('includes/navbar.php');
 ?>
 <div class="container-fluid">
-
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thêm Tour Du Lịch
@@ -41,10 +40,10 @@ include('includes/navbar.php');
         }
         ?>
         <form action="code.php" method="POST" enctype="multipart/form-data">
-
+            <div class="card-body">
                 <div class="form-group">
                     <label> Loại Tour Du Lịch </label>
-                    <select class="form-control"  name="loaitour">
+                    <select class="form-control" name="loaitour">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_loaitour = "SELECT * FROM loaitourdulich";
@@ -67,8 +66,20 @@ include('includes/navbar.php');
                     <input type="text" name="NoiKhoiHanh" class="form-control" placeholder="Nhập Nơi Khởi Hàng">
                 </div>
                 <div class="form-group">
-                    <label> Nơi Đến </label>
-                    <input type="text" name="NoiDen" class="form-control" placeholder="Nhập Nơi Đến">
+                    <label> Vị Trí </label>
+                    <select class="form-control" name="ViTri">
+                        <!-- <div class="form-group" name="LoaiTin"> -->
+                        <?php
+                        $q_vt = "SELECT * FROM vitri";
+                        $rs_vt = mysqli_query($connection, $q_vt);
+                        while ($TL = @mysqli_fetch_array($rs_vt)) {
+                        ?>
+                            <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                    </select>
                 </div>
                 <div class="form-group">
                     <label> Ngày Đi </label>
@@ -77,7 +88,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Hướng Dẫn Viên </label>
-                    <select class="form-control"  name="HuongDanVien">
+                    <select class="form-control" name="HuongDanVien">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_hdv = "SELECT * FROM huongdanvien";
@@ -93,7 +104,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Khách Sạn </label>
-                    <select class="form-control"  name="KhachSan">
+                    <select class="form-control" name="KhachSan">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_ks = "SELECT * FROM khachsan";
@@ -109,7 +120,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Nhà Hàng </label>
-                    <select class="form-control"  name="NhaHang">
+                    <select class="form-control" name="NhaHang">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_nh = "SELECT * FROM nhahang";
@@ -125,7 +136,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Dịch Vụ Đi Kèm </label>
-                    <select class="form-control"  name="DichVu">
+                    <select class="form-control" name="DichVu">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_dv = "SELECT * FROM dichvudikem";
@@ -141,7 +152,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Phương Tiện </label>
-                    <select class="form-control"  name="PhuongTien">
+                    <select class="form-control" name="PhuongTien">
                         <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_pt = "SELECT * FROM phuongtien";
@@ -155,7 +166,7 @@ include('includes/navbar.php');
                         <!-- </div> -->
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label> Giá Tiền (VNĐ) </label>
                     <input type="number" name="GiaTien" class="form-control" placeholder="Nhập Giá Tiền">
@@ -171,6 +182,14 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label> Số Ngày </label>
                     <input type="number" name="SoNgay" class="form-control" placeholder="Nhập Số Ngày">
+                </div>
+                <div class="form-group">
+                    <label> Sức Chứa </label>
+                    <input type="number" name="SucChua" class="form-control" placeholder="Nhập Số Ngày">
+                </div>
+                <div class="form-group">
+                    <label> Chi Phí Tour </label>
+                    <input type="number" name="ChiPhiTour" class="form-control" placeholder="Nhập Số Ngày">
                 </div>
                 <div class="form-group">
                     <label> Ảnh </label>
@@ -193,7 +212,6 @@ include('includes/navbar.php');
 
         </form>
     </div>
-
 </div>
 <?php
 include('includes/scripts.php');

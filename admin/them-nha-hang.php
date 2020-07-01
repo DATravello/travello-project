@@ -43,11 +43,42 @@ include('includes/navbar.php');
         <form action="code.php" method="POST" enctype="multipart/form-data">
 
             <div class="modal-body">
-
+                <div class="form-group">
+                    <label>Tên Thương Hiệu</label>
+                    <select class="form-control" name="ThuongHieuNH">
+                        <!-- <div class="form-group" name="LoaiTin"> -->
+                        <?php
+                        $q_thuonghieu = "SELECT * FROM thuonghieunh";
+                        $rs_thuonghieu = mysqli_query($connection, $q_thuonghieu);
+                        while ($TL = @mysqli_fetch_array($rs_thuonghieu)) {
+                        ?>
+                            <option value="<?php echo $TL["MaThuongHieuNH"] ?>"><?php echo $TL["TenThuongHieuNH"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label> Tên Nhà Hàng </label>
                     <input type="text" name="TenNhaHang" class="form-control" placeholder="Nhập Tên Nhà Hàng">
+                </div>
+                <div class="form-group">
+                    <label>Vị Trí</label>
+                    <select class="form-control" name="ViTriNH">
+                        <!-- <div class="form-group" name="LoaiTin"> -->
+                        <?php
+                        $q_vitri = "SELECT * FROM vitri";
+                        $rs_vitri = mysqli_query($connection, $q_vitri);
+                        while ($TL = @mysqli_fetch_array($rs_vitri)) {
+                        ?>
+                            <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                        <!-- </div> -->
+                    </select>
                 </div>
                 <div class="form-group">
                     <label> Địa Chỉ </label>
@@ -73,19 +104,19 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Giới Thiệu </label>
-                    <input type="text" name="GioiThieuNH" class="form-control" placeholder="Nhập Giới Thiệu">
+                    <textarea rows="5" name="GioiThieuNH" class="form-control" placeholder="Nhập Giới Thiệu"></textarea>
                 </div>
                 <div class="form-group">
-                    <label> Giá Nhà Hàng (VNĐ) </label>
-                    <input type="number" name="GiaNH" class="form-control" placeholder="Nhập Giá Nhà Hàng">
+                    <label> Giá Trẻ Em (VNĐ) </label>
+                    <input type="number" name="GiaTreEm" class="form-control" placeholder="Nhập Giá Cho Trẻ Em">
                 </div>
                 <div class="form-group">
-                    <label> Ngày Đến </label>
-                    <input type="date" name="NgayDen" class="form-control" placeholder="Nhập Ngày Đến">
-                 </div>
+                    <label> Giá Người Lớn (VNĐ) </label>
+                    <input type="number" name="GiaNguoiLon" class="form-control" placeholder="Nhập Giá Cho Người Lớn">
+                </div>
                 <div class="form-group">
-                    <label> Ngày Đi </label>
-                    <input type="date" name="NgayDi" class="form-control" placeholder="Nhập Ngày Đi">
+                    <label> Mô Tả Thực Đơn </label>
+                    <textarea rows="5" name="MoTaThucDon" class="form-control" placeholder="Nhập Mô Tả Thực Đơn"></textarea>
                 </div>
             </div>
             <div class="modal-footer">

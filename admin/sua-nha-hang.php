@@ -22,7 +22,21 @@ include('includes/navbar.php');
 
             foreach ($query_run as $row) {
         ?>
-                <form action="code.php" method="POST"  enctype="multipart/form-data">
+                <form action="code.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label> Tên Thương Hiệu</label>
+                        <select class="form-control" name="sua_mathnh">
+                            <?php
+                            $q_thuonghieunh = "SELECT * FROM thuonghieunh";
+                            $rs_thuonghieunh = mysqli_query($connection, $q_thuonghieunh);
+                            while ($TL = @mysqli_fetch_array($rs_thuonghieunh)) {
+                            ?>
+                                <option value="<?php echo $TL["MaThuongHieuNH"] ?>"><?php echo $TL["TenThuongHieuNH"] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Mã NH</label>
                         <input type="text" name="sua_mnh" value="<?php echo $row['MaNH'] ?>" class="form-control" readonly>
@@ -32,20 +46,34 @@ include('includes/navbar.php');
                         <input type="text" name="sua_tennh" value="<?php echo $row['TenNhaHang'] ?>" class="form-control" placeholder="Nhập Tên Nhà Hàng">
                     </div>
                     <div class="form-group">
+                        <label> Vị Trí</label>
+                        <select class="form-control" name="sua_vitrinh">
+                            <?php
+                            $q_vitri = "SELECT * FROM vitri";
+                            $rs_vitri = mysqli_query($connection, $q_vitri);
+                            while ($TL = @mysqli_fetch_array($rs_vitri)) {
+                            ?>
+                                <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label> Địa Chỉ </label>
                         <input type="text" name="sua_diachinh" value="<?php echo $row['DiaChi'] ?>" class="form-control" placeholder="Nhập Địa Chỉ">
                     </div>
                     <div class="form-group">
                         <label> Ảnh </label>
                         <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
+                            </div>
                         </div>
-                        <div class="custom-file">
-                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>
-                    </div>
                     </div>
                     <div class="form-group">
                         <label> Số Điện Thoại </label>
@@ -53,19 +81,19 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label> Giới Thiệu </label>
-                        <input type="text" name="sua_gtnh" value="<?php echo $row['GioiThieuNH'] ?>" class="form-control" placeholder="Nhập Giới Thiệu">
+                        <textarea rows="5" name="sua_gtnh" value="<?php echo $row['GioiThieuNH'] ?>" class="form-control" placeholder="Nhập Giới Thiệu"></textarea>
                     </div>
                     <div class="form-group">
-                        <label> Giá </label>
-                        <input type="number" name="sua_gianh" value="<?php echo $row['GiaNH'] ?>" class="form-control" placeholder="Nhập Giá">
+                        <label> Giá Trẻ Em </label>
+                        <input type="number" name="sua_giatreem" value="<?php echo $row['GiaTreEm'] ?>" class="form-control" placeholder="Nhập Giá">
                     </div>
                     <div class="form-group">
-                        <label> Ngày Đến </label>
-                        <input type="date" name="sua_ngayden" value="<?php echo $row['NgayDen'] ?>" class="form-control" placeholder="Nhập Ngày Đến">
+                        <label> Giá Người Lớn </label>
+                        <input type="number" name="sua_gianguoilon" value="<?php echo $row['GiaNguoiLon'] ?>" class="form-control" placeholder="Nhập Giá">
                     </div>
                     <div class="form-group">
-                        <label> Ngày Đi </label>
-                        <input type="date" name="sua_ngaydi" value="<?php echo $row['NgayDi'] ?>" class="form-control" placeholder="Nhập Ngày Đi">
+                        <label> Mô Tả Thực Đơn </label>
+                        <input type="text" name="sua_thucdon" value="<?php echo $row['MoTaThucDon'] ?>" class="form-control" placeholder="Nhập Thực Đơn">
                     </div>
 
                     <a href="danh-sach-nha-hang.php" class="btn btn-danger">Huỷ Bỏ</a>

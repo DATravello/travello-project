@@ -75,7 +75,7 @@ if(isset($_GET['nhahang']))
                     </select>
                 </div> -->
                     <!-- <div class="w-type"><h5>Hạng Sao: </h5> <p><?php echo $rows['HangSao'];?> * <p></div> -->
-                    <div class="w-price"><h5>Giá: <h5> <p><?php echo $rows['GiaNH'];?> VNĐ <p></div>
+                    <div class="w-price"><h5>Giá: <h5> <p><?php echo product_price($rows['GiaNguoiLon']);?> VNĐ <p></div>
                     <div class="w-time"><h5>Địa Chỉ: </h5> <p><?php echo $rows['DiaChi'];?></p></div>
                     <div class="w-place"><h5>Điện Thoại: </h5> <p><?php echo $rows['SDT'];?></p></div>
                     <!-- <div class="w-catch"><h5>Số Phòng: </h5> <p><?php echo $rows['SoPhong'];?></p></div>

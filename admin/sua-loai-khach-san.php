@@ -16,7 +16,7 @@
         {
             $id = $_POST['edit_MaLoaiKS'];
         
-            $query = "SELECT * FROM loaiks WHERE MaLoaiKS='$id'";
+            $query = "SELECT * FROM loaikhachsan WHERE MaLoaiKS='$id'";
             $query_run = mysqli_query($connection, $query);
         
             foreach($query_run as $row)
@@ -29,11 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label> Tên Loại Khách Sạn </label>
-                        <input type="text" name="sua_tenloai"  value="<?php echo $row['TenLoaiPhong'] ?>" class="form-control" placeholder="Nhập Tên Loại Phòng">
-                    </div>
-                    <div class="form-group">
-                        <label>Giá</label>
-                        <input type="number" name="sua_gia" value="<?php echo $row['Gia'] ?>" class="form-control" placeholder="Nhập Giá">
+                        <input type="text" name="sua_tenloai"  value="<?php echo $row['TenLoaiKS'] ?>" class="form-control" placeholder="Nhập Tên Loại Khách Sạn">
                     </div>
 
 

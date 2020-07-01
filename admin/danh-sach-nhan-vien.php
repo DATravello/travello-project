@@ -61,7 +61,6 @@
             <th>Địa Chỉ</th>
             <th>SDT</th>
             <th>Ảnh</th>
-            <th>Quyền</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -81,8 +80,7 @@
                   <td> <?php echo $row['GioiTinh']; ?>  </td>
                   <td> <?php echo $row['DiaChi']; ?>  </td>
                   <td> <?php echo $row['SDT']; ?>  </td>
-                  <td> <?php echo $row['Anh']; ?>  </td>
-                  <td> <?php echo $row['Quyen']; ?>  </td>
+                  <td> <img src="img/nhan-vien/<?php echo $row['Anh'];?>" width="50px" height="50px"></td>
                   <td>
                     <form action="sua-nhan-vien.php" method="post">
                       <input type="hidden" name="edit_MaNV" value="<?php echo $row['MaNV']; ?>">
