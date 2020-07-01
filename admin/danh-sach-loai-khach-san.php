@@ -48,15 +48,14 @@
     <div class="table-responsive">
       <?php
         $connection = mysqli_connect("localhost","root","","travello_db");
-        $query = "SELECT * FROM loaiks";
+        $query = "SELECT * FROM loaikhachsan";
         $query_run = mysqli_query($connection, $query);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Mã Loại KS</th>
-            <th>Tên Loại Phòng</th>
-            <th>Giá</th>
+            <th>Mã Loại Khách Sạn</th>
+            <th>Tên Loại Khách Sạn</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -71,8 +70,7 @@
           ?>
                 <tr>
                   <td><?php echo $row['MaLoaiKS']; ?></td>
-                  <td> <?php echo $row['TenLoaiPhong']; ?>  </td>
-                  <td> <?php echo $row['Gia']; ?>  </td>
+                  <td> <?php echo $row['TenLoaiKS']; ?>  </td>
                   <td>
                     <form action="sua-loai-khach-san.php" method="post">
                       <input type="hidden" name="edit_MaLoaiKS" value="<?php echo $row['MaLoaiKS']; ?>">

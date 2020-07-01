@@ -37,10 +37,10 @@ include('function.php');
                         <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
+                        <a class="nav-link" href="thuong-hieu-khach-san.php">Khách Sạn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
+                        <a class="nav-link" href="thuong-hieu-nha-hang.php">Nhà Hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Vận Chuyển</a>

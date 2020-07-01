@@ -52,8 +52,18 @@
                         <input type="text" name="sua_noikhoihanh"  value="<?php echo $row['NoiKhoiHanh'] ?>" class="form-control" placeholder="Enter NoiKhoiHanh">
                     </div>
                     <div class="form-group">
-                        <label>Nơi Đến </label>
-                        <input type="text" name="sua_noiden" value="<?php echo $row['NoiDen'] ?>" class="form-control" placeholder="Enter NoiDen">
+                        <label> Vị Trí</label>
+                        <select class="form-control"  name="sua_vitri">
+                        <?php
+                        $q_vitri = "SELECT * FROM vitri";
+                        $rs_vitri= mysqli_query($connection, $q_vitri);
+                        while ($TL = @mysqli_fetch_array($rs_vitri)) {
+                        ?>
+                            <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                     </div>
                     <div class="form-group">
                         <label>Thời Gian </label>
@@ -144,6 +154,14 @@
                     <div class="form-group">
                         <label>Số Ngày </label>
                         <input type="number" name="sua_songay" value="<?php echo $row['SoNgay'] ?>" class="form-control" placeholder="Enter SoNgay">
+                    </div>
+                    <div class="form-group">
+                        <label>Sức Chứa </label>
+                        <input type="number" name="sua_succhua" value="<?php echo $row['SoNgay'] ?>" class="form-control" placeholder="Enter SoNgay">
+                    </div>
+                    <div class="form-group">
+                        <label>Chi Phí Tour </label>
+                        <input type="number" name="sua_chiphi" value="<?php echo $row['ChiPhiTour'] ?>" class="form-control" placeholder="Enter SoNgay">
                     </div>
                     <div class="form-group">
                         <label>Ảnh </label>

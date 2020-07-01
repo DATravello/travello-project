@@ -1,31 +1,29 @@
 <?php
-    include('security.php');
-    include('includes/header.php');
-    include('includes/navbar.php');
+include('security.php');
+include('includes/header.php');
+include('includes/navbar.php');
 ?>
 
 <div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Sửa Nhân Viên
-    <a href="danh-sach-nhan-vien.php">
-              <button type="button" class="btn btn-success">Danh Sách Nhân Viên</button>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Sửa Nhân Viên
+            <a href="danh-sach-nhan-vien.php">
+                <button type="button" class="btn btn-success">Danh Sách Nhân Viên</button>
             </a>
-    </h6>
-  </div>
-    
-  <div class="card-body">
-    <?php
-        if(isset($_POST['edit_btn']))
-        {
+        </h6>
+    </div>
+
+    <div class="card-body">
+        <?php
+        if (isset($_POST['edit_btn'])) {
             $manv = $_POST['edit_MaNV'];
             $query = "SELECT * FROM nhanvien WHERE MaNV ='$manv'";
             $query_run = mysqli_query($connection, $query);
 
-            foreach($query_run as $row)
-            {
-    ?>
+            foreach ($query_run as $row) {
+        ?>
                 <form action="code.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
+                    <div class="form-group">
                         <label> Mã Nhân Viên </label>
                         <input type="text" name="sua_manv" value="<?php echo $row['MaNV'] ?>" class="form-control" readonly>
                     </div>
@@ -51,36 +49,41 @@
                     </div>
                     <div class="form-group">
                         <label>Ảnh </label>
-                        <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>
+                        <style>
+                            input[type=file] {
+                                width: 100%;
+                                padding: 5px;
+                                background: #eee;
+                                display: block;
+                                width: 100%;
+                                padding: 0.375rem 40px;
+                                font-size: 1rem;
+                                font-weight: 400;
+                                line-height: 1.5;
+                                color: #6e707e;
+                                border: 1px solid #d1d3e2;
+                                background-color: #fff;
+                                background-clip: padding-box;
+                                border-radius: 0.3rem;
+                            }
+                        </style>
+                        <input type="file" value="img/nhan-vien/<?php echo $row['Anh'] ?>" name="Anh" id="Anh">
                     </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Quyền </label>
-                        <input type="text" name="sua_quyen" value="<?php echo $row['Quyen'] ?>" class="form-control" placeholder="Enter Quyền Nhân Viên">
-                    </div>
-
                     <a href="danh-sach-nhan-vien.php" class="btn btn-danger">Cancel</a>
                     <button type="submit" name="btn_capnhat_nv" class="btn btn-primary">Cập Nhật</button>
                 </form>
 
-                <?php
+        <?php
             }
         }
-        
-      ?>
-    
-  </div>
+
+        ?>
+
+    </div>
 </div>
 
 
 <?php
-    include('includes/footer.php');
-    include('includes/scripts.php');
+include('includes/footer.php');
+include('includes/scripts.php');
 ?>

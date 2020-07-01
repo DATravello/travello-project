@@ -56,11 +56,11 @@
           <tr>
             <th>Mã HDV</th>
             <th>Tên HDV</th>
+            <th>Ảnh</th>
             <th>Ngày Sinh</th>
             <th>Địa Chỉ</th>
             <th>Giới Tính</th>
             <th>SDT</th>
-            <th>Ảnh</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -76,11 +76,11 @@
                 <tr>
                   <td><?php echo $row['MaHDV']; ?></td>
                   <td> <?php echo $row['TenHDV']; ?>  </td>
+                  <td> <img src="img/huong-dan-vien/<?php echo $row['Anh'];?>" width="100px" height="100px"> </td>
                   <td> <?php echo $row['NgaySinh']; ?>  </td>
                   <td> <?php echo $row['DiaChi']; ?>  </td>
                   <td> <?php echo $row['GioiTinh']; ?>  </td>
                   <td> <?php echo $row['SDT']; ?>  </td>
-                  <td> <?php echo $row['Anh']; ?>  </td>
                   <td>
                     <form action="sua-huong-dan-vien.php" method="post">
                       <input type="hidden" name="edit_MaHDV" value="<?php echo $row['MaHDV']; ?>">

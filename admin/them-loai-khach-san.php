@@ -9,7 +9,7 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thêm Loại Khách Sạn
             <a href="danh-sach-loai-khach-san.php">
-              <button type="button" class="btn btn-success">Danh Sách Loại Khác Sạn</button>
+              <button type="button" class="btn btn-success">Danh Sách Loại Khách Sạn</button>
             </a>
             </h6>
         </div>
@@ -48,12 +48,8 @@
 
 
             <div class="form-group">
-                <label> Tên Loại Phòng </label>
-                <input type="text" name="TenLoaiPhong" class="form-control" placeholder="Nhập Tên Loại Phòng">
-            </div>
-            <div class="form-group">
-                <label> Giá </label>
-                <input type="number" name="Gia" class="form-control" placeholder="Nhập Giá Loại Phòng">
+                <label> Tên Loại Khách Sạn </label>
+                <input type="text" name="TenLoaiKS" class="form-control" placeholder="Nhập Tên Loại Khách Sạn">
             </div>
             
         </div>
