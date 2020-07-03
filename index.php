@@ -231,7 +231,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 <div class="footer">
     <div class="row">
         <div class="col-md-4">
-            <h3>Travello</h3>
+            <h3 style="color:#fff">Travello</h3>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 At quisquam deserunt error nesciunt earum, alias minima pariatur?<p>
         </div>

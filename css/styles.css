@@ -77,6 +77,10 @@ h3 {
     color: #fff;
 }
 
+.banner {
+    margin-bottom: 50px;
+}
+
 .fixed-top {
     padding: 20px 0!important;
 }
@@ -539,6 +543,7 @@ h3 {
     font-size: 20px;
     background: #212121;
     color: #fff;
+    margin-top: 30px;
 }
 
 .footer h3 {
@@ -585,7 +590,7 @@ h3 {
 /* END FOOTER */
 
 
-/* DESTINATION */
+/* DESTINATION CONTENT */
 
 .destination-content {
     margin: 50px 0;
@@ -628,6 +633,76 @@ h3 {
 /* END DESTINATION */
 
 
+/* DESTIONATION */
+
+.destination {
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.destination .col-md-4 {
+    margin-bottom: 30px;
+}
+
+.destination .img-destination {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: all .3s;
+    object-fit: cover;
+}
+
+.destination .title-destination {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.destination .subtitle-destination {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    color: #fff;
+    transform: translate(-50%);
+    transition: all .3s;
+}
+
+.title-destination::after {
+    display: block;
+    content: '';
+    background: #fff;
+    height: 2px;
+    width: 50px;
+    margin: auto;
+    margin-top: 5px;
+    transition: all .3s;
+}
+
+.destination .card {
+    height: 100%;
+}
+
+.destination .card:hover img {
+    transform: scale(1.1);
+}
+
+.destination .card:hover .title-destination::after {
+    width: 100%;
+}
+
+.destination .card:hover .subtitle-destination {
+    bottom: 0px;
+}
+
+
+/* END DESTINATION */
+
+
 /* KHÁCH SẠN */
 
 .hotel-content {
@@ -638,6 +713,50 @@ h3 {
     text-align: center;
     font-size: 35px;
     margin: 40px 0;
+}
+
+.hotel-content .carousel-item img {
+    height: 100%;
+}
+
+.tour-description .tab-hotel .nav {
+    margin-bottom: 50px;
+    margin-top: 20px;
+    border: none;
+}
+
+.tab-hotel .nav .nav-link:hover {
+    border: none;
+}
+
+.tab-hotel .nav .nav-button {
+    padding: 15px 0;
+    margin-right: 20px;
+    text-decoration: none;
+    color: #1A2B48;
+}
+
+.tab-hotel .nav .active {
+    border-bottom: 2px solid #5191FA;
+    color: #5191FA;
+}
+
+.hotel-content .tour-widget p {
+    display: block !important;
+    margin: 10px 0;
+    color: #5E6D77;
+}
+
+.hotel-content .tour-widget p i {
+    margin-right: 7px;
+    font-size: 15px;
+    color: #333;
+}
+
+.hotel-content .w-hotel-price {
+    color: red !important;
+    font-weight: bold;
+    font-size: 17px;
 }
 
 .self-booking {
@@ -864,74 +983,6 @@ h3 {
         color: #000;
         font-weight: 400;
     }
-    /* FOOTER */
-    .to-top {
-        color: #fff;
-        background: #2196F3;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        font-size: 15px;
-        width: 35px;
-        height: 35px;
-        transition: all .3s;
-        opacity: 0;
-        pointer-events: none;
-    }
-    .to-top:hover {
-        text-decoration: none;
-        background: #212121;
-        color: #fff;
-    }
-    .to-top.active {
-        bottom: 20px;
-        pointer-events: auto;
-        opacity: 1;
-    }
-    .footer {
-        font-size: 20px;
-        background: #212121;
-        color: #fff;
-    }
-    .footer h3 {
-        font-size: 40px;
-        font-weight: bold;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-    .footer h5 {
-        font-weight: 600;
-        letter-spacing: 1px;
-        position: relative;
-        width: auto;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-    .footer h5::before {
-        content: " ";
-        position: absolute;
-        width: 100%;
-        background: #e8e8e8;
-        height: 1px;
-        bottom: -5px;
-        left: 0;
-    }
-    .footer .row {
-        padding: 50px 60px;
-    }
-    .footer-copyright {
-        padding: 10px 20px;
-        background: #111312;
-    }
-    .footer-copyright i {
-        margin: 0 5px;
-        font-size: 35px;
-    }
-    /* END FOOTER */
 }
 
 
