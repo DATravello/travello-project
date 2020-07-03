@@ -1,103 +1,87 @@
 <?php
 include('include/header.php');
 
-if(isset($_GET['nhahang']))
-{
-    $manh=$_GET['nhahang'];
+if (isset($_GET['nha-hang'])) {
+    $manh = $_GET['nha-hang'];
     require_once('database/db_config.php');
 
-    $query="SELECT * from nhahang where MaNH='$manh'";
-    $result=mysqli_query($connection, $query);
-    $rows=@mysqli_fetch_array($result);
-
-    // $query2="SELECT * from loaiks where MaLoaiKS='1'";
-    // $result2=mysqli_query($connection, $query2);
-    // $rows2=@mysqli_fetch_array($result2);
-
-    //Loại KS
-    // $loaiks = "SELECT * FROM khachsan INNER JOIN loaiks ON khachsan.MaLoaiKS = loaiks.MaLoaiKS where MaKS='$maks'";
-    // $result_loaks = mysqli_query($connection, $loaiks);
-    // $rows_loaiks = @mysqli_fetch_array($result_pt);
-
-    // //Khách Sạn
-    // $khachsan = "SELECT * FROM tourdulich INNER JOIN khachsan ON tourdulich.MaKS = khachsan.MaKS where MaTour='$matour'";
-    // $result_ks = mysqli_query($connection, $khachsan);
-    // $rows_ks = @mysqli_fetch_array($result_ks);
-
-    // //Hướng dẫn viên
-    // $hdv = "SELECT * FROM tourdulich INNER JOIN huongdanvien ON tourdulich.MaHDV = huongdanvien.MaHDV where MaTour='$matour'";
-    // $result_hdv = mysqli_query($connection, $hdv);
-    // $rows_hdv = @mysqli_fetch_array($result_hdv);
+    $query = "SELECT * from nhahang where MaNH='$manh'";
+    $result = mysqli_query($connection, $query);
+    $rows = @mysqli_fetch_array($result);
 }
 ?>
 
-    <!-- NỘI DUNG -->
+<!-- NỘI DUNG -->
 
-    <div class="container tour-container">
-        <div class="tour-title"><h2><?php echo $rows['TenNhaHang'];?></h2></div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="tour-content">
-                    <!-- <div class="tour-subtitle"><h5><?php echo $rows['TenNhaHang'];?>  <?php echo $rows2['TenLoaiKS'];?></h5></div> -->
-                    <div class="tour-image"><img src="admin/img/nha-hang/<?php echo $rows['Anh'];?>"></div>
-                    <div class="tour-image-sub">
-                        <?php echo $rows['TenNhaHang'];?>
+<div class="container tour-container hotel-content">
+    <div class="tour-title">
+        <h2><?php echo $rows['TenNhaHang']; ?></h2>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="tour-content">
+                <!-- <div class="tour-subtitle"><h5><?php echo $rows['TenNhaHang']; ?>  <?php echo $rows2['TenLoaiKS']; ?></h5></div> -->
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height:400px">
+                            <img class="d-block w-100" src="admin/img/nha-hang/<?php echo $rows['Anh']; ?>" width="100%" alt="Second slide">
+                        </div>
+                        <div class="carousel-item" style="height:400px">
+                            <img class="d-block w-100" src="admin/img/nha-hang/<?php echo $rows['Anh']; ?>" width="100%" alt="Second slide">
+                        </div>
                     </div>
-                <div class="tour-description">
-                        <h3>Giới Thiệu </h3>
-                        <!-- <div class="w-type"><h5>Hạng Sao: </h5> <p><?php echo $rows['HangSao'];?> * <p></div> -->
-                        <?php echo $rows['GioiThieuNH'];?><br/>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <div class="tour-image-sub">
+                    <?php echo $rows['TenNhaHang']; ?>
+                </div>
 
-                        <!-- <?php echo $rows['DiaChi'];?><br/>
-                        <?php echo $rows['SDT'];?><br/> -->
-                        <!-- <?php echo $rows['WebSite'];?><br/> -->
+                <div class="tour-description">
+                    <div class="tab-hotel">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-button active" id="mota-tab" data-toggle="tab" href="#mota" role="tab" aria-controls="home" aria-selected="true">Giới Thiệu Nhà Hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-button" id="mota-thucdon-tab" data-toggle="tab" href="#mota-thucdon" role="tab" aria-controls="profile" aria-selected="false">Thực Đơn Nhà Hàng</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="mota" role="tabpanel" aria-labelledby="home-tab">
+                                <p><?php echo $rows['GioiThieuNH']; ?><p>
+                            </div>
+                            <div class="tab-pane fade" id="mota-thucdon" role="tabpanel" aria-labelledby="profile-tab">
+                                <p><?php echo $rows['MoTaThucDon']; ?><p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="tour-widget">
-                    <h5 class="w-title">Thông tin đặt nhà hàng</h5>
-                    <!-- <?php
-                            $q_LKS = "SELECT * FROM loaiks";
-                             $r_LKS = mysqli_query($connection, $q_LKS);
-                        ?>
+        </div>
+        <div class="col-md-4">
+            <div class="tour-widget">
+                <h5 class="w-title">Thông tin</h5>
+                <br>
+                <p class="w-hotel-price"><i class="fas fa-dollar-sign"></i> <?php echo product_price($rows['GiaNguoiLon']); ?>/Người lớn</p>
+                <p class="w-hotel-price"><i class="fas fa-dollar-sign"></i> <?php echo product_price($rows['GiaTreEm']); ?>/Trẻ em</p>
+                <p class="w-hotel-address"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['DiaChi']; ?></p>
+                <p class="w-hotel-phone"><i class="fas fa-phone-square"></i> <?php echo $rows['SDT']; ?></p>
                 <div class="form-group">
-                        <label> Loại Phòng </label>
-                    <select name="MaLoaiKS" class="form-control">
-                        <?php
-                        while($LKS=mysqli_fetch_array($r_LKS))
-                        {
-                        ?>
-                        <option value="<?php echo $LKS["MaLoaiKS"]?>"><?php echo $LKS["TenLoaiPhong"]?></option>
-                        <?php
-                        }
-                         ?>
-                    </select>
-                </div> -->
-                    <!-- <div class="w-type"><h5>Hạng Sao: </h5> <p><?php echo $rows['HangSao'];?> * <p></div> -->
-                    <div class="w-price"><h5>Giá: <h5> <p><?php echo product_price($rows['GiaNguoiLon']);?> VNĐ <p></div>
-                    <div class="w-time"><h5>Địa Chỉ: </h5> <p><?php echo $rows['DiaChi'];?></p></div>
-                    <div class="w-place"><h5>Điện Thoại: </h5> <p><?php echo $rows['SDT'];?></p></div>
-                    <!-- <div class="w-catch"><h5>Số Phòng: </h5> <p><?php echo $rows['SoPhong'];?></p></div>
-                    <div class="w-day"><h5>Số ngày: </h5> <p><?php echo $rows['SoNgay'];?></p></div>
-                    <div class="w-vehicle"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiKS'];?></p></div>
-                    <div class="w-hotel"><h5>Loại Phòng: </h5> <p><?php echo $rows_loaiks['TenLoaiPhong'];?></p></div>
-                    <div class="w-guide"><h5>Hướng dẫn viên: </h5> <p><?php echo $rows_hdv['TenHDV'];?></p></div> -->
-                    <button class="btn btn-book"><a href="dat-nha-hang.php?tour=<?php echo $rows['MaNH'];?>">Đặt Nhà Hàng</button>
+                    <a class="btn btn-book" href="#">Liên Hệ Đặt Bàn</a>
                 </div>
-               
+
             </div>
         </div>
     </div>
+</div>
 
-    <!-- END NỘI DUNG -->
+<!-- END NỘI DUNG -->
 
-
-</body>
-<script src="scripts/jquery-3.5.1.slim.min.js"></script>
-<script src="scripts/popper.min.js"></script>
-<script src="scripts/bootstrap.min.js"></script>
-<script src="scripts/fontawesome-kit.js"></script>
-<script src="scripts/scroll.js"></script>
-
-</html>
+<?php include('include/footer.php'); ?>

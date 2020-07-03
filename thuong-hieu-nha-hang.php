@@ -1,8 +1,9 @@
 <?php
 include('include/header.php')
 ?>
+
 <!-- NỘI DUNG -->
-	<section class="thuong-hieu">
+<section class="container destination">
 	<?php
 
 	$conn = mysqli_connect("localhost", "root", "", "travello_db");
@@ -12,34 +13,36 @@ include('include/header.php')
 	$query_run1 = mysqli_query($conn, $query1);
 	$temp = "";
 	?>
-
-	<?php
-	while ($row = mysqli_fetch_assoc($query_run1)) {
-
-	?>
-
+	<div class="row">
 		<?php
-		if ($temp != $row['MaLoaiNH']) {
-			echo '</div></div><h3 style="text-align:center; margin: 50px">' . $row['TenLoaiNH'] . '</h3>
+		while ($row = mysqli_fetch_assoc($query_run1)) {
+
+		?>
+
+			<?php
+			if ($temp != $row['MaLoaiNH']) {
+				echo '</div></div><h3 style="text-align:center; margin: 50px">' . $row['TenLoaiNH'] . '</h3>
 			<div class="card-deck">
 				<div class="row">';
-			$temp = $row['MaLoaiNH'];
+				$temp = $row['MaLoaiNH'];
+			}
+			?>
+			<div class="col-md-4">
+				<a href="nha-hang-theo-vi-tri.php?thuonghieu=<?php echo $row['MaThuongHieuNH']; ?>">
+					<div class="card">
+						<img class="img-destination" src="admin/img/thuong-hieu-nh/<?php echo $row['HinhAnh'] ?>" alt="Card image cap">
+						<h5 class="title-destination"><?php echo $row['TenThuongHieuNH'] ?></h5>
+						<p class="subtitle-destination">
+							<?php //echo $rw_soks["Total"] 
+							?> Nhà Hàng
+						</p>
+					</div>
+				</a>
+			</div>
+
+		<?php
 		}
 		?>
-		<div class="card col-6">
-			<img class="card-img-top" src="admin/img/thuong-hieu-nh/<?php echo $row['HinhAnh'] ?>?>" alt="Card image cap">
-			<div class="dark-overlay">
-				<div class="card-body">
-					<h5 class="card-title"><?php echo $row['TenThuongHieuNH'] ?></h5>
-					<a href="nha-hang.php?thuonghieunh=<?php echo $row['MaThuongHieuNH']; ?>" class="btn btn-primary">Danh Sách Nhà Hàng</a>
-				</div>
-			</div>
-		</div>
-
-	<?php
-	}
-		echo '	</div>
-	</div>'
-	?>
-	</section>
+	</div>
+</section>
 <?php include('include/footer.php'); ?>
