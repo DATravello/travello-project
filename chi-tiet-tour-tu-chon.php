@@ -1,5 +1,7 @@
 <?php
-include('include/header.php');
+session_start();
+include('database/db_config.php');
+include('function.php');
 
 
 if (isset($_GET['tour'])) {
@@ -16,6 +18,7 @@ if (isset($_GET['tour'])) {
     $q_ks = "SELECT * FROM khachsan WHERE MaKS='$mks'";
     $rs_ks = mysqli_query($connection, $q_ks);
     $rw_ks = mysqli_fetch_array($rs_ks);
+    $makhachsan = $rw_ks["MaKS"];
 
     // Querry Điểm đến
     $mavt = $rw_tour['MaViTri'];
@@ -43,334 +46,597 @@ if (isset($_GET['tour'])) {
     $soxe = mysqli_fetch_assoc($rs_soxe);
 
     //Query Nhà Hàng
-
     $q_nh = "SELECT * FROM nhahang WHERE MaViTri='$mavt'";
     $rs_nh = mysqli_query($connection, $q_nh);
 
     $q_sonh = "SELECT COUNT(*) AS total FROM nhahang";
     $rs_sonh = mysqli_query($connection, $q_sonh);
     $sonh = mysqli_fetch_assoc($rs_sonh);
+
+
+    //Query Khách Hàng
+    $email = $_SESSION['Email'];
+    $kh = "SELECT * FROM khachhang WHERE Email = '$email'";
+    $rs_kh = mysqli_query($connection, $kh);
+    $r_kh = mysqli_fetch_array($rs_kh);
+    $maKhachHang = $r_kh["MaKH"];
+}
+
+//Đặt tour
+if (isset($_POST['btn_DatTour'])) {
+    $permitted_chars = '0123456789';
+    $mahd = substr(str_shuffle($permitted_chars), 0, 8);
+
+    $maks = 5;
+    $sophong = $_POST["SoPhongDat"];
+    $ngaynhan = $_POST["NgayNhan"];
+    $ngaytra = $_POST["NgayTra"];
+    $ngaydat = date("Y-m-d");
+    $giaphong = $_POST["GiaPhong"];
+    $tongtienphong = $giaphong * $sophong;
+
+    $query = "INSERT INTO hoadonks (`MaHD`, `MaKS`, `MaKH`, `SoPhongDat`, `NgayNhanPhong`, `NgayTraPhong`, `NgayDat`, `TongTien`) VALUES ('$mahd', '$makhachsan', '$maKhachHang', '$sophong', '$ngaynhan', '$ngaytra', '$ngaydat', '$tongtienphong')";
+
+    $query_run = mysqli_query($connection, $query);
+    if ($query_run) {
+        echo "<script> loadModal(); </script>";
+    } else {
+        header("Location: chi-tiet-tour-tu-chon.php?tour=" . $matour);
+    }
+
+    $tongtienxe = $_POST["TongTienXe"];
+
+    $query_xe = "INSERT INTO hoadonphuongtien (`MaHD`,`MaKH`,) VALUES ('$mahd', '$maKhachHang')";
 }
 ?>
 
-<!-- NỘI DUNG -->
+<script>
+    function loadModal() {
+        $("#myModal").modal("show");
+    }
+</script>
 
-<section class="container self-booking">
 
-    <h5 class="title-booking"><?php echo $rw_tour["TenTour"]; ?> - <?php echo $rw_ks["TenKS"]; ?></h5>
-    <div class="self-star">
-        <?php
-        $s = $rw_ks["HangSao"];
-        for ($i = 1; $i <= $s; $i++) {
-            echo '<i class="fas fa-star"></i>';
-        }
-        ?>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Đặt Tour Thành Công!<br>
+                Vui lòng kiểm tra Email để hoàn tất thanh toán đặt tour!
+                Chúng tôi sẽ liên lạc với bạn trong thời gian sớm nhất.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
     </div>
-    <div class="self-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rw_dd["TenViTri"] ?></div>
-    <div class="row">
-        <div class="col-3 nav-self">
-            <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-lich-trinh-list" data-toggle="list" href="#list-lich-trinh" role="tab" aria-controls="lich-trinh">Lịch Trình Tour</a>
-                <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Khách Sạn</a>
-                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
-                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
-                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
-                <div class="list-group-item self-sum" style="background:#ffcd3c;color:#fff"><i class="fas fa-dollar-sign"></i> Tổng: <p id="tongTienTour" style="color:red;display:inline;font-weight:bold"><?php echo product_price($rw_tour["ChiPhiTour"]); ?></p>
+</div>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Travello</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tour.css">
+    <link rel="stylesheet" href="css/animate/animate.min.css">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">TRAVELLO</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="khach-san.php">Khách Sạn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nha-hang.php">Nhà Hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vận Chuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Liên Hệ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <?php
+                        if (isset($_SESSION['Email']) && $_SESSION['Email']) {
+                            echo '<a class="nav-link" href="thong-tin-tai-khoan.php"><i class="fas fa-user"></i></a>';
+                        } else {
+                            echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
+                        }
+                        ?>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BANNER -->
+
+    <section class="banner">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/Slider-1.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>KHÁM PHÁ THẾ GIỚI</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#search">Tìm Kiếm Ngay</a></p>
+                    </div>
                 </div>
+                <div class="carousel-item">
+                    <img src="img/Slider-2.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>Trải Nghiệm Mới</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#">Thêm Thông Tin</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/Slider-3.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
+                        <h5>Tìm Chuyến Đi</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <p><a href="#">Tìm Kiếm</a></p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- END BANNER -->
+
+    <!-- END HEADER -->
+
+    <!-- NỘI DUNG -->
+
+    <section class="container self-booking">
+        <form method="post">
+            <h5 class="title-booking"><?php echo $rw_tour["TenTour"]; ?> - <?php echo $rw_ks["TenKS"]; ?></h5>
+            <div class="self-star">
+                <?php
+                $s = $rw_ks["HangSao"];
+                for ($i = 1; $i <= $s; $i++) {
+                    echo '<i class="fas fa-star"></i>';
+                }
+                ?>
+            </div>
+            <div class="self-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rw_dd["TenViTri"] ?></div>
+            <div class="row">
+                <div class="col-3 nav-self">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-lich-trinh-list" data-toggle="list" href="#list-lich-trinh" role="tab" aria-controls="lich-trinh">Lịch Trình Tour</a>
+                        <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Khách Sạn</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
+                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
+                        <div class="list-group-item self-sum" style="background:#ffcd3c;color:#fff"><i class="fas fa-dollar-sign"></i> Tổng: <p id="tongTienTour" style="color:red;display:inline;font-weight:bold"><?php echo product_price($rw_tour["ChiPhiTour"]); ?></p>
+                            <button type="submit" class="btn btn-primary" name="btn_DatTour">Đặt</button>
+                        </div>
+                        <script>
+                            function tongTien() {
+                                var tienKS = parseInt($("#tongtienks").val());
+                                var tienXe = parseInt($('#tongtienxe').val());
+                                var tienNH = parseInt($('#tongtiennh').val());
+                                var tongTienTour = <?php echo $rw_tour["ChiPhiTour"] ?> + tienKS + tienXe;
+                                $("#tongTienTour").text(tongTienTour.toLocaleString('it-IT', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }));
+                            }
+                        </script>
+                    </div>
+                </div>
+
                 <script>
-                    function tongTien() {
-                        var tienKS = parseInt($("#tongtienks").val());
-                        var tienXe = parseInt($('#tongtienxe').val());
-                        var tienNH = parseInt($('#tongtiennh').val());
-                        var tongTienTour = <?php echo $rw_tour["ChiPhiTour"] ?> + tienKS + tienXe;
-                        $("#tongTienTour").text(tongTienTour.toLocaleString('it-IT', {
+                    $('#tongtienks').val(0);
+
+                    function tienphong() {
+                        var a = $('#sophong').val();
+                        var sumlp = 0;
+                        sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
+                        $('#tongtienphong').text(sumlp.toLocaleString('it-IT', {
                             style: 'currency',
                             currency: 'VND'
                         }));
+                        $('#tongtienks').val(sumlp);
                     }
                 </script>
-            </div>
-        </div>
+                <div class="col-9 content-self">
+                    <div class="tab-content" id="nav-tabContent">
+                        <!-- LỊCH TRÌNH TOUR -->
+                        <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
+                            <div class="self-tour-img"><img src="admin/img/tour-du-lich/<?php echo $rw_tour['Anh'] ?>" alt="" width="100%"></div>
+                            <div class="self-tour-des">
+                                <div id="accordion">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <a style="width:100%" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    <h3>Lịch Trình Tour (Dự Kiến)</h3>
+                                                </a>
+                                            </h5>
+                                        </div>
 
-        <script>
-            $('#tongtienks').val(0);
-
-            function tienphong() {
-                var a = $('#sophong').val();
-                var sumlp = 0;
-                sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
-                $('#tongtienphong').text(sumlp.toLocaleString('it-IT', {
-                    style: 'currency',
-                    currency: 'VND'
-                }));
-                $('#tongtienks').val(sumlp);
-            }
-        </script>
-        <div class="col-9 content-self">
-            <div class="tab-content" id="nav-tabContent">
-                <!-- LỊCH TRÌNH TOUR -->
-                <div class="tab-pane fade show active" id="list-lich-trinh" role="tabpanel" aria-labelledby="list-lich-trinh-list">
-                    <div class="self-tour-img"><img src="admin/img/tour-du-lich/<?php echo $rw_tour['Anh'] ?>" alt="" width="100%"></div>
-                    <div class="self-tour-des">
-                        <div id="accordion">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <a style="width:100%" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <h3>Lịch Trình Tour (Dự Kiến)</h3>
-                                        </a>
-                                    </h5>
-                                </div>
-
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <p><?php echo $rw_tour["HanhTrinh"] ?></p>
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p><?php echo $rw_tour["HanhTrinh"] ?></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- CHỌN KHÁCH SẠN -->
-                <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                    <div class="self-hotel-img"><img src="admin/img/khach-san/<?php echo $rw_ks["Anh"]; ?>" width="100%"></div>
-                    <div class="self-hotel-des">
-                        <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
-                        <p><i class="fas fa-mobile"></i> SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
-                        <p><i class="fas fa-globe-americas"></i> Website: <?php echo $rw_ks["WebSite"]; ?></p>
-                        <p><?php echo $rw_ks["MoTa"]; ?></p>
-                    </div>
-                    <div class="hr"></div>
-                    <div class="book">
-                        <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
-                            <div class="col-md-6">
-                                <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_ks["SoPhong"]; ?></span> phòng</p>
-                                <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?></p>
-                                </p>
+                        <!-- CHỌN KHÁCH SẠN -->
+                        <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                            <div class="self-hotel-img"><img src="admin/img/khach-san/<?php echo $rw_ks["Anh"]; ?>" width="100%"></div>
+                            <div class="self-hotel-des">
+                                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
+                                <p><i class="fas fa-mobile"></i> SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
+                                <p><i class="fas fa-globe-americas"></i> Website: <?php echo $rw_ks["WebSite"]; ?></p>
+                                <p><?php echo $rw_ks["MoTa"]; ?></p>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6"><label id="LBSdtHK1">Ngày Nhận Phòng</label><input type="date" name="" class="form-control" id=""></div>
-                                    <div class="form-group col-md-6"><label id="LBcmndHK1">Ngày Trả Phòng</label><input type="date" name="" class="form-control" id=""></div>
+                            <div class="hr"></div>
+                            <div class="book">
+                                <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
+                                    <div class="col-md-6">
+                                        <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_ks["SoPhong"]; ?></span> phòng</p>
+                                        <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?>
+                                                <input name="GiaPhong" value="<?php echo $rw_ks['Gia']; ?>" style="visibility:hidden"></p>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6"><label id="LBSdtHK1">Ngày Nhận Phòng</label><input type="date" name="NgayNhan" class="form-control" id="NgayNhan"></div>
+                                            <div class="form-group col-md-6"><label id="LBcmndHK1">Ngày Trả Phòng</label><input type="date" name="NgayTra" class="form-control" id="NgayTra"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h5 style="margin: 20px 0;">Loại Phòng: <p class="room-name"><?php echo $rw_lp["TenLoaiPhong"]; ?></p>
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="admin/img/loai-phong/<?php echo $rw_ks["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <?php echo $rw_ks["MoTaLoaiPhong"]; ?>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="" id="lable">Số Lượng</label>
+                                            <input type="number" class="form-control" onclick="tienphong(),tongTien()" name="SoPhongDat" id="sophong">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p>Thành Tiền</p>
+                                        <p style="color:red;font-weight:bold" id="tongtienphong"></p>
+                                        <input type="number" id="tongtienks" name="TongTienKS" style="visibility:hidden;height:0;margin:0" value="0">
+                                    </div>
                                 </div>
                             </div>
+                            <div class="hr"></div>
                         </div>
-
-                        <h5 style="margin: 20px 0;">Loại Phòng: <p class="room-name"><?php echo $rw_lp["TenLoaiPhong"]; ?></p>
-                        </h5>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="admin/img/loai-phong/<?php echo $rw_ks["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
-
-                            </div>
-                            <div class="col-md-5">
-                                <?php echo $rw_ks["MoTaLoaiPhong"]; ?>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="" id="lable">Số Lượng</label>
-                                    <input type="number" class="form-control" onclick="tienphong(),tongTien()" name="" id="sophong">
+                        <!-- CHỌN HƯỚNG DẪN VIÊN -->
+                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                            <section class="tour-guide">
+                                <h5>ĐỘI NGŨ HƯỚNG DẪN VIÊN</h5>
+                                <div class="row">
+                                    <?php
+                                    while ($rw_hdv = @mysqli_fetch_array($rs_hdv)) {
+                                    ?>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <img src="admin/img/huong-dan-vien/<?php echo $rw_hdv["Anh"] ?>" alt="" class="img-guide rounded-circle w-50 mb-3">
+                                                    <h5 class="name-guide"><?php echo $rw_hdv["TenHDV"] ?></h5>
+                                                    <p class="guide">(Hướng Dẫn Viên)</p>
+                                                    <p class="date-guide">Ngày Sinh: <?php echo $rw_hdv["NgaySinh"] ?></p>
+                                                    <p class="sex-guide">Giới Tính: <?php echo $rw_hdv["GioiTinh"] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <p>Thành Tiền</p>
-                                <p style="color:red;font-weight:bold" id="tongtienphong"></p>
-                                <input type="number" id="tongtienks" style="visibility:hidden;height:0;margin:0" value="0">
-                            </div>
+                            </section>
                         </div>
-                    </div>
-                    <div class="hr"></div>
-                </div>
-                <!-- CHỌN HƯỚNG DẪN VIÊN -->
-                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                    <section class="tour-guide">
-                        <h5>ĐỘI NGŨ HƯỚNG DẪN VIÊN</h5>
-                        <div class="row">
-                            <?php
-                            while ($rw_hdv = @mysqli_fetch_array($rs_hdv)) {
-                            ?>
-                                <div class="col-lg-3 col-md-6">
+                        <!-- CHỌN PHƯƠNG TIỆN -->
+                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                            
+                            <section class="tour-vehicle">
+                                <!-- Card vehicle -->
+                                <?php
+                                $i = 0;
+                                while ($rw_pt = mysqli_fetch_array($rs_pt)) {
+                                ?>
+                                    <script>
+                                        function tienxetheosoluong() {
+                                            var soxe = <?php echo $soxe['total'] ?>;
+                                            var sumXe = 0;
+                                            var sum = 0;
+
+                                            for (var i = 0; i < soxe; i++) {
+                                                var a = $('#soluongxe' + i).val();
+                                                var b = $('#songay' + i).val();
+                                                var dongia = $('#dongia' + i).text();
+                                                sum = parseInt(a) * parseInt(b) * parseInt(dongia);
+                                                $('#tongtienXe' + i).text(sum.toLocaleString('it-IT', {
+                                                    style: 'currency',
+                                                    currency: 'VND'
+                                                }));
+                                                $("#tienXe" + i).val(sum);
+                                                sumXe = sumXe + parseInt($('#tienXe' + i).val());
+                                                $('#tongtienxe').val(sumXe);
+                                                $('#tongTX' + i).val(sum);
+                                                $('#TongTienXe').val(sumXe);
+                                            }
+                                        }
+                                    </script>
+
                                     <div class="card">
                                         <div class="card-body">
-                                            <img src="admin/img/huong-dan-vien/<?php echo $rw_hdv["Anh"] ?>" alt="" class="img-guide rounded-circle w-50 mb-3">
-                                            <h5 class="name-guide"><?php echo $rw_hdv["TenHDV"] ?></h5>
-                                            <p class="guide">(Hướng Dẫn Viên)</p>
-                                            <p class="date-guide">Ngày Sinh: <?php echo $rw_hdv["NgaySinh"] ?></p>
-                                            <p class="sex-guide">Giới Tính: <?php echo $rw_hdv["GioiTinh"] ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                    </section>
-                </div>
-                <!-- CHỌN PHƯƠNG TIỆN -->
-                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-                    <section class="tour-vehicle">
-                        <!-- Card vehicle -->
-                        <?php
-                        $i = 0;
-                        while ($rw_pt = mysqli_fetch_array($rs_pt)) {
-                        ?>
-                            <script>
-                                function tienxetheosoluong() {
-                                    var soxe = <?php echo $soxe['total'] ?>;
-                                    var sumXe = 0;
-                                    var sum = 0;
+                                            <div class="row">
 
-                                    for (var i = 0; i < soxe; i++) {
-                                        var a = $('#soluongxe' + i).val();
-                                        var b = $('#songay' + i).val();
-                                        var dongia = $('#dongia' + i).text();
-                                        sum = parseInt(a) * parseInt(b) * parseInt(dongia);
-                                        $('#tongtienXe' + i).text(sum.toLocaleString('it-IT', {
-                                            style: 'currency',
-                                            currency: 'VND'
-                                        }));
-                                        $("#tienXe" + i).val(sum);
-                                        sumXe = sumXe + parseInt($('#tienXe' + i).val());
-                                        $('#tongtienxe').val(sumXe);
-                                    }
-                                }
-                            </script>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
+                                                <div class="col-md-2" style="padding-right:0;">
+                                                    <img src="admin/img/phuong-tien/<?php echo $rw_pt["HinhAnh"] ?>" class="img-vehicle" alt="">
+                                                </div>
+                                                <div class="col-md-2" style="padding-right:0;">
+                                                    <h5 class="name-vehicle"><?php echo $rw_pt["PhuongTien"] ?></h5>
+                                                </div>
+                                                <!-- <div class="col-md-2" style="padding-right:0;">
+                                                    <div class="form-group">
+                                                        <label for="label">Số Lượng Xe</label>
+                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="0">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="padding-right:0;">
+                                                    <div class="form-group">
+                                                        <label for="label">Số Ngày</label>
+                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>" value="0">
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-md-2" style="padding-right:0;">
+                                                    Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
+                                                    <p id="dongia<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
+                                                </div>
+                                                <!-- <div class="col-md-2" style="padding-right:0;">
+                                                    Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
+                                                    <p id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
+                                                    <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
+                                                    <input type="number" name="TongTienXe" style="visibility:hidden;">
+                                                </div> -->
 
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            <img src="admin/img/phuong-tien/<?php echo $rw_pt["HinhAnh"] ?>" class="img-vehicle" alt="">
-                                        </div>
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            <h5 class="name-vehicle"><?php echo $rw_pt["PhuongTien"] ?></h5>
-                                        </div>
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            <div class="form-group">
-                                                <label for="label">Số Lượng Xe</label>
-                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            <div class="form-group">
-                                                <label for="label">Số Ngày</label>
-                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
-                                            <p id="dongia<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
-                                        </div>
-                                        <div class="col-md-2" style="padding-right:0;">
-                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
-                                            <p id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
-                                            <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                <div class="col-md-2">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $i ?>">
+                                                        Xem Chi Tiết
+                                                    </button>
 
-                        <?php
-                            $i++;
-                        } ?>
-                    </section>
-                </div>
-                <!-- CHỌN NHÀ HÀNG -->
-                <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-                    <!-- Card Nhà Hàng -->
-                    <section class="tour-restaurant">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal<?php echo $i ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Đặt Xe <?php echo $rw_pt["PhuongTien"] ?></h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <input type="hidden" id="MaPT<?php echo $i ?>" name="MaPT<?php echo $i ?>" value="<?php echo $rw_pt["MaPhuongTien"] ?>">
+                                                                        <div class="col-md-4" style="padding-right:0;">
+                                                                            <div class="form-group">
+                                                                                <label for="label">Số Lượng Xe</label>
+                                                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4" style="padding-right:0;">
+                                                                            <div class="form-group">
+                                                                                <label for="label">Số Ngày</label>
+                                                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4" style="padding-right:0;">
+                                                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
+                                                                            <input id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
+                                                                            <input id="tongTX<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
+                                                                            <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
+                                                                            <input type="number" name="TongTienXe" style="visibility:hidden;">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" name="btnHuyDatXe" class="btn btn-secondary">Huỷ Đặt Xe</button>
+                                                                    <button type="button" onclick="DatXe()" name="btnDatXe" class="btn btn-primary">Đặt Xe</button>
+                                                                </div>
+                                                                <script>
+                                                                    //var MaPT = [];
+                                                                    //var SoLuongXe = [];
 
-                        <?php
-                        $i = 0;
-                        while ($rw_nh = mysqli_fetch_array($rs_nh)) {
-                        ?>
+                                                                    var SoNgay = [];
 
-                            <script>
-                                function TienNhaHang() {
-                                    var soNH = <?php echo $sonh['total']; ?>;
-                                    var sumNH = 0;
-                                    for (var i = 0; i < soNH; i++) {
-                                        var soNL = $("#songuoilon" + i).val();
-                                        var soTE = $("#sotreem" + i).val();
-                                        var giaNL = $('#gianguoilon' + i).text();
-                                        var giaTE = $('#giatreem' + i).text();
-                                        sumNH = (parseInt(soNL) * parseInt(giaNL)) + (parseInt(soTE) * parseInt(giaTE));
-                                        $("#sumtiennhahang" + i).text(sumNH.toLocaleString('it-IT', {
-                                            style: 'currency',
-                                            currency: 'VND'
-                                        }));
+                                                                    //var mapt = document.getElementById("MaPT<?php echo $i ?>").value;
+                                                                    //var soluong = document.getElementById("soluongxe<?php echo $i ?>").val();
+                                                                    var songay = document.getElementById("songay<?php echo $i ?>").value;
 
-                                    }
-                                }
-                            </script>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-3" style="padding: 0 10px 0 10px;">
-                                            <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh']; ?>" class="img-restaurant" alt="">
+                                                                    function DatXe() {
+                                                                        //MaPT.push(mapt);
+                                                                        //SoLuongXe.push(soluong);
+                                                                        SoNgay.push(songay);
 
-                                        </div>
-                                        <div class="col-md-3" style="padding: 0 10px 0 0;">
-                                            <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang']; ?></h5>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                Xem Thực Đơn
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Thực Đơn Nhà Hàng</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p><?php echo $rw_nh['MoTaThucDon']; ?></p>
+                                                                        //document.getElementById("demo").innerHTML = MaPT;
+                                                                        //document.getElementById("demoxe").innerHTML = SoLuongXe;
+                                                                        document.getElementById("demosl").innerHTML = SoNgay;
+                                                                    }
+                                                                </script>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
-                                            <div class="form-group">
-                                                <label for="label">Số Lượng Người Lớn</label>
-                                                <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="songuoilon<?php echo $i ?>" id="songuoilon<?php echo $i ?>">
+                                    </div>
+
+                                <?php
+                                    $i++;
+                                } ?>
+
+                                <select class="form-control">
+                                    <option>Chọn Loại Xe</option>
+                                
+                                <?php
+                                while ($rw_pt = mysqli_fetch_array($rs_pt)) {
+                                ?>
+                                    <option value="<?php echo $rw_pt["MaPhuongTien"]?>"><?php echo $rw_pt["PhuongTien"]?></option>
+                                <?php
+                                }
+                                ?>
+                                </select>
+                            </section>
+                        </div>
+                        <!-- CHỌN NHÀ HÀNG -->
+                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                            <!-- Card Nhà Hàng -->
+                            <section class="tour-restaurant">
+
+                                <?php
+                                $i = 0;
+                                while ($rw_nh = mysqli_fetch_array($rs_nh)) {
+                                ?>
+
+                                    <script>
+                                        function TienNhaHang() {
+                                            var soNH = <?php echo $sonh['total']; ?>;
+                                            var sumNH = 0;
+                                            for (var i = 0; i < soNH; i++) {
+                                                var soNL = $("#songuoilon" + i).val();
+                                                var soTE = $("#sotreem" + i).val();
+                                                var giaNL = $('#gianguoilon' + i).text();
+                                                var giaTE = $('#giatreem' + i).text();
+                                                sumNH = (parseInt(soNL) * parseInt(giaNL)) + (parseInt(soTE) * parseInt(giaTE));
+                                                $("#sumtiennhahang" + i).text(sumNH.toLocaleString('it-IT', {
+                                                    style: 'currency',
+                                                    currency: 'VND'
+                                                }));
+
+                                            }
+                                        }
+                                    </script>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-3" style="padding: 0 10px 0 10px;">
+                                                    <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh']; ?>" class="img-restaurant" alt="">
+
+                                                </div>
+                                                <div class="col-md-3" style="padding: 0 10px 0 0;">
+                                                    <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang']; ?></h5>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                        Xem Thực Đơn
+                                                    </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Thực Đơn Nhà Hàng</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><?php echo $rw_nh['MoTaThucDon']; ?></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                    <div class="form-group">
+                                                        <label for="label">Số Lượng Người Lớn</label>
+                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="songuoilon<?php echo $i ?>" id="songuoilon<?php echo $i ?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="label">Số Lượng Trẻ Em</label>
+                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="sotreem<?php echo $i ?>" id="sotreem<?php echo $i ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                    Đơn giá:
+                                                    <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaNguoiLon']); ?>/Người Lớn</p>
+                                                    <p id="gianguoilon<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
+                                                    <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaTreEm']); ?>/Trẻ Em</p>
+                                                    <p id="giatreem<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
+                                                </div>
+                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                    Tổng tiền:
+                                                    <p id="sumtiennhahang<?php echo $i ?>" style="color:red;font-weight:bold;font-size:13px"></p>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="label">Số Lượng Trẻ Em</label>
-                                                <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="sotreem<?php echo $i ?>" id="sotreem<?php echo $i ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
-                                            Đơn giá:
-                                            <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaNguoiLon']); ?>/Người Lớn</p>
-                                            <p id="gianguoilon<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
-                                            <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaTreEm']); ?>/Trẻ Em</p>
-                                            <p id="giatreem<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
-                                        </div>
-                                        <div class="col-md-2" style="padding: 0 10px 0 0;">
-                                            Tổng tiền:
-                                            <p id="sumtiennhahang<?php echo $i ?>" style="color:red;font-weight:bold;font-size:13px"></p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php
-                            $i++;
-                        } ?>
-                    </section>
+                                <?php
+                                    $i++;
+                                } ?>
+                            </section>
+                        </div>
+                    </div>
                 </div>
-
-
             </div>
-        </div>
-    </div>
-</section>
+        </form>
+    </section>
 
-<!-- END -->
+    <!-- END -->
 
-<?php
-include('include/footer.php');
-?>
+    <?php
+    include('include/footer.php');
+    ?>
