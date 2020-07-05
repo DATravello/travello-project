@@ -24,7 +24,7 @@ if (isset($_GET['tour'])) {
 
 if (isset($_POST['btn_DatTour'])) {
     $permitted_chars = '0123456789';
-    $maHD =  substr(str_shuffle($permitted_chars), 0, 8);
+    $maHD = substr(str_shuffle($permitted_chars), 0, 8);
     $soTreEm = $_POST["SoTreEm"];
     $soNguoiLon = $_POST["SoNguoiLon"];
     $thanhToan = $_POST["ThanhToan"];
