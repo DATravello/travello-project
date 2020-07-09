@@ -5,3 +5,4 @@
 <script src="scripts/scroll.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="scripts/cus.js"></script>
+<script src="scripts/sweetalert.min.js"></script>
