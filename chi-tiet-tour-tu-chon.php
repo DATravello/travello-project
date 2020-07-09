@@ -763,13 +763,7 @@ if (isset($_POST['btn_DatTour'])) {
                 </div>
             </div>
         </form>
-        <button class="btn btn-primary" onclick="validate()">Click</button>
     </section>
-    <script>
-        function validate() {
-            swal("Good job!", "You clicked the button!", "success");
-        }
-    </script>
 
     <!-- END -->
 
