@@ -13,13 +13,6 @@ if (isset($_GET['tour'])) {
     $rs_tour = mysqli_query($connection, $q_tour);
     $rw_tour = mysqli_fetch_array($rs_tour);
 
-    // Querry Khách sạn
-    $mks = $rw_tour['MaKS'];
-    $q_ks = "SELECT * FROM khachsan WHERE MaKS='$mks'";
-    $rs_ks = mysqli_query($connection, $q_ks);
-    $rw_ks = mysqli_fetch_array($rs_ks);
-    $makhachsan = $rw_ks["MaKS"];
-
     // Querry Điểm đến
     $mavt = $rw_tour['MaViTri'];
     $q_diemden = "SELECT * FROM vitri WHERE MaViTri='$mavt'";
@@ -29,10 +22,12 @@ if (isset($_GET['tour'])) {
     //Query Hướng Dẫn Viên
     $q_hdv = "SELECT * FROM huongdanvien";
     $rs_hdv = mysqli_query($connection, $q_hdv);
-    //$rw_hdv = mysqli_fetch_array($rs_hdv);
 
     //Query Loại Phòng
-    $malp = $rw_ks['MaLoaiPhong'];
+    $ks1 = "SELECT * FROM khachsan";
+    $rs_ks1 = mysqli_query($connection, $ks1);
+    $ks = mysqli_fetch_array($rs_ks1);
+    $malp = $ks['MaLoaiPhong'];
     $q_lp = "SELECT * FROM loaiphong p WHERE p.MaLoaiPhong = '$malp'";
     $rs_lp = mysqli_query($connection, $q_lp);
     $rw_lp = mysqli_fetch_array($rs_lp);
@@ -60,6 +55,10 @@ if (isset($_GET['tour'])) {
     $rs_kh = mysqli_query($connection, $kh);
     $r_kh = mysqli_fetch_array($rs_kh);
     $maKhachHang = $r_kh["MaKH"];
+
+    //Query Thanh Toán
+    $q_thanhtoan = "SELECT * FROM thanhtoan";
+    $rs_thanhtoan = mysqli_query($connection, $q_thanhtoan);
 }
 
 //Đặt tour
@@ -67,57 +66,68 @@ if (isset($_POST['btn_DatTour'])) {
     $permitted_chars = '0123456789';
     $mahd = substr(str_shuffle($permitted_chars), 0, 8);
 
-    $maks = 5;
-    $sophong = $_POST["SoPhongDat"];
-    $ngaynhan = $_POST["NgayNhan"];
-    $ngaytra = $_POST["NgayTra"];
+    $maks = $_POST["KhachSan"];
+    $ngaynhan = $_POST["NgayNhan$maks"];
+    $ngaytra = $_POST["NgayTra$maks"];
     $ngaydat = date("Y-m-d");
-    $giaphong = $_POST["GiaPhong"];
-    $tongtienphong = $giaphong * $sophong;
+    $sophong = $_POST["SoPhongDat$maks"];
+    $tongtienks = $_POST["TongTienKS$maks"];
 
-    $query = "INSERT INTO hoadonks (`MaHD`, `MaKS`, `MaKH`, `SoPhongDat`, `NgayNhanPhong`, `NgayTraPhong`, `NgayDat`, `TongTien`) VALUES ('$mahd', '$makhachsan', '$maKhachHang', '$sophong', '$ngaynhan', '$ngaytra', '$ngaydat', '$tongtienphong')";
+    $sql_ks = "INSERT INTO hoadonks (`MaHD`, `MaKS`, `MaKH`, `SoPhongDat`, `NgayNhanPhong`, `NgayTraPhong`, `NgayDat`, `TongTien`)
+    VALUES ('$mahd', '$maks', '$maKhachHang', '$sophong', '$ngaynhan', '$ngaytra', '$ngaydat', '$tongtienks')";
+    $sql_ks_run = mysqli_query($connection, $sql_ks);
+    if ($sql_ks_run) {
+        $mapt = $_POST["PhuongTien"];
+        $soluongxe = $_POST["SoLuongXe$mapt"];
+        $songaydatxe = $_POST["SoNgayDatXe$mapt"];
+        $tongtienpt = $_POST["TongTienXe$mapt"];
 
-    $query_run = mysqli_query($connection, $query);
-    if ($query_run) {
-        echo "<script> loadModal(); </script>";
+        $sql_pt = "INSERT INTO hoadonphuongtien (`MaHD`, `MaKH`, `MaPhuongTien`, `SoLuongXeDat`, `SoLuongNgayDat`, `NgayDat`, `TongTien`)
+        VALUES ('$mahd', '$maKhachHang', '$mapt', '$soluongxe', '$songaydatxe', '$ngaydat', '$tongtienpt')";
+        $sql_pt_run = mysqli_query($connection, $sql_pt);
+
+        if ($sql_pt_run) {
+            $manh = $_POST["NhaHang"];
+            $songuoilon = $_POST["SoNguoiLon$manh"];
+            $sotreem = $_POST["SoTreEm$manh"];
+            $ngaydatban = $_POST["NgayDatBan$manh"];
+            $tongtiennh = $_POST["TongTienNhaHang$manh"];
+
+            $sql_nh = "INSERT INTO hoadonnh (`MaHD`, `MaKH`, `MaNH`, `SoNguoiLon`, `SoTreEm`, `NgayDatBan`, `NgayDat`, `TongTien`)
+            VALUES ('$mahd', '$maKhachHang', '$manh', '$songuoilon', '$sotreem', '$ngaydatban', '$ngaydat', '$tongtiennh')";
+            $sql_nh_run = mysqli_query($connection, $sql_nh);
+
+            if ($sql_nh_run) {
+                $chiphitour = $rw_tour["ChiPhiTour"];
+                $mathanhtoan = $_POST["ThanhToan"];
+                $tinhtrang = 'Chưa Xác Nhận';
+                $TongTienTour = $tongtienks + $tongtiennh + $tongtienpt + $chiphitour;
+
+                $sql_tour = "INSERT INTO hoadontourtutao (`MaHD`, `MaKH`, `MaTT`, `MaTour`, `NgayDat`, `TongTien`, `TinhTrang`)
+                VALUES ('$mahd', '$maKhachHang', '$mathanhtoan', '$matour', '$ngaydat', '$TongTienTour', '$tinhtrang')";
+                $sql_tour_run = mysqli_query($connection, $sql_tour);
+
+                if ($sql_tour_run) {
+                    $message = "Đặt Tour Thành Công";
+                    echo "<script type='text/javascript'>alert('$message');</script>";         
+                } else {
+                    $message = "Đặt Tour Thất Công";
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                }
+            } else {
+                $message = "Đặt Nhà Hàng Thất Bại";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+            }
+        } else {
+            $message = "Đặt Phương Tiện Thất Bại";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
     } else {
-        header("Location: chi-tiet-tour-tu-chon.php?tour=" . $matour);
+        $message = "Đặt Phòng Thất Bại";
+        echo "<script type='text/javascript'>alert('$message');</script>";
     }
-
-    $tongtienxe = $_POST["TongTienXe"];
-
-    $query_xe = "INSERT INTO hoadonphuongtien (`MaHD`,`MaKH`,) VALUES ('$mahd', '$maKhachHang')";
 }
 ?>
-
-<script>
-    function loadModal() {
-        $("#myModal").modal("show");
-    }
-</script>
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Đặt Tour Thành Công!<br>
-                Vui lòng kiểm tra Email để hoàn tất thanh toán đặt tour!
-                Chúng tôi sẽ liên lạc với bạn trong thời gian sớm nhất.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <head>
     <meta charset="utf-8">
@@ -231,20 +241,27 @@ if (isset($_POST['btn_DatTour'])) {
     <!-- END BANNER -->
 
     <!-- END HEADER -->
+    <div class="modal fade" id="thankyouModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Thành Công!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Đặt tour thành công!<br>
+                        Vui lòng kiểm tra Email trong vòng 24h kể từ thời gian đặt tour. Chúng tôi sẽ liên lạc với bạn sớm nhất để xác nhận đặt tour.<br>
+                        Cám ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- NỘI DUNG -->
 
     <section class="container self-booking">
         <form method="post">
-            <h5 class="title-booking"><?php echo $rw_tour["TenTour"]; ?> - <?php echo $rw_ks["TenKS"]; ?></h5>
-            <div class="self-star">
-                <?php
-                $s = $rw_ks["HangSao"];
-                for ($i = 1; $i <= $s; $i++) {
-                    echo '<i class="fas fa-star"></i>';
-                }
-                ?>
-            </div>
+            <h5 class="title-booking"><?php echo $rw_tour["TenTour"]; ?></h5>
             <div class="self-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rw_dd["TenViTri"] ?></div>
             <div class="row">
                 <div class="col-3 nav-self">
@@ -254,6 +271,7 @@ if (isset($_POST['btn_DatTour'])) {
                         <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
                         <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
                         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
+                        <a class="list-group-item list-group-item-action" id="list-thanh-toan-list" data-toggle="list" href="#list-thanh-toan" role="tab" aria-controls="home">Hình Thức Thanh Toán</a>
                         <div class="list-group-item self-sum" style="background:#ffcd3c;color:#fff"><i class="fas fa-dollar-sign"></i> Tổng: <p id="tongTienTour" style="color:red;display:inline;font-weight:bold"><?php echo product_price($rw_tour["ChiPhiTour"]); ?></p>
                             <button type="submit" class="btn btn-primary" name="btn_DatTour">Đặt</button>
                         </div>
@@ -271,21 +289,6 @@ if (isset($_POST['btn_DatTour'])) {
                         </script>
                     </div>
                 </div>
-
-                <script>
-                    $('#tongtienks').val(0);
-
-                    function tienphong() {
-                        var a = $('#sophong').val();
-                        var sumlp = 0;
-                        sumlp = parseInt(a) * <?php echo $rw_ks['Gia'] ?>;
-                        $('#tongtienphong').text(sumlp.toLocaleString('it-IT', {
-                            style: 'currency',
-                            currency: 'VND'
-                        }));
-                        $('#tongtienks').val(sumlp);
-                    }
-                </script>
                 <div class="col-9 content-self">
                     <div class="tab-content" id="nav-tabContent">
                         <!-- LỊCH TRÌNH TOUR -->
@@ -313,55 +316,168 @@ if (isset($_POST['btn_DatTour'])) {
                         </div>
                         <!-- CHỌN KHÁCH SẠN -->
                         <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                            <div class="self-hotel-img"><img src="admin/img/khach-san/<?php echo $rw_ks["Anh"]; ?>" width="100%"></div>
-                            <div class="self-hotel-des">
-                                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rw_ks["DiaChi"]; ?></p>
-                                <p><i class="fas fa-mobile"></i> SĐT: <?php echo $rw_ks["DienThoai"]; ?></p>
-                                <p><i class="fas fa-globe-americas"></i> Website: <?php echo $rw_ks["WebSite"]; ?></p>
-                                <p><?php echo $rw_ks["MoTa"]; ?></p>
-                            </div>
-                            <div class="hr"></div>
-                            <div class="book">
-                                <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
-                                    <div class="col-md-6">
-                                        <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_ks["SoPhong"]; ?></span> phòng</p>
-                                        <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_ks['Gia']) ?>
-                                                <input name="GiaPhong" value="<?php echo $rw_ks['Gia']; ?>" style="visibility:hidden"></p>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6"><label id="LBSdtHK1">Ngày Nhận Phòng</label><input type="date" name="NgayNhan" class="form-control" id="NgayNhan"></div>
-                                            <div class="form-group col-md-6"><label id="LBcmndHK1">Ngày Trả Phòng</label><input type="date" name="NgayTra" class="form-control" id="NgayTra"></div>
+
+                            <select class="form-control form-control-lg" onchange="Chonks()" name="KhachSan" id="ChonKhachSan" style="margin-bottom:20px;">
+                                <option value="" selected disabled hidden>Chọn Khách Sạn</option>
+                                <?php
+                                $query_khachsan = "SELECT * FROM khachsan WHERE MaViTri = $mavt";
+                                $result_khachsan = mysqli_query($connection, $query_khachsan);
+
+                                while ($row = @mysqli_fetch_array($result_khachsan)) {
+                                ?>
+                                    <option value="<?php echo $row["MaKS"] ?>"><?php echo $row["TenKS"] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            <script>
+                                function Chonks() {
+                                    $('.card-hotel').hide();
+                                    x = document.getElementById("ChonKhachSan").value;
+                                    $('#hotel' + x).show();
+                                }
+                            </script>
+                            <style>
+                                #chi-tiet .modal-body {
+                                    font-size: 16px !important;
+                                }
+
+                                #chi-tiet .modal-header .modal-title {
+                                    font-size: 20px !important;
+                                }
+
+                                #chi-tiet .modal-body .nav a {
+                                    font-size: 16px !important;
+                                }
+                            </style>
+                            <?php
+                            $q_slks = "SELECT COUNT(*) AS total FROM khachsan WHERE MaViTri = $mavt";
+                            $rs_slks = mysqli_query($connection, $q_slks);
+                            $soks = mysqli_fetch_assoc($rs_slks);
+                            ?>
+                            <script>
+                                function tienphongks() {
+                                    var totalks = <?php echo $soks["total"] ?>;
+                                    for (var i = 0; i < totalks; i++) {
+                                        var soluong = $('#sophong' + i).val();
+                                        var giaphong = $('#GiaPhong' + i).val();
+                                        if (soluong == 0) {
+                                            var tongtienphong = 0;
+                                        } else {
+                                            var tongtienphong = parseInt(soluong) * parseInt(giaphong);
+                                        }
+
+                                        $("#tongtienphong" + i).text(tongtienphong.toLocaleString('it-IT', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }));
+                                        $('#tongtienks' + i).val(tongtienphong);
+                                    }
+                                }
+                            </script>
+
+
+                            <?php
+                            //Query khách sạn Theo Vị Trí
+                            $mavt = $rw_tour['MaViTri'];
+                            $q_ks = "SELECT * FROM khachsan WHERE MaViTri = $mavt";
+                            $rs_ks = mysqli_query($connection, $q_ks);
+
+                            $i = 0;
+                            while ($rw_khachsan = @mysqli_fetch_array($rs_ks)) {
+                            ?>
+
+
+
+                                <div class="card card-hotel" id="hotel<?php echo $rw_khachsan['MaKS']; ?>" style="display:none">
+                                    <div class="card-body">
+                                        <h3><?php echo $rw_khachsan['TenKS']; ?></h3>
+
+                                        <div class="row" style="border-bottom: 2px solid #f1f1f1;margin: 20px 0">
+                                            <div class="col-md-6">
+                                                <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_khachsan["SoPhong"]; ?></span> phòng</p>
+                                                <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_khachsan['Gia']) ?>
+                                                        <input id="GiaPhong<?php echo $i ?>" name="GiaPhong<?php echo $rw_khachsan['MaKS']; ?>" value="<?php echo $rw_khachsan['Gia']; ?>" style="visibility:hidden"></p>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6"><label id="LBSdtHK1">Ngày Nhận Phòng</label><input type="date" name="NgayNhan<?php echo $rw_khachsan['MaKS']; ?>" class="form-control" id="NgayNhan<?php echo $rw_khachsan['MaKS']; ?>"></div>
+                                                    <div class="form-group col-md-6"><label id="LBcmndHK1">Ngày Trả Phòng</label><input type="date" name="NgayTra<?php echo $rw_khachsan['MaKS']; ?>" class="form-control" id="NgayTra<?php echo $rw_khachsan['MaKS']; ?>"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h5 style="margin: 20px 0;">Loại Phòng: <p class="room-name"><?php echo $rw_lp["TenLoaiPhong"]; ?></p>
+                                        </h5>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img src="admin/img/loai-phong/<?php echo $rw_khachsan["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chi-tiet">
+                                                    Xem Chi Tiết
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="" id="lable">Số Lượng</label>
+                                                    <input type="number" class="form-control" onclick="tienphongks()" name="SoPhongDat<?php echo $rw_khachsan['MaKS']; ?>" id="sophong<?php echo $i; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p>Thành Tiền</p>
+                                                <p style="color:red;font-weight:bold" id="tongtienphong<?php echo $i; ?>"></p>
+                                                <input type="number" id="tongtienks<?php echo $i; ?>" name="TongTienKS<?php echo $rw_khachsan['MaKS']; ?>" style="visibility:hidden;height:0;width:0">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <h5 style="margin: 20px 0;">Loại Phòng: <p class="room-name"><?php echo $rw_lp["TenLoaiPhong"]; ?></p>
-                                </h5>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="admin/img/loai-phong/<?php echo $rw_ks["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
-
-                                    </div>
-                                    <div class="col-md-5">
-                                        <?php echo $rw_ks["MoTaLoaiPhong"]; ?>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="" id="lable">Số Lượng</label>
-                                            <input type="number" class="form-control" onclick="tienphong(),tongTien()" name="SoPhongDat" id="sophong">
+                                <div class="modal fade bd-example-modal-lg" id="chi-tiet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông Tin Chi Tiết</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="tab-hotel">
+                                                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-bottom: 50px;border:none">
+                                                        <li class="nav-item">
+                                                            <a class="nav-button active" id="mota-tab" data-toggle="tab" href="#mota" role="tab" aria-controls="home" aria-selected="true">Giới Thiệu Khách Sạn</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-button" id="mota-phong-tab" data-toggle="tab" href="#mota-phong" role="tab" aria-controls="profile" aria-selected="false">Thông Tin Loại Phòng</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="mota" role="tabpanel" aria-labelledby="home-tab">
+                                                            <div class="self-hotel-img"><img src="admin/img/khach-san/<?php echo $rw_khachsan["Anh"]; ?>" width="100%"></div>
+                                                            <div class="self-hotel-des">
+                                                                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rw_khachsan["DiaChi"]; ?></p>
+                                                                <p><i class="fas fa-mobile"></i> SĐT: <?php echo $rw_khachsan["DienThoai"]; ?></p>
+                                                                <p><i class="fas fa-globe-americas"></i> Website: <?php echo $rw_khachsan["WebSite"]; ?></p>
+                                                                <p><?php echo $rw_khachsan["MoTa"]; ?></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="mota-phong" role="tabpanel" aria-labelledby="profile-tab">
+                                                            <img src="admin/img/loai-phong/<?php echo $rw_khachsan["AnhLoaiPhong"]; ?>" alt="" style="width:100%;border-radius:5px">
+                                                            <?php echo $rw_khachsan["MoTaLoaiPhong"]; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <p>Thành Tiền</p>
-                                        <p style="color:red;font-weight:bold" id="tongtienphong"></p>
-                                        <input type="number" id="tongtienks" name="TongTienKS" style="visibility:hidden;height:0;margin:0" value="0">
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="hr"></div>
+                            <?php
+                                $i++;
+                            }
+                            ?>
                         </div>
+
                         <!-- CHỌN HƯỚNG DẪN VIÊN -->
                         <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
                             <section class="tour-guide">
@@ -387,11 +503,33 @@ if (isset($_POST['btn_DatTour'])) {
                                 </div>
                             </section>
                         </div>
+
                         <!-- CHỌN PHƯƠNG TIỆN -->
                         <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-                            
+
                             <section class="tour-vehicle">
                                 <!-- Card vehicle -->
+
+                                <select class="form-control form-control-lg" onchange="Chonxe()" name="PhuongTien" id="ChonPhuongTien" style="margin-bottom:20px;">
+                                    <option value="" selected disabled hidden>Chọn Loại Xe</option>
+                                    <?php
+
+                                    $q_pt1 = "SELECT * FROM phuongtien";
+                                    $rs_pt1 = mysqli_query($connection, $q_pt1);
+                                    while ($row_pt = @mysqli_fetch_array($rs_pt1)) {
+                                    ?>
+                                        <option value="<?php echo $row_pt["MaPhuongTien"] ?>"><?php echo $row_pt["PhuongTien"] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <script>
+                                    function Chonxe() {
+                                        $('.card-car').hide();
+                                        x = document.getElementById("ChonPhuongTien").value;
+                                        $('#car' + x).show();
+                                    }
+                                </script>
                                 <?php
                                 $i = 0;
                                 while ($rw_pt = mysqli_fetch_array($rs_pt)) {
@@ -406,147 +544,92 @@ if (isset($_POST['btn_DatTour'])) {
                                                 var a = $('#soluongxe' + i).val();
                                                 var b = $('#songay' + i).val();
                                                 var dongia = $('#dongia' + i).text();
-                                                sum = parseInt(a) * parseInt(b) * parseInt(dongia);
+
+                                                if (a == 0 && b != 0) {
+                                                    sum = parseInt(b) * parseInt(dongia);
+                                                } else if (a != 0 && b == 0) {
+                                                    sum = parseInt(a) * parseInt(dongia);
+                                                } else if (a == 0 && b == 0) {
+                                                    sum = 0;
+                                                } else {
+                                                    sum = parseInt(a) * parseInt(b) * parseInt(dongia);
+                                                }
                                                 $('#tongtienXe' + i).text(sum.toLocaleString('it-IT', {
                                                     style: 'currency',
                                                     currency: 'VND'
                                                 }));
-                                                $("#tienXe" + i).val(sum);
-                                                sumXe = sumXe + parseInt($('#tienXe' + i).val());
-                                                $('#tongtienxe').val(sumXe);
-                                                $('#tongTX' + i).val(sum);
-                                                $('#TongTienXe').val(sumXe);
+
+                                                $('#TongTienXe' + i).val(sum);
+                                                if (a === '0') {
+                                                    document.getElementById("ChonPhuongTien").disabled = true;
+                                                } else {
+                                                    document.getElementById("ChonPhuongTien").disabled = false;
+                                                }
                                             }
                                         }
                                     </script>
 
-                                    <div class="card">
+                                    <div class="card card-car" id="car<?php echo $rw_pt["MaPhuongTien"] ?>" style="display:none;">
                                         <div class="card-body">
                                             <div class="row">
-
                                                 <div class="col-md-2" style="padding-right:0;">
                                                     <img src="admin/img/phuong-tien/<?php echo $rw_pt["HinhAnh"] ?>" class="img-vehicle" alt="">
                                                 </div>
                                                 <div class="col-md-2" style="padding-right:0;">
                                                     <h5 class="name-vehicle"><?php echo $rw_pt["PhuongTien"] ?></h5>
                                                 </div>
-                                                <!-- <div class="col-md-2" style="padding-right:0;">
+                                                <div class="col-md-2" style="padding-right:0;">
                                                     <div class="form-group">
                                                         <label for="label">Số Lượng Xe</label>
-                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>" value="0">
+                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="SoLuongXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="soluongxe<?php echo $i ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2" style="padding-right:0;">
                                                     <div class="form-group">
                                                         <label for="label">Số Ngày</label>
-                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>" value="0">
+                                                        <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="SoNgayDatXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="songay<?php echo $i ?>">
                                                     </div>
-                                                </div> -->
+                                                </div>
                                                 <div class="col-md-2" style="padding-right:0;">
                                                     Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
                                                     <p id="dongia<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
+                                                    <input type="hidden" value="<?php echo $rw_pt["Gia"] ?>" id="giaxe<?php echo $rw_pt["MaPhuongTien"] ?>" name="giaxe<?php echo $rw_pt["MaPhuongTien"] ?>">
                                                 </div>
-                                                <!-- <div class="col-md-2" style="padding-right:0;">
-                                                    Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
-                                                    <p id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
-                                                    <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
-                                                    <input type="number" name="TongTienXe" style="visibility:hidden;">
-                                                </div> -->
-
-                                                <div class="col-md-2">
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $i ?>">
-                                                        Xem Chi Tiết
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal<?php echo $i ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Đặt Xe <?php echo $rw_pt["PhuongTien"] ?></h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <input type="hidden" id="MaPT<?php echo $i ?>" name="MaPT<?php echo $i ?>" value="<?php echo $rw_pt["MaPhuongTien"] ?>">
-                                                                        <div class="col-md-4" style="padding-right:0;">
-                                                                            <div class="form-group">
-                                                                                <label for="label">Số Lượng Xe</label>
-                                                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="soluongxe" id="soluongxe<?php echo $i ?>">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4" style="padding-right:0;">
-                                                                            <div class="form-group">
-                                                                                <label for="label">Số Ngày</label>
-                                                                                <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="songay" id="songay<?php echo $i ?>">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4" style="padding-right:0;">
-                                                                            Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>"><?php echo product_price($rw_pt["Gia"]) ?></p>
-                                                                            <input id="tienXe<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
-                                                                            <input id="tongTX<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"></p>
-                                                                            <input type="number" id="tongtienxe" style="visibility:hidden;height:0;margin:0" value="0">
-                                                                            <input type="number" name="TongTienXe" style="visibility:hidden;">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" name="btnHuyDatXe" class="btn btn-secondary">Huỷ Đặt Xe</button>
-                                                                    <button type="button" onclick="DatXe()" name="btnDatXe" class="btn btn-primary">Đặt Xe</button>
-                                                                </div>
-                                                                <script>
-                                                                    //var MaPT = [];
-                                                                    //var SoLuongXe = [];
-
-                                                                    var SoNgay = [];
-
-                                                                    //var mapt = document.getElementById("MaPT<?php echo $i ?>").value;
-                                                                    //var soluong = document.getElementById("soluongxe<?php echo $i ?>").val();
-                                                                    var songay = document.getElementById("songay<?php echo $i ?>").value;
-
-                                                                    function DatXe() {
-                                                                        //MaPT.push(mapt);
-                                                                        //SoLuongXe.push(soluong);
-                                                                        SoNgay.push(songay);
-
-                                                                        //document.getElementById("demo").innerHTML = MaPT;
-                                                                        //document.getElementById("demoxe").innerHTML = SoLuongXe;
-                                                                        document.getElementById("demosl").innerHTML = SoNgay;
-                                                                    }
-                                                                </script>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-md-2" style="padding-right:0;">
+                                                    Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>">0 đ</p>
+                                                    <input type="number" id="TongTienXe<?php echo $i ?>" name="TongTienXe<?php echo $rw_pt["MaPhuongTien"] ?>" style="visibility:hidden;width:0;height:0">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 <?php
                                     $i++;
                                 } ?>
-
-                                <select class="form-control">
-                                    <option>Chọn Loại Xe</option>
-                                
-                                <?php
-                                while ($rw_pt = mysqli_fetch_array($rs_pt)) {
-                                ?>
-                                    <option value="<?php echo $rw_pt["MaPhuongTien"]?>"><?php echo $rw_pt["PhuongTien"]?></option>
-                                <?php
-                                }
-                                ?>
-                                </select>
                             </section>
                         </div>
                         <!-- CHỌN NHÀ HÀNG -->
                         <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
                             <!-- Card Nhà Hàng -->
                             <section class="tour-restaurant">
-
+                                <select class="form-control form-control-lg" onchange="Chonnh()" name="NhaHang" id="ChonNhaHang" style="margin-bottom:20px;">
+                                    <option value="" selected disabled hidden>Chọn Nhà Hàng</option>
+                                    <?php
+                                    $query_nhahang = "SELECT * FROM nhahang WHERE MaViTri = $mavt";
+                                    $result_nhahang = mysqli_query($connection, $query_nhahang);
+                                    while ($row = @mysqli_fetch_array($result_nhahang)) {
+                                    ?>
+                                        <option value="<?php echo $row["MaNH"] ?>"><?php echo $row["TenNhaHang"] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <script>
+                                    function Chonnh() {
+                                        $('.card').hide();
+                                        x = document.getElementById("ChonNhaHang").value;
+                                        $('#' + x).show();
+                                    }
+                                </script>
                                 <?php
                                 $i = 0;
                                 while ($rw_nh = mysqli_fetch_array($rs_nh)) {
@@ -566,25 +649,21 @@ if (isset($_POST['btn_DatTour'])) {
                                                     style: 'currency',
                                                     currency: 'VND'
                                                 }));
-
+                                                $("#TongTienNhaHang" + i).val(sumNH);
                                             }
                                         }
                                     </script>
-                                    <div class="card">
+                                    <div class="card" id="<?php echo $rw_nh["MaNH"] ?>" style="display:none;">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-3" style="padding: 0 10px 0 10px;">
-                                                    <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh']; ?>" class="img-restaurant" alt="">
-
-                                                </div>
-                                                <div class="col-md-3" style="padding: 0 10px 0 0;">
-                                                    <h5 class="name-vehicle"><?php echo $rw_nh['TenNhaHang']; ?></h5>
+                                                <div class="col-md-6">
+                                                    <h4 class="name-vehicle"><?php echo $rw_nh['TenNhaHang']; ?></h4>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#thuc-don-<?php echo $rw_nh["MaNH"] ?>">
                                                         Xem Thực Đơn
                                                     </button>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="thuc-don-<?php echo $rw_nh["MaNH"] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -600,26 +679,38 @@ if (isset($_POST['btn_DatTour'])) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                <div class="col-md-6">
+                                                    <label>Ngày Đặt Bàn</label>
+                                                    <input type="date" class="form-control" id="NgayDatBan<?php echo $i ?>" name="NgayDatBan<?php echo $rw_nh["MaNH"] ?>">
+                                                </div>
+                                            </div>
+                                            <div class="hr" style="margin: 20px 0"></div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img src="admin/img/nha-hang/<?php echo $rw_nh['Anh']; ?>" class="img-restaurant" alt="">
+
+                                                </div>
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="label">Số Lượng Người Lớn</label>
-                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="songuoilon<?php echo $i ?>" id="songuoilon<?php echo $i ?>">
+                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoNguoiLon<?php echo $rw_nh["MaNH"] ?>" id="songuoilon<?php echo $i ?>">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="label">Số Lượng Trẻ Em</label>
-                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="sotreem<?php echo $i ?>" id="sotreem<?php echo $i ?>">
+                                                        <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoTreEm<?php echo $rw_nh["MaNH"] ?>" id="sotreem<?php echo $i ?>">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                <div class="col-md-3">
                                                     Đơn giá:
                                                     <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaNguoiLon']); ?>/Người Lớn</p>
                                                     <p id="gianguoilon<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
                                                     <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaTreEm']); ?>/Trẻ Em</p>
                                                     <p id="giatreem<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
                                                 </div>
-                                                <div class="col-md-2" style="padding: 0 10px 0 0;">
+                                                <div class="col-md-3">
                                                     Tổng tiền:
                                                     <p id="sumtiennhahang<?php echo $i ?>" style="color:red;font-weight:bold;font-size:13px"></p>
+                                                    <input type="hidden" id="TongTienNhaHang<?php echo $i ?>" name="TongTienNhaHang<?php echo $rw_nh["MaNH"] ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -629,13 +720,59 @@ if (isset($_POST['btn_DatTour'])) {
                                 } ?>
                             </section>
                         </div>
+
+                        <div class="tab-pane fade" id="list-thanh-toan" role="tabpanel" aria-labelledby="list-thanh-toan-list">
+                            <section class="tour-payment">
+                                <select class="form-control form-control-lg" onchange="Chontt()" name="ThanhToan" id="ChonHinhThuc" style="margin-bottom:20px;">
+                                    <option value="" selected disabled hidden>Chọn Hình Thức Thanh Toán</option>
+                                    <?php
+                                    $query_thanhtoan = "SELECT * FROM thanhtoan";
+                                    $result_thanhtoan = mysqli_query($connection, $query_thanhtoan);
+                                    while ($row = @mysqli_fetch_array($result_thanhtoan)) {
+                                    ?>
+                                        <option value="<?php echo $row["MaTT"] ?>"><?php echo $row["TenThanhToan"] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <script>
+                                    function Chontt() {
+                                        $('.card').hide();
+                                        x = document.getElementById("ChonHinhThuc").value;
+                                        $('#TT' + x).show();
+                                    }
+                                </script>
+                                <?php
+                                $i = 0;
+                                while ($rw_thanhtoan = mysqli_fetch_array($rs_thanhtoan)) {
+                                ?>
+                                    <div class="card" id="TT<?php echo $rw_thanhtoan["MaTT"] ?>" style="display:none">
+                                        <div class="card-body">
+                                            <p>Hình Thức: <b><?php echo $rw_thanhtoan["TenThanhToan"] ?></b></p>
+                                            <div class="hr" style="margin:20px 0"></div>
+                                            <p><?php echo $rw_thanhtoan["NoiDung"] ?></p>
+                                        </div>
+                                    </div>
+                                <?php
+                                    $i++;
+                                }
+                                ?>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
+        <button class="btn btn-primary" onclick="validate()">Click</button>
     </section>
+    <script>
+        function validate() {
+            swal("Good job!", "You clicked the button!", "success");
+        }
+    </script>
 
     <!-- END -->
+
 
     <?php
     include('include/footer.php');
