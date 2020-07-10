@@ -108,10 +108,30 @@ if (isset($_POST['btn_DatTour'])) {
                 $sql_tour_run = mysqli_query($connection, $sql_tour);
 
                 if ($sql_tour_run) {
-                    $message = "Đặt Tour Thành Công";
-                    echo "<script type='text/javascript'>alert('$message');</script>";         
+                    $soTreEm = $_POST["SoTETour"];
+                    $soNguoiLon = $_POST["SoNLTour"];
+                    $sl = $soTreEm + $soNguoiLon;
+
+                    for ($i = 1; $i <= $sl; $i++) {
+                        $tenHK = $_POST["TenHK$i"];
+                        $cmndHK = $_POST["CmndHK$i"];
+                        $sdtHK = $_POST["SdtHK$i"];
+                        $gioitinhHK = $_POST["GioiTinhHK$i"];
+                        $ngaysinhHK = $_POST["ngaysinhHK$i"];
+
+                        $q_thanhvientour = "INSERT INTO thanhvientour (`MaHD`, `TenTV`, `CMND`, `SDT`, `GioiTinh`, `NgaySinh`) 
+                                    VALUES ('$mahd', '$tenHK', '$cmndHK', '$sdtHK', '$gioitinhHK', '$ngaysinhHK')";
+                        $q_thanhvientour_run = mysqli_query($connection, $q_thanhvientour);
+                    }
+                    if ($q_thanhvientour_run) {
+                        $message = "Đặt Tour Thành Công";
+                        echo "<script type='text/javascript'>alert('$message');</script>";
+                    } else {
+                        $message = "Đặt Tour Thất Bại";
+                        echo "<script type='text/javascript'>alert('$message');</script>";
+                    }
                 } else {
-                    $message = "Đặt Tour Thất Công";
+                    $message = "Đặt Tour Thất Bại";
                     echo "<script type='text/javascript'>alert('$message');</script>";
                 }
             } else {
@@ -271,6 +291,7 @@ if (isset($_POST['btn_DatTour'])) {
                         <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Hướng Dẫn Viên</a>
                         <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Vận Chuyển</a>
                         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Nhà Hàng</a>
+                        <a class="list-group-item list-group-item-action" id="list-thanh-vien-list" data-toggle="list" href="#list-thanh-vien" role="tab" aria-controls="home">Thông Tin Thành Viên</a>
                         <a class="list-group-item list-group-item-action" id="list-thanh-toan-list" data-toggle="list" href="#list-thanh-toan" role="tab" aria-controls="home">Hình Thức Thanh Toán</a>
                         <div class="list-group-item self-sum" style="background:#ffcd3c;color:#fff"><i class="fas fa-dollar-sign"></i> Tổng: <p id="tongTienTour" style="color:red;display:inline;font-weight:bold"><?php echo product_price($rw_tour["ChiPhiTour"]); ?></p>
                             <button type="submit" class="btn btn-primary" name="btn_DatTour">Đặt</button>
@@ -719,6 +740,89 @@ if (isset($_POST['btn_DatTour'])) {
                                     $i++;
                                 } ?>
                             </section>
+                        </div>
+                        <div class="tab-pane fade" id="list-thanh-vien" role="tabpanel" aria-labelledby="list-thanh-vien-list">
+                            <div class="modal fade" id="ErrorMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle" style="font-size:17px">Lỗi</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <b style="font-size: 15px;">Số Người Lớn Không Hợp Lệ!</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                function NhapSLThanhVien() {
+                                    var nl = $("#SNL").val();
+                                    var te = $("#STE").val();
+                                    if (parseInt(nl) == 0) {
+                                        $('#ErrorMember').modal('show');
+                                    } else {
+                                        var x = parseInt(nl) + parseInt(te);
+                                        for (var i = 1; i <= x; i++) {
+                                            $("#holder").append('<h5>Thông tin hành khách #' + i + '</h5>' + '<div class="form-row">' +
+                                                '<div class="form-group col-md-6"><label>Tên (*)</label><input type="text" name="TenHK' + i + '" class="form-control" id="TenHK' + i + '" placeholder="Nhập Tên Hành Khách"></div>' +
+                                                '<div class="form-group col-md-6"><label>Đối Tượng</label><select onchange="DoiTuong()" class="form-control" name="dtHK' + i + '" id="dtHK' + i + '"><option value="1">Người Lớn</option><option value="2">Trẻ Em</option></select></div></div>' +
+                                                '<div class="form-row">' +
+                                                '<div class="form-group col-md-6"><label>Ngày Sinh</label><input type="date" name="ngaysinhHK' + i + '" class="form-control" id="ngaysinhHK' + i + '"placeholder=""></div>' +
+                                                '<div class="form-group col-md-6"><label>Giới Tính</label><select class="form-control" name="GioiTinhHK' + i + '" id="GioiTinhHK' + i + '"><option value="Nam">Nam</option><option value="Nữ">Nữ</option><option value="Khác">Khác</option></select></div></div>' +
+                                                '<div class="form-row">' +
+                                                '<div class="form-group col-md-6"><label id="LabelSdtHK' + i + '">Số điện thoại (*)</label><input type="number" name="SdtHK' + i + '" class="form-control" id="SdtHK' + i + '" placeholder="Nhập Số Điện Thoại"></div>' +
+                                                '<div class="form-group col-md-6"><label id="LabelcmndHK' + i + '">Chứng minh nhân dân</label><input type="number" name="CmndHK' + i + '" class="form-control" id="CmndHK' + i + '"placeholder="Nhập CMND"></div></div>');
+                                        }
+                                        $("#btnThanhVien").attr("disabled", true);
+                                    }
+                                }
+
+                                function ResetThanhVien() {
+                                    $("#btnThanhVien").removeAttr("disabled");
+                                    $("#SNL").val(0);
+                                    $("#STE").val(0);
+                                    $("#holder").empty().append(html);
+                                }
+
+                                function DoiTuong() {
+                                    var nl = $("#SNL").val();
+                                    var te = $("#STE").val();
+                                    x = parseInt(document.getElementById('SNL').value) + parseInt(document.getElementById('STE').value);
+                                    for (var i = 1; i <= x; i++) {
+                                        var dt = document.getElementById("dtHK" + i);
+                                        if (dt.value == "2") {
+                                            document.getElementById("LabelSdtHK" + i).style.visibility = "hidden";
+                                            document.getElementById("LabelcmndHK" + i).style.visibility = "hidden";
+                                            document.getElementById("SdtHK" + i).style.visibility = "hidden";
+                                            document.getElementById("CmndHK" + i).style.visibility = "hidden";
+                                        } else {
+                                            document.getElementById("LabelSdtHK" + i).style.visibility = "visible";
+                                            document.getElementById("LabelcmndHK" + i).style.visibility = "visible";
+                                            document.getElementById("SdtHK" + i).style.visibility = "visible";
+                                            document.getElementById("CmndHK" + i).style.visibility = "visible";
+                                        }
+                                    }
+                                }
+                            </script>
+                            <section class="tour-member">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label>Số Người Lớn</label>
+                                        <input type="number" name="SoNLTour" id="SNL" class="form-control" placeholder="Nhập Số Người Lớn" value="0">
+                                    </div>
+                                    <div class="col">
+                                        <label>Số Trẻ Em</label>
+                                        <input type="number" name="SoTETour" id="STE" id="SoTE" class="form-control" placeholder="Nhập Số Trẻ Em" value="0">
+                                    </div>
+                                </div>
+                                <button type="button" onclick="NhapSLThanhVien()" class="btn btn-primary" id="btnThanhVien" style="margin:20px 0">Tiếp Theo</button>
+                                <button type="button" onclick="ResetThanhVien()" class="btn btn-primary" id="btnResetTV" style="margin:20px 0">Chọn Lại</button>
+                                <div id="holder"></div>
+                            </section>
+
                         </div>
 
                         <div class="tab-pane fade" id="list-thanh-toan" role="tabpanel" aria-labelledby="list-thanh-toan-list">
