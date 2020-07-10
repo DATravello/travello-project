@@ -67,6 +67,7 @@ include('includes/navbar.php');
               <th>Ngày Đặt</th>
               <th>Tổng Tiền</th>
               <th>Tình Trạng</th>
+              <th>Edit</th>
             </tr>
             <tr>
 
@@ -95,6 +96,12 @@ include('includes/navbar.php');
                   <td> <?php echo $row['NgayDat']; ?> </td>
                   <td> <?php echo $row['TongTien']; ?> </td>
                   <td> <?php echo $row['TinhTrang']; ?> </td>
+                  <td>
+                    <form action="sua-hoa-don-tour-tron-goi.php" method="post">
+                      <input type="hidden" name="edit_MaHD" value="<?php echo $row['MaHD']; ?>">
+                      <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button>
+                    </form>
+                  </td>
                 </tr>
                 <tr>
 

@@ -1280,3 +1280,28 @@ if (isset($_POST['btn_xoa_khachhang'])) {
         header('location: danh-sach-khach-hang.php');
     }
 }
+
+//SỬA HÓA ĐƠN TOUR TRỌN GÓI
+if (isset($_POST['btn_capnhat_hd_tron_goi'])) {
+    $mahd=$_POST['sua_mahd'];
+    $thanhtoan=$_POST['sua_thanhtoan'];
+    $makh = $_POST['sua_khachhang'];
+    $tour=$_POST['sua_tour'];
+    $songuoilon = $_POST['sua_songuoilon'];
+    $sotrem = $_POST['sua_sotreem'];
+    $ngaydat = $_POST['sua_ngaydat'];
+    $tongtien = $_POST['sua_tongtien'];
+    $tinhtrang = $_POST['sua_tinhtrang'];
+    $query = "UPDATE hoadon SET  TinhTrang='$tinhtrang' WHERE MaHD='$mahd'";
+    $query_run = mysqli_query($connection, $query);
+
+    if ($query_run) {
+        $_SESSION['success'] = "Update Successed!";
+        header('location: danh-sach-hoa-don-tour-tron-goi.php');
+    } else {
+        $_SESSION['status'] = "Update Failed!";
+        header('location: sua-hoa-don-tour-tron-goi.php');
+    }
+}
+
+?>
