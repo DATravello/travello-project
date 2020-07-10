@@ -197,6 +197,22 @@
     </div>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseUtilities">
+    <i class="fas fa-chart-bar"></i>
+      <span>Quản Lý Hóa Đơn</span>
+    </a>
+    <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="danh-sach-hoa-don-tour-tron-goi.php">DS Hóa Đơn Tour Trọn Gói</a>
+        <a class="collapse-item" href="danh-sach-hoa-don-khach-san.php">DS Hóa Đơn Khách Sạn</a>
+        <a class="collapse-item" href="danh-sach-hoa-don-nha-hang.php">DS Hóa Đơn Nhà Hàng</a>
+        <a class="collapse-item" href="danh-sach-hoa-don-phuong-tien.php">DS Hóa Đơn Phương Tiện</a>
+        <a class="collapse-item" href="danh-sach-hoa-don-tour-tu-len.php">DS Hóa Đơn Tour Tự Lên</a>
+      </div>
+    </div>
+  </li>
+
   <!-- Divider -->
   <!-- <hr class="sidebar-divider"> -->
 
@@ -275,7 +291,7 @@
 
 
             </span>
-            <img class="img-profile rounded-circle" src="img/nhan-vien/<?php echo $rw_nv["Anh"] ?>"  width="30px" height="30px">
+            <img class="img-profile rounded-circle" src="img/nhan-vien/<?php echo $rw_nv["Anh"] ?>" width="30px" height="30px">
           </a>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

@@ -17,6 +17,7 @@ if (isset($_GET['tour'])) {
     $rs_kh = mysqli_query($connection, $kh);
     $r_kh = mysqli_fetch_array($rs_kh);
     $maKhachHang = $r_kh["MaKH"];
+
     //Gan bien
     $giaNguoiLon = $rows["GiaTien"];
     $giaTreEm = $rows["GiaTreEm"];
@@ -53,13 +54,184 @@ if (isset($_POST['btn_DatTour'])) {
             $query2_run = mysqli_query($connection, $query2);
         }
         if ($query2_run) {
+            echo '<script>alert("Đặt tour thành công!<br>Vui lòng kiểm tra Email");</script>';
             header("Location: index.php");
         } else {
+            echo '<script>alert("Đặt tour thất bại!");</script>';
             header("Location: dat-tour.php?tour=" . $matour);
         }
     } else {
         header("Location: dat-tour.php?tour=" . $matour);
     }
+
+    $email = $_SESSION['Email'];
+    $ngayhientai = date("Y-m-d");
+    require_once('admin/phpmailler/class.phpmailer.php');
+    // and NgayDat='$ngayhientai'
+
+    $mailday = "";
+    require_once('admin/phpmailler/class.phpmailer.php');
+
+    //Khởi tạo đối tượng
+    $mail = new PHPMailer();
+    $mail->IsSMTP(); // Gọi đến class xử lý SMTP
+    $mail->Host       = "smtp.gmail.com"; // tên SMTP server
+    $mail->SMTPAuth   = true;                  // Sử dụng đăng nhập vào account
+    $mail->SMTPSecure = "ssl";
+    $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
+    $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
+    $mail->Username   = "huy240298@gmail.com"; // SMTP account username
+    $mail->Password   = "hue240298";            // SMTP account password
+    //Thiet lap thong tin nguoi gui va email nguoi gui
+    $mail->SetFrom('huy240298@gmail.com', 'Travello');
+    //Thiết lập thông tin người nhận
+    $mail->AddAddress($email, "Khách hàng");
+    //Thiết lập email nhận email hồi đáp
+    //nếu người nhận nhấn nút Reply
+    $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+    $mail->Subject    = "Travello";
+    //Thiết lập định dạng font chữ
+    $mail->CharSet = "utf-8";
+    //Thiết lập nội dung chính của email
+    $tenkh = $r_kh["TenKH"];
+    $sdtkh = $r_kh["SDT"];
+    $body = "Chào";
+    $mail->isHTML(true);
+    $mail->Body = '
+    <html>
+
+<head>
+<style type="text/css">
+section {
+    display: -webkit-flex;
+    display: flex;
+    margin: 20px auto;
+}
+
+.left {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+}
+
+.right {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+}
+
+th {
+    text-align: left;
+    padding-left: 20px;
+    background-color: rgba(0,0,0,.075);
+}
+
+td {
+    border: 1px solid #eee;
+}
+
+.bg-primary {
+    background: #007bff;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+.bg-primary p {
+    margin: 5px 0;
+}
+h5 {
+    font-size: 20px;
+}
+</style>
+</head>
+
+
+<body>
+    <div class="container">
+        <hr>
+        <h3 style="text-align:center">PHIẾU XÁC NHẬN BOOKING</h3>
+        <hr>
+        <h5 style="color:red">A. Thông Tin Booking</h5>
+
+        <section>
+            <div class="left">
+                <table style="width:100%">
+                    <tr>
+                        <th>Mã đơn hàng:</th>
+                        <td>' . $maHD . '</td>
+                    </tr>
+                    <tr>
+                        <th>Họ tên:</th>
+                        <td>' . $tenkh . '</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>' . $sdtkh . '</td>
+                    </tr>
+                    <tr>
+                        <th>Tình trạng booking:</th>
+                        <td>Chờ xác nhận</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right">
+                <table style="width:100%">
+                    <tr>
+                        <th>Ngày tạo:</th>
+                        <td>' . $ngayhientai . '</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>' . $email . '</td>
+                    </tr>
+                    <tr>
+                        <th>Tình trạng thanh toán:</th>
+                        <td>Chưa thanh toán</td>
+                    </tr>
+                    <tr>
+                        <th>Tổng Tiền:</th>
+                        <td>' .product_price($TongTien). '</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+
+        <h5 style="color:red">B. Chi Tiết Booking</h5>
+
+        <div class="group-amount">
+            <table style="width:50%;">
+                <tr>
+                    <th>Số người lớn:</th>
+                    <td>' .$soNguoiLon. '</td>
+                </tr>
+                <tr>
+                    <th>Số trẻ em:</th>
+                    <td>' .$soTreEm. '</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>Cám ơn quý khách đã tin tưởng và chọn dịch vụ của chúng tôi!<br>
+            Quý khách vui lòng kiểm tra lại toàn bộ thông tin đặt tour, bộ phận CSKH sẽ liên lạc với quý khách qua số điện thoại trên trong thời gian sớm nhất để xác định việc đặt tour.<br>
+            Chúc quý khách 1 chuyến du lịch thật vui vẻ và bổ ích!
+        </p>
+
+
+        <div class="bg-primary">
+            <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
+            <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
+            <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+        </div>
+    </div>
+</body>
+
+</html>';
+    // $mail->Body=$row['hoadon'];
+    if ($mail->Send()) {
+        echo "<div class='alert alert-success'>Đặt hàng thành công.</div>";
+    } else
+        echo "<div class='alert alert-success'>Đặt hàng thất bại.</div>";
 } ?>
 
 
