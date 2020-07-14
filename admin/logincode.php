@@ -7,7 +7,8 @@
         $taikhoan = $_POST['TaiKhoan'];
         if(empty($_POST['TaiKhoan']) || empty($_POST['MatKhau']))
         {
-            header("location:index.php?Empty=Vui Lòng Không Bỏ Trống Trường");
+            $_SESSION['login-admin-status'] = 'Không Được Để Trống!';
+            header("location:index.php?Empty=cannot-be-empty-id-password");
         }
         else
         {
@@ -16,15 +17,17 @@
             if(mysqli_fetch_assoc($result))
             {
                 $_SESSION['TaiKhoan'] = $_POST['TaiKhoan'];
+                $_SESSION['login-admin-status'] = 'Đăng Nhập Thành Công';
                 header("location:index.php");
             }
             else
             {
-                header("location:login.php?Invalid= Sai TK/MK");
+                $_SESSION['login-admin-status'] = 'Sai Tài Khoản Và Mật Khẩu';
+                header("location:login.php?Invalid=invalid-email-and-password");
             }
         }
     }
     else{
-
+        $_SESSION['login-admin-status'] = 'Lỗi Đăng Nhập';
     }
 ?>

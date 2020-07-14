@@ -2,6 +2,8 @@
 session_start();
 include('database/db_config.php');
 include('function.php');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +29,33 @@ include('function.php');
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <style>
+                .dropdown-menu {
+                    width: 200px;
+                    margin-top: 2rem;
+                }
+
+                .dropdown-menu a {
+                    color: #000;
+                    padding: 10px 15px;
+                    font-weight: normal;
+                    font-size: 13px;
+                    text-transform: none;
+                }
+            </style>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="du-lich-tu-chon.php">Du Lịch</a>
+                    <li class="dropdown show">
+                        <a class="nav-link" role="button" id="dropdown-travel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Du Lịch</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-travel">
+                            <a class="dropdown-item" href="loai-tour.php?loai-tour=1">Du Lịch Trong Nước</a>
+                            <a class="dropdown-item" href="loai-tour.php?loai-tour=2">Du Lịch Nước Ngoài</a>
+                            <a class="dropdown-item" href="du-lich-tu-chon.php">Du Lịch Tự Chọn</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="thuong-hieu-khach-san.php">Khách Sạn</a>
@@ -45,6 +66,7 @@ include('function.php');
                     <li class="nav-item">
                         <a class="nav-link" href="#">Vận Chuyển</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
@@ -53,13 +75,24 @@ include('function.php');
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-                    </li>
-                    <li class="nav-item">
+                    <li class="dropdown show">
                         <?php
                         if (isset($_SESSION['Email']) && $_SESSION['Email']) {
-                            echo '<a class="nav-link" href="thong-tin-tai-khoan.php"><i class="fas fa-user"></i></a>';
+                            $email = $_SESSION["Email"];
+
+                            $sql = "SELECT * FROM khachhang WHERE Email = '$email'";
+                            $result = mysqli_query($connection, $sql);
+                            $rows = mysqli_fetch_array($result);
+                            
+                            echo '<a class="nav-link" role="button" id="dropdown-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><i class="fas fa-user"></i></a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-account" style="width:fit-content">
+                                <a class="dropdown-item disabled">' . $rows["TenKH"] . '</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="thong-tin-tai-khoan.php">Thông Tin Tài Khoản</a>
+                                <a class="dropdown-item" href="dang-xuat.php">Đơn Hàng</a>
+                                <a class="dropdown-item" href="logout.php">Đăng Xuất</a>
+                            </div>';
                         } else {
                             echo '<a class="nav-link" href="login.php"><i class="fas fa-key"></i></a>';
                         }

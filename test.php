@@ -1,127 +1,130 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Xác Nhận Booking</title>
+    <meta charset="UTF-8">
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+
 </head>
+
 <style>
-    section {
-        display: -webkit-flex;
-        display: flex;
-        margin: 20px auto;
+    #shiva {
+        width: 100px;
+        height: 100px;
+        background: red;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        float: left;
+        margin: 5px;
     }
 
-    .left {
-        -webkit-flex: 2;
-        -ms-flex: 2;
-        flex: 2;
+    .count {
+        line-height: 100px;
+        color: white;
+        margin-left: 30px;
+        font-size: 25px;
     }
 
-    .right {
-        -webkit-flex: 2;
-        -ms-flex: 2;
-        flex: 2;
+    #talkbubble {
+        width: 120px;
+        height: 80px;
+        background: red;
+        position: relative;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        float: left;
+        margin: 20px;
     }
 
-    th {
-        text-align: left;
-        padding-left: 20px;
-        background-color: rgba(0,0,0,.075);
+    #talkbubble:before {
+        content: "";
+        position: absolute;
+        right: 100%;
+        top: 26px;
+        width: 0;
+        height: 0;
+        border-top: 13px solid transparent;
+        border-right: 26px solid red;
+        border-bottom: 13px solid transparent;
     }
 
-    td {
-        border: 1px solid #eee;
-    }
-
-    .bg-primary {
-        background: #007bff;
-        color: #fff;
-        padding: 20px 0;
-        text-align: center;
-    }
-    .bg-primary p {
-        margin: 5px 0;
-    }
-    h5 {
+    .linker {
         font-size: 20px;
+        color: black;
     }
 </style>
 
 <body>
+    <script>
+        $(document).ready(function() {
+            $("#depart").datepicker({
+                showAnim: 'drop',
+                numberOfMonth: 1,
+                dateFormat: 'dd-mm-yy',
+                onClose: function(selectedDate) {
+                    $('return').datepicker("option", "minDate", selectedDate);
+                }
+
+            })
+        })
+
+        function animateValue(obj, start = 0, end = null, duration = 3000) {
+            if (obj) {
+
+                // save starting text for later (and as a fallback text if JS not running and/or google)
+                var textStarting = obj.innerHTML;
+
+                // remove non-numeric from starting text if not specified
+                end = end || parseInt(textStarting.replace(/\D/g, ""));
+
+                var range = end - start;
+
+                // no timer shorter than 50ms (not really visible any way)
+                var minTimer = 50;
+
+                // calc step time to show all interediate values
+                var stepTime = Math.abs(Math.floor(duration / range));
+
+                // never go below minTimer
+                stepTime = Math.max(stepTime, minTimer);
+
+                // get current time and calculate desired end time
+                var startTime = new Date().getTime();
+                var endTime = startTime + duration;
+                var timer;
+
+                function run() {
+                    var now = new Date().getTime();
+                    var remaining = Math.max((endTime - now) / duration, 0);
+                    var value = Math.round(end - (remaining * range));
+                    // replace numeric digits only in the original string
+                    obj.innerHTML = textStarting.replace(/([0-9]+)/g, value);
+                    if (value == end) {
+                        clearInterval(timer);
+                    }
+                }
+
+                timer = setInterval(run, stepTime);
+                run();
+            }
+        }
+
+        animateValue(document.getElementById('value'));
+    </script>
     <div class="container">
-        <hr>
-        <h3 style="text-align:center">PHIẾU XÁC NHẬN BOOKING</h3>
-        <hr>
-        <h5 style="color:red">A. Thông Tin Booking</h5>
-
-        <section>
-            <div class="left">
-                <table style="width:100%">
-                    <tr>
-                        <th>Mã đơn hàng:</th>
-                        <td>Bill Gates</td>
-                    </tr>
-                    <tr>
-                        <th>Họ tên:</th>
-                        <td>555 77 854</td>
-                    </tr>
-                    <tr>
-                        <th>Số điện thoại:</th>
-                        <td>555 77 855</td>
-                    </tr>
-                    <tr>
-                        <th>Tình trạng booking:</th>
-                        <td>555 77 855</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="right">
-                <table style="width:100%">
-                    <tr>
-                        <th>Ngày tạo:</th>
-                        <td>Bill Gates</td>
-                    </tr>
-                    <tr>
-                        <th>Email:</th>
-                        <td>555 77 854</td>
-                    </tr>
-                    <tr>
-                        <th>Tình trạng thanh toán:</th>
-                        <td>555 77 855</td>
-                    </tr>
-                    <tr>
-                        <th>Ghi Chú:</th>
-                        <td>555 77 855</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
+    <form action="" method="post">
+        <input type="text" id="depart" placeholder="Depart">
+        <input type="text" name="datepick" id="return">
+    </form>
 
 
-        <h5 style="color:red">B. Chi Tiết Booking</h5>
+    <div id="value">+300% gross margin</div>
 
-        <div class="group-amount">
-            <table style="width:50%;">
-                <tr>
-                    <th>Số người lớn:</th>
-                    <td>Bill Gates</td>
-                </tr>
-                <tr>
-                    <th>Số trẻ em:</th>
-                    <td>555 77 854</td>
-                </tr>
-            </table>
-        </div>
-        <p>Cám ơn quý khách đã tin tưởng và chọn dịch vụ của chúng tôi!<br>
-            Quý khách vui lòng kiểm tra lại toàn bộ thông tin đặt tour, bộ phận CSKH sẽ liên lạc với quý khách qua số điện thoại trên trong thời gian sớm nhất để xác định việc đặt tour.
-            <br>Chúc quý khách 1 chuyến du lịch thật vui vẻ và bổ ích!
-        </p>
-
-
-        <div class="bg-primary">
-            <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
-            <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
-            <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
-        </div>
     </div>
 
 </body>
