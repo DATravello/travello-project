@@ -894,9 +894,12 @@ if (isset($_POST['btn_DatTour'])) {
 </section>
 
 <!-- END -->
-<?php
-include('include/footer.php');
-?>
+
 
 <script src="plugins/jquery-validation-1.19.2/dist/jquery.validate.min.js"></script>
 <script src="scripts/validate-cus.js"></script>
+
+    <?php
+    include('include/footer.php');
+    ?>
+
