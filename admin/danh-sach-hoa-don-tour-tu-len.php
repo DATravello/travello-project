@@ -63,9 +63,6 @@ include('includes/navbar.php');
               <th>Tên Khách Hàng</th>
               <th>Thanh Toán</th>
               <th>Tên Tour</th>
-              <th>Mã HĐ Khách Sạn</th>
-              <th>Mã HĐ Nhà Hàng</th>
-              <th>Mã HĐ Phương Tiện</th>
               <th>Số Người Lớn</th>
               <th>Số Trẻ Em</th>
               <th>Ngày Đặt</th>
@@ -91,9 +88,6 @@ include('includes/navbar.php');
                   <td><?php
                       echo $rows1['TenTour'];
                       ?></td>
-                  <td> <?php echo $row['MaHDKS']; ?> </td>
-                  <td> <?php echo $row['MaHoaDonNH']; ?> </td>
-                  <td> <?php echo $row['MaHoaDonPT']; ?> </td>
                   <td> <?php echo $row['SoNguoiLon']; ?> </td>
                   <td> <?php echo $row['SoTreEm']; ?> </td>
                   <td> <?php echo $row['NgayDat']; ?> </td>

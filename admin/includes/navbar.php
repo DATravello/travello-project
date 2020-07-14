@@ -53,11 +53,11 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Interface
+    Quản Lý
   </div>
 
   <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
       <i class="fas fa-fw fa-cog"></i>
       <span>Pages</span>
@@ -70,7 +70,7 @@
         <a class="collapse-item" href="list-user.php">List User</a>
 
       </div>
-  </li>
+  </li> -->
 
 
 
