@@ -1,13 +1,3 @@
-<?php
-session_start();
-$_SESSION["Email"];
-if ($_SESSION["Email"]) {
-    header("location: index.php");
-}
-else {
-    $_SESSION["Email"] = '';
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +9,6 @@ else {
     <link rel="stylesheet" href="css/animate/animate.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
 </head>
 <style>
     label {

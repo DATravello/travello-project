@@ -1,10 +1,10 @@
 <?php
-include('include/header.php');
+include('include/header-login-required.php');
 
 if (isset($_GET['tour'])) {
     $matour = $_GET['tour'];
     require_once('database/db_config.php');
-    
+
 
     //Query Tour
     $q_tour = "SELECT * FROM tourdulich WHERE MaTour='$matour'";
@@ -319,7 +319,7 @@ if (isset($_POST['btn_DatTour'])) {
     }
 }
 ?>
-
+<title><?php echo $tentour ?> | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container self-booking">

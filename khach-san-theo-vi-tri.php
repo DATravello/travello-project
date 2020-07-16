@@ -1,22 +1,26 @@
-<?php include('include/header.php'); ?>
+<?php
+include('include/header.php');
+
+if (isset($_GET['thuonghieu'])) {
+	$math = $_GET['thuonghieu'];
+	require_once('database/db_config.php');
+
+	//QUERY Khách Sạn, Vị Trí theo Mã thương hiệu
+	$q_ks = "SELECT * FROM vitri vt, khachsan ks Where vt.MaViTri = ks.MaViTri and MaThuongHieuKS = '$math'";
+	$rs_ks = mysqli_query($connection, $q_ks);
+
+	//Query Tên Thương Hiệu KS
+	$q_th = "SELECT * FROM thuonghieuks WHERE MaThuongHieuKS = $math";
+	$rs_th = mysqli_query($connection, $q_th);
+	$rw_th = mysqli_fetch_array($rs_th);
+	$thuonghieu = $rw_th["TenThuongHieuKS"];
+}
+?>
+
+<title><?php echo $thuonghieu?> | Travello</title>
 
 <!-- NỘI DUNG -->
-
-
-
 <section class="container destination">
-
-	<?php
-
-	if (isset($_GET['thuonghieu'])) {
-		$math = $_GET['thuonghieu'];
-		require_once('database/db_config.php');
-
-		//QUERY Khách Sạn, Vị Trí theo Mã thương hiệu
-		$q_ks = "SELECT * FROM vitri vt, khachsan ks Where vt.MaViTri = ks.MaViTri and MaThuongHieuKS = '$math'";
-		$rs_ks = mysqli_query($connection, $q_ks);
-	}
-	?>
 	<div class="row">
 		<?php
 		while ($rw_ks = mysqli_fetch_array($rs_ks)) {
@@ -34,7 +38,7 @@
 		?>
 
 				<div class="col-md-4">
-					<a href="khach-san.php?diem-den=<?php echo $rw_ks["MaViTri"] ?>&thuong-hieu=<?php echo $math?>">
+					<a href="khach-san.php?diem-den=<?php echo $rw_ks["MaViTri"] ?>&thuong-hieu=<?php echo $math ?>">
 						<div class="card">
 							<img class="img-destination" src="admin/img/diem-den/<?php echo $rw_vt["Anh"]; ?>" alt="Card image cap">
 							<h5 class="title-destination"><?php echo $rw_ks["TenViTri"]; ?></h5>

@@ -12,6 +12,7 @@
 
 .tour-container .btn-book {
     background: #CF1011;
+    font-weight: bold;
     color: #FFF;
     padding: 5px 30px;
     margin-top: 20px;
@@ -23,16 +24,10 @@
 .tour-container .btn-book:hover {
     border: 1px solid #CF1011;
     background: #fff;
-}
-
-.tour-container .btn-book:hover a {
     color: #CF1011;
+    
 }
 
-.tour-container .btn-book a {
-    text-decoration: none;
-    color: #fff;
-}
 
 .tour-container .tour-widget {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

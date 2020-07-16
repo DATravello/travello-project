@@ -1,7 +1,5 @@
 <?php
 include('include/header.php');
-
-
 if (isset($_GET['diem-den'])) {
     $mavt = $_GET['diem-den'];
     require_once('database/db_config.php');
@@ -10,13 +8,15 @@ if (isset($_GET['diem-den'])) {
     $query = "SELECT * FROM tourdulich WHERE MaViTri='$mavt'";
     $result = mysqli_query($connection, $query);
 
-    // Querry Điểm đến
-    //$q_diemden = "SELECT * FROM vitri WHERE MaViTri='$mavt'";
-    //$rs_diemden = mysqli_query($connection, $q_diemden);
-    //$rw_dd = mysqli_fetch_array($rs_diemden);
+    //Querry Điểm đến
+    $q_diemden = "SELECT * FROM vitri WHERE MaViTri='$mavt'";
+    $rs_diemden = mysqli_query($connection, $q_diemden);
+    $rw_dd = mysqli_fetch_array($rs_diemden);
+    $tendiemden = $rw_dd["TenViTri"];
 }
 ?>
 
+<title><?php echo $tendiemden?> | Du Lịch Tự Chọn | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container hotel-content">

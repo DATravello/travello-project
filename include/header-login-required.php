@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('database/db_config.php');
+include('security.php');
 include('function.php');
 ?>
 

@@ -1,9 +1,7 @@
 <?php
 include('include/header.php')
 ?>
-
-
-
+<title>Thương Hiệu Khách Sạn | Travello</title>
 
 <!-- NỘI DUNG -->
 <section class="container destination">

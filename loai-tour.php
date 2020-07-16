@@ -4,13 +4,15 @@ if (isset($_GET['loai-tour'])) {
     require_once('database/db_config.php');
     $query = "SELECT * from tourdulich where MaLoaiTour='$maloaitour'";
     $result = mysqli_query($connection, $query);
+    
 
     $query_lt = "SELECT * FROM loaitourdulich where MaLoaiTour = '$maloaitour'";
     $result_lt = mysqli_query($connection, $query_lt);
     $rows_lt = @mysqli_fetch_assoc($result_lt);
-
-
+    $tenloaitour = $rows_lt["TenLoaiTour"];
 ?>
+
+<title><?php echo $tenloaitour?> | Travello</title>
 
     <style>
         .filter-title {
@@ -178,7 +180,13 @@ if (isset($_GET['loai-tour'])) {
                                     <div class="like"><i class="fas fa-heart"></i></div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $rows['NoiDen'] ?></p>
+                                    <?php
+                                        $vt = $rows['MaViTri'];
+                                        $query_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
+                                        $rs_vt = mysqli_query($connection, $query_vt);
+                                        $vitri = mysqli_fetch_array($rs_vt);
+                                    ?>
+                                    <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $vitri["TenViTri"] ?></p>
                                     <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                                     <p class="card-text">
                                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
