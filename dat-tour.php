@@ -1,17 +1,16 @@
-<!-- DONE -->
-
 <?php
-session_start();
-include('database/db_config.php');
-include('function.php');
+include('include/header-login-required.php');
 
 if (isset($_GET['tour'])) {
     $email = $_SESSION['Email'];
     $matour = $_GET['tour'];
+
     //Query Tour
-    $query = "SELECT * from tourdulich where MaTour='$matour'";
+    $query = "SELECT * FROM tourdulich WHERE MaTour='$matour'";
     $result = mysqli_query($connection, $query);
     $rows = @mysqli_fetch_array($result);
+    $tentour = $rows["TenTour"];
+
     //Query Khach Hang
     $kh = "SELECT * FROM khachhang WHERE Email = '$email'";
     $rs_kh = mysqli_query($connection, $kh);
@@ -82,7 +81,7 @@ if (isset($_POST['btn_DatTour'])) {
             //Thiết lập email nhận email hồi đáp
             //nếu người nhận nhấn nút Reply
             $mail->AddReplyTo("huy240298@gmail.com", "Travello");
-            $mail->Subject    = "Travello";
+            $mail->Subject    = "Xác Nhận Đặt Tour - $tentour";
             //Thiết lập định dạng font chữ
             $mail->CharSet = "utf-8";
             //Thiết lập nội dung chính của email
@@ -233,9 +232,9 @@ if (isset($_POST['btn_DatTour'])) {
         header("Location: dat-tour.php?tour=" . $matour);
     }
 } ?>
+<title>Đặt Tour - <?php echo $tentour?></title>
 
-
-<head>
+<!-- <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Travello</title>
@@ -246,10 +245,10 @@ if (isset($_POST['btn_DatTour'])) {
     <link rel="stylesheet" href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css">
 </head>
 
-<body>
+<body> -->
 
     <!-- HEADER -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <!-- <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.php">TRAVELLO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -296,11 +295,11 @@ if (isset($_POST['btn_DatTour'])) {
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- BANNER -->
 
-    <section class="banner">
+    <!-- <section class="banner">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -342,7 +341,7 @@ if (isset($_POST['btn_DatTour'])) {
                 <span class="sr-only">Next</span>
             </a>
         </div>
-    </section>
+    </section> -->
 
     <!-- END BANNER -->
 

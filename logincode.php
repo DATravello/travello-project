@@ -1,9 +1,7 @@
 <?php
-session_start();
-require_once('database/db_config.php');
+include('security.php');
 
 if (isset($_POST['DangNhap'])) {
-    $error = '';
     $email = $_POST['txtEmail'];
     if (empty($_POST['txtEmail']) || empty($_POST['txtMatKhau'])) {
         $_SESSION['login-status'] = 'Không Được Để Trống!';

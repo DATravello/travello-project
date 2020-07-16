@@ -8,6 +8,7 @@ if (isset($_GET['tour'])) {
     $query = "SELECT * from tourdulich where MaTour='$matour'";
     $result = mysqli_query($connection, $query);
     $rows = @mysqli_fetch_array($result);
+    $tentour = $rows["TenTour"];
 
     //Loại Tour
     $query2 = "SELECT * FROM tourdulich INNER JOIN loaitourdulich ON tourdulich.MaLoaiTour = loaitourdulich.MaLoaiTour ";
@@ -36,6 +37,7 @@ if (isset($_GET['tour'])) {
     $rw_vitri = mysqli_fetch_array($rs_vitri);
 }
 ?>
+<title><?php echo $tentour?> | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container tour-container">
@@ -97,7 +99,7 @@ if (isset($_GET['tour'])) {
                     <h5>Hướng dẫn viên: </h5>
                     <p><?php echo $rows_hdv['TenHDV']; ?></p>
                 </div>
-                <button class="btn btn-book"><a href="dat-tour.php?tour=<?php echo $rows['MaTour']; ?>">Đặt tour</a></button>
+                <a href="dat-tour.php?tour=<?php echo $rows['MaTour']; ?>"><button class="btn btn-book">Đặt tour</button></a>
             </div>
 
         </div>

@@ -1,40 +1,72 @@
-<?php include('include/header.php');
+<?php include('include/header.php'); ?>
 
-?>
+<title>Travello | Trang Chủ</title>
 
 <!-- SEARCH -->
-<div class="d-flex justify-content-center align-items-center ">
+<!-- <div class="d-flex justify-content-center align-items-center "> -->
+<div class="container">
 
-
-    <form class="search" id="search">
+    <form class="search" id="search" action="search.php" method="get">
         <h5>TÌM KIẾM TOUR</h5>
         <div class="form-row">
-            <div class="col-xs-8 input-group-lg">
-                <select class="custom-select" id="inlineFormCustomSelect">
+            <div class="col-xs-8 col-md-3 form-group">
+                <input type="text" name="SearchTenTour" class="form-control" placeholder="Tên Tour">
+            </div>
+            <div class="col-xs-8 col-md-2 form-group">
+
+                <select class="custom-select" name="SearchNoiDi" id="inlineFormCustomSelect">
                     <option selected>Nơi Đi</option>
-                    <option value="1">TP. Hồ Chí Minh</option>
-                    <option value="2">Hà Nội</option>
-                    <option value="3">Đà Nẵng</option>
-                    <option value="3">Huế</option>
+                    <?php
+                    //Query Nơi Khởi Hành
+                    $sql_noidi = "SELECT * FROM vitri";
+                    $rs_noidi = mysqli_query($connection, $sql_noidi);
+                    while ($rows = @mysqli_fetch_array($rs_noidi)) { ?>
+                        <option value="<?php echo $rows["MaViTri"] ?>"><?php echo $rows["TenViTri"] ?></option>
+                    <?php
+                    }
+                    ?>
+
                 </select>
             </div>
-            <div class="col-xs-8 input-group-lg">
-                <select class="custom-select" id="inlineFormCustomSelect">
+            <div class="col-xs-8 col-md-2 form-group">
+                <select class="custom-select" name="SearchNoiDen" id="inlineFormCustomSelect">
                     <option selected>Nơi Đến</option>
-                    <option value="1">TP. Hồ Chí Minh</option>
-                    <option value="2">Hà Nội</option>
-                    <option value="3">Đà Nẵng</option>
-                    <option value="3">Huế</option>
+                    <?php
+                    //Query Nơi Đến
+                    $sql_noidi = "SELECT * FROM vitri";
+                    $rs_noidi = mysqli_query($connection, $sql_noidi);
+                    while ($rows = @mysqli_fetch_array($rs_noidi)) { ?>
+                        <option value="<?php echo $rows["MaViTri"] ?>"><?php echo $rows["TenViTri"] ?></option>
+                    <?php
+                    }
+                    ?>
                 </select>
             </div>
-            <div class="col-xs-8 input-group-lg align-middle">
-                <input type="date" class="form-control" placeholder="Thời Gian">
+            <div class="col-xs-8 col-md-3 form-group align-middle">
+                <input type="date" name="SearchNgayDi" class="form-control" placeholder="Thời Gian">
             </div>
-            <div class="col-xs-8">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+            <style>
+                .search .btn-search {
+                    border: none;
+                    height: 30px;
+                    line-height: 30px;
+                    background: #000;
+                    color: #fff;
+                    border-radius: 20px;
+                    padding: 0 40px;
+                }
+
+                .search .form-group {
+                    margin: 0;
+                }
+            </style>
+            <div class="col-md-2 text-center">
+                <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
             </div>
+
         </div>
     </form>
+
 </div>
 
 
@@ -141,7 +173,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             $rs_vitri = mysqli_query($connection, $q_vitri);
                             $rw_vitri = mysqli_fetch_array($rs_vitri);
                             ?>
-                            <?php echo $rw_vitri['TenViTri'] 
+                            <?php echo $rw_vitri['TenViTri']
                             ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
@@ -195,7 +227,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             $rs_vitri = mysqli_query($connection, $q_vitri);
                             $rw_vitri = mysqli_fetch_array($rs_vitri);
                             ?>
-                            <?php echo $rw_vitri['TenViTri'] 
+                            <?php echo $rw_vitri['TenViTri']
                             ?>
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>

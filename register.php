@@ -1,13 +1,5 @@
 <?php
 session_start();
-$_SESSION["Email"] = '';
-$_SESSION["Email"];
-if ($_SESSION["Email"]) {
-    header("location: index.php");
-}
-else {
-    $_SESSION["Email"] = '';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

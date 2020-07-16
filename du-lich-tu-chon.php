@@ -3,10 +3,8 @@ include('include/header.php');
 
 $query = "SELECT * FROM vitri";
 $result = mysqli_query($connection, $query);
-
-
 ?>
-
+<title>Du Lịch Tự Chọn | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container destination-content">

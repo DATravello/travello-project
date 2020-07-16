@@ -8,8 +8,23 @@ if (isset($_GET['diem-den']) && isset($_GET['thuong-hieu'])) {
     //QUERY Khách Sạn, Vị Trí theo Mã thương hiệu
     $q_ks = "SELECT * FROM khachsan Where MaViTri ='$mavt' AND MaThuongHieuKS='$math'";
     $rs_ks = mysqli_query($connection, $q_ks);
+
+    //Query Tên Thương Hiệu KS
+	$q_th = "SELECT * FROM thuonghieuks WHERE MaThuongHieuKS = $math";
+	$rs_th = mysqli_query($connection, $q_th);
+	$rw_th = mysqli_fetch_array($rs_th);
+    $thuonghieu = $rw_th["TenThuongHieuKS"];
+    
+    //Query Vị Trí
+    $q_vt = "SELECT * FROM vitri WHERE MaViTri = $mavt";
+	$rs_vt = mysqli_query($connection, $q_vt);
+	$rw_vt = mysqli_fetch_array($rs_vt);
+    $vitri = $rw_vt["TenViTri"];
+
 }
 ?>
+
+<title><?php echo $thuonghieu?> | <?php echo $vitri?>  | Travello</title>
 
 <!-- NỘI DUNG -->
 
