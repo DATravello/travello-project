@@ -5,7 +5,7 @@ if (isset($_GET['diem-den'])) {
     require_once('database/db_config.php');
 
     // Querry Khách sạn
-    $query = "SELECT * FROM tourdulich WHERE MaViTri='$mavt'";
+    $query = "SELECT * FROM tourdulich WHERE MaViTri='$mavt' ORDER BY NgayTao DESC";
     $result = mysqli_query($connection, $query);
 
     //Querry Điểm đến
@@ -16,7 +16,7 @@ if (isset($_GET['diem-den'])) {
 }
 ?>
 
-<title><?php echo $tendiemden?> | Du Lịch Tự Chọn | Travello</title>
+<title><?php echo $tendiemden ?> | Du Lịch Tự Chọn | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container hotel-content">
@@ -31,8 +31,8 @@ if (isset($_GET['diem-den'])) {
                 <div class="card">
                     <div class="card-img-top">
                         <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                        <div class="feature">Đang Giảm Giá</div>
                         <div class="like"><i class="fas fa-heart"></i></div>
+                        <div class="feature">Tour Tự Lên</div>
                     </div>
                     <div class="card-body">
                         <p class="card-location"><i class="fas fa-map-marker-alt"></i>
@@ -42,7 +42,7 @@ if (isset($_GET['diem-den'])) {
                             $rs_vitri = mysqli_query($connection, $q_vitri);
                             $rw_vitri = mysqli_fetch_array($rs_vitri);
                             ?>
-                            <?php echo $rw_vitri['TenViTri'] 
+                            <?php echo $rw_vitri['TenViTri']
                             ?>
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour-tu-chon.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
@@ -51,8 +51,11 @@ if (isset($_GET['diem-den'])) {
                         </p>
                     </div>
                     <div class="card-footer d-flex">
-                        <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
-                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
+                        <div class="card-f-left">
+                            <p><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</p>
+                            <p><i class="fas fa-couch"></i> <?php echo $rows["SucChua"] ?> Chỗ</p>
+                        </div>
+                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price-available"><?php echo product_price($rows['GiaTien']) ?></span></div>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,7 @@
 <?php
 include('include/header.php');
-?>
 
-<!-- NỘI DUNG -->
-
-<?php
+//Query Khách Hàng
 $email = $_SESSION['Email'];
 $query = "SELECT * from khachhang where Email = '$email'";
 $result = mysqli_query($connection, $query);
@@ -13,6 +10,12 @@ $rowTK = mysqli_fetch_array($result);
 $MaKH = $rowTK["MaKH"];
 ?>
 
+<title>Hoá Đơn Đặt Tour | Travello</title>
+<!-- NỘI DUNG -->
+<?php
+$q_hd = "SELECT * FROM hoadon WHERE MaKH = '$MaKH' ORDER BY NgayDat DESC";
+$r_hd = mysqli_query($connection, $q_hd);
+?>
 <style>
     .container-orders .left-user-tab .card {
         background: #8178d1;
@@ -109,40 +112,29 @@ $MaKH = $rowTK["MaKH"];
 
     .container-orders .left-user-tab .sub-card {
         background: #fff !important;
-        border-top-left-radius: 0 !important;
-        border-top-right-radius: 0 !important;
-
+        border-top-left-radius: 0!important;
+        border-top-right-radius: 0!important;
+       
     }
-
     .container-orders .left-user-tab .sub-card .card-body {
-        border: none !important;
-        padding: 10px 5px !important;
+        border: none!important;
+        padding: 10px 5px!important;
     }
 
     .container-orders .active {
         background: #eee;
     }
-
     .container-orders .sub-card p {
         margin: 10px 0;
         padding: 10px;
         color: rgb(74, 74, 74);
     }
-
     .container-orders .sub-card i {
         margin-right: 10px;
     }
+
 </style>
-<script>
-    function EditUser() {
-        $("#HoTen").removeAttr("disabled");
-        $("#DiaChi").removeAttr("disabled");
-        $("#NgaySinh").removeAttr("disabled");
-        $("#GioiTinh").removeAttr("disabled");
-        $("#SDT").removeAttr("disabled");
-    }
-</script>
-<title> <?php echo $rowTK["TenKH"]; ?> | Thông Tin Tài Khoản</title>
+
 <section class="container container-orders">
     <div class="row">
         <div class="col-md-4">
@@ -160,13 +152,14 @@ $MaKH = $rowTK["MaKH"];
                         <p class="phone-user"><i class="fas fa-mobile"></i> Điện thoại: <?php echo $rowTK["SDT"]; ?></p>
                         <p class="email-user"><i class="fas fa-envelope"></i> Email: <?php echo $rowTK["Email"]; ?></p>
                         <p class="address-user"><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $rowTK["DiaChi"]; ?></p>
-                        <div class="text-center"><button class="btn btn-edit-user" onclick="EditUser()" id="edit-user">Chỉnh Sửa <i class="fas fa-pen"></i></button></div>
+                        <div class="text-center"><button class="btn btn-edit-user">Chỉnh Sửa <i class="fas fa-pen"></i></button></div>
+
                     </div>
                 </div>
                 <div class="card sub-card">
                     <div class="card-body">
-                        <p class="active"><i class="fas fa-user"></i> Thông Tin Tài Khoản</p>
-                        <p><i class="fas fa-shopping-cart"></i> <a href="hoa-don-dat-tour.php">Lịch Sử Đặt Tour</a></p>
+                        <p><i class="fas fa-user"></i> <a href="thong-tin-tai-khoan.php">Thông Tin Tài Khoản</a></p>
+                        <p class="active"><i class="fas fa-shopping-cart"></i> Lịch Sử Đặt Tour</p>
                         <p><i class="fas fa-heart"></i> <a href="#">Tour Yêu Thích</a></p>
                         <p><i class="fas fa-eye"></i> <a href="#">Tour Đã Xem</a></p>
                         <p><i class="fas fa-question-circle"></i> <a href="#">Hỏi Đáp</a></p>
@@ -175,44 +168,68 @@ $MaKH = $rowTK["MaKH"];
             </div>
         </div>
 
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-center">Thông Tin Tài Khoản</h5>
-                    <form id="info-u" class="info-u">
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Họ Tên</label>
-                            <input type="text" class="form-control" id="HoTen" placeholder="<?php echo $rowTK["TenKH"] ?>" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Ngày Sinh</label>
-                            <input type="text" class="form-control" id="NgaySinh" onfocus="(this.type='date')" placeholder="<?php echo $rowTK["NgaySinh"] ?>" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Địa Chỉ</label>
-                            <input type="text" class="form-control" id="DiaChi" placeholder="<?php echo $rowTK["DiaChi"] ?>" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Giới Tính</label>
-                            <input type="text" class="form-control" id="GioiTinh" placeholder="<?php echo $rowTK["GioiTinh"] ?>" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Số Điện Thoại</label>
-                            <input type="number" class="form-control" id="SDT" placeholder="<?php echo $rowTK["SDT"] ?>" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Email</label>
-                            <input type="email" class="form-control" id="Email" placeholder="<?php echo $rowTK["Email"] ?>" disabled>
-                        </div>
-                    </form>
-                    <hr>
-                    <div style="text-align:right"><button class="btn btn-success">Lưu Lại <i class="fas fa-save"></i></button></div>
-                </div>
+        <div class="col-md-8">
+            <?php
+            $now = date("Y-m-d");
+            while ($rowHD = @mysqli_fetch_array($r_hd)) {
+                $matour = $rowHD["MaTour"];
+                $mahd = $rowHD["MaHD"];
+                $sql = "SELECT * FROM tourdulich WHERE MaTour = $matour";
+                $rs = mysqli_query($connection, $sql);
+                $tour = mysqli_fetch_array($rs);
+                $ngaydi = $tour["ThoiGian"];
+                if ($ngaydi > $now) {
+                    $sql_update = "UPDATE hoadon SET TinhTrang = 'Đã Hoàn Thành' WHERE MaHD = $mahd";
+                    $rs_update = mysqli_query($connection, $sql_update);
+                }
+            ?>
+                <div class="card orders">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p>Tour <a href="thong-tin-hoa-don.php?ma-hoa-don=<?php echo $rowHD["MaHD"] ?>" style="color:#007bff;font-weight:bold">#<?php echo $rowHD["MaHD"] ?></a></p>
+                                <p style="font-weight:bold;"><?php echo $tour["TenTour"]; ?></p>
 
-            </div>
+                            </div>
+                            <div class="col-md-3">
+                                <p>Ngày Đặt</p>
+                                <p><?php
+                                    $ngaydat = date_create($rowHD["NgayDat"]);
+                                    echo date_format($ngaydat, 'd/m/Y');
+                                    ?>
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Tổng Tiền</p>
+                                <p style="color:red;font-weight:bold"><?php echo product_price($rowHD["TongTien"]) ?></p>
+                            </div>
+                            <div class="col-md-4" style="text-align:right">
+                                <p>Tình Trạng</p>
+                                <?php
+                                if ($rowHD["TinhTrang"] == "Đã Hoàn Thành") {
+                                    echo '<p class="status status-done">' . $rowHD["TinhTrang"] . '</p>';
+                                } else if ($rowHD["TinhTrang"] == "Chưa Xác Nhận") {
+                                    echo '<p class="status status-process">' . $rowHD["TinhTrang"] . '</p>';
+                                } else if ($rowHD["TinhTrang"] == "Chưa Thanh Toán") {
+                                    echo '<p class="status status-unpayment">' . $rowHD["TinhTrang"] . '</p>';
+                                } else if ($rowHD["TinhTrang"] == "Đã Thanh Toán") {
+                                    echo '<p class="status status-payment">' . $rowHD["TinhTrang"] . '</p>';
+                                } else if ($rowHD["TinhTrang"] == "Đã Huỷ") {
+                                    echo '<p class="status status-cancel">' . $rowHD["TinhTrang"] . '</p>';
+                                }
+                                ?>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </section>
+
 
 <?php
 include('include/footer.php');

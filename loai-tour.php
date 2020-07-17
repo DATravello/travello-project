@@ -2,9 +2,9 @@
 if (isset($_GET['loai-tour'])) {
     $maloaitour = $_GET['loai-tour'];
     require_once('database/db_config.php');
-    $query = "SELECT * from tourdulich where MaLoaiTour='$maloaitour'";
+    $query = "SELECT * from tourdulich where MaLoaiTour='$maloaitour' ORDER BY NgayTao DESC";
     $result = mysqli_query($connection, $query);
-    
+
 
     $query_lt = "SELECT * FROM loaitourdulich where MaLoaiTour = '$maloaitour'";
     $result_lt = mysqli_query($connection, $query_lt);
@@ -12,7 +12,7 @@ if (isset($_GET['loai-tour'])) {
     $tenloaitour = $rows_lt["TenLoaiTour"];
 ?>
 
-<title><?php echo $tenloaitour?> | Travello</title>
+    <title><?php echo $tenloaitour ?> | Travello</title>
 
     <style>
         .filter-title {
@@ -176,15 +176,28 @@ if (isset($_GET['loai-tour'])) {
                             <div class="card">
                                 <div class="card-img-top">
                                     <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                                    <div class="feature">Đang Giảm Giá</div>
+                                    <?php
+                                    $succhua = $rows["SucChua"];
+                                    $giamgia = $rows["GiamGia"];
+                                    $gia = $rows["GiaTien"];
+                                    if ($succhua == 0) {
+                                        echo '<div class="feature-soldout">Đã Bán Hết</div>';
+                                    } else {
+                                        if ($giamgia > 0) {
+                                            $percent = 100 - ($giamgia / $gia) * 100;
+                                            echo '<div class="feature-sale">Giảm Giá ' . floor($percent) . '%</div>';
+                                        } else {
+                                        }
+                                    }
+                                    ?>
                                     <div class="like"><i class="fas fa-heart"></i></div>
                                 </div>
                                 <div class="card-body">
                                     <?php
-                                        $vt = $rows['MaViTri'];
-                                        $query_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
-                                        $rs_vt = mysqli_query($connection, $query_vt);
-                                        $vitri = mysqli_fetch_array($rs_vt);
+                                    $vt = $rows['MaViTri'];
+                                    $query_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
+                                    $rs_vt = mysqli_query($connection, $query_vt);
+                                    $vitri = mysqli_fetch_array($rs_vt);
                                     ?>
                                     <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $vitri["TenViTri"] ?></p>
                                     <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
@@ -193,8 +206,20 @@ if (isset($_GET['loai-tour'])) {
                                     </p>
                                 </div>
                                 <div class="card-footer d-flex">
-                                    <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
-                                    <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
+                                    <div class="card-f-left">
+                                        <p><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</p>
+                                        <p><i class="fas fa-couch"></i> <?php echo $succhua ?> Chỗ</p>
+                                    </div>
+                                    <div class="ml-auto card-f-right">
+                                        <?php
+                                        if ($giamgia > 0) {
+                                            echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
+                                                    <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                                        } else {
+                                            echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

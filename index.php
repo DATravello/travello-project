@@ -139,20 +139,16 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     </div>
 </div>
 
-<!-- TOUR ĐẶT NHIỀU -->
+<!-- TOUR GIẢM GIÁ -->
 
-<!-- TOUR TRONG NƯỚC -->
 <section class="container tour-container">
     <?php
     $query = "SELECT * from loaitourdulich";
     $result = mysqli_query($connection, $query);
-    $query2 = "SELECT * from tourdulich where MaLoaiTour='1'";
+    $query2 = "SELECT * from tourdulich where GiamGia > 0 LIMIT 6";
     $result2 = mysqli_query($connection, $query2);
-    $query3 = "SELECT * from loaitourdulich where MaLoaiTour='1'";
-    $result3 = mysqli_query($connection, $query3);
-    $rows3 = mysqli_fetch_array($result3);
     ?>
-    <h5 class="tour-title"><?php echo $rows3['TenLoaiTour'] ?></h5>
+    <h5 class="tour-title">Tour Đang Giảm Giá</h5>
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
@@ -162,7 +158,20 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                 <div class="card">
                     <div class="card-img-top">
                         <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                        <div class="feature">Đang Giảm Giá</div>
+                        <?php
+                        $succhua = $rows["SucChua"];
+                        $giamgia = $rows["GiamGia"];
+                        $gia = $rows["GiaTien"];
+                        if ($succhua == 0) {
+                            echo '<div class="feature-soldout">Đã Bán Hết</div>';
+                        } else {
+                            if ($giamgia > 0) {
+                                $percent = 100 - ($giamgia / $gia) * 100;
+                                echo '<div class="feature-sale">Giảm Giá ' . floor($percent)  . '%</div>';
+                            } else {
+                            }
+                        }
+                        ?>
                         <div class="like"><i class="fas fa-heart"></i></div>
                     </div>
                     <div class="card-body">
@@ -181,8 +190,20 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         </p>
                     </div>
                     <div class="card-footer d-flex">
-                        <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
-                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
+                        <div class="card-f-left">
+                            <p><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</p>
+                            <p><i class="fas fa-couch"></i> <?php echo $succhua ?> Chỗ</p>
+                        </div>
+                        <div class="ml-auto card-f-right">
+                            <?php
+                            if ($giamgia > 0) {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
+                                <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            } else {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -190,6 +211,137 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
         }
         ?>
     </div>
+</section>
+
+<style>
+    .parallax {
+        /* The image used */
+        background-image: url("img/parallax-1.jpg");
+
+        /* Set a specific height */
+        height: 300px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<!-- Container element -->
+<!-- <div class="parallax" style="padding: 50px 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- TOUR TRONG NƯỚC -->
+<section class="container tour-container">
+    <?php
+    $query = "SELECT * from loaitourdulich";
+    $result = mysqli_query($connection, $query);
+    $query2 = "SELECT * from tourdulich where MaLoaiTour='1' ORDER BY NgayTao DESC LIMIT 6";
+    $result2 = mysqli_query($connection, $query2);
+    $query3 = "SELECT * from loaitourdulich where MaLoaiTour='1'";
+    $result3 = mysqli_query($connection, $query3);
+    $rows3 = mysqli_fetch_array($result3);
+    ?>
+    <h5 class="tour-title"><?php echo $rows3['TenLoaiTour'] ?></h5>
+    <div class="row">
+        <?php
+        while ($rows = @mysqli_fetch_array($result2)) {
+        ?>
+            <!-- Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
+                        <?php
+                        $succhua = $rows["SucChua"];
+                        $giamgia = $rows["GiamGia"];
+                        $gia = $rows["GiaTien"];
+                        if ($succhua == 0) {
+                            echo '<div class="feature-soldout">Đã Bán Hết</div>';
+                        } else {
+                            if ($giamgia > 0) {
+                                $percent = 100 - ($giamgia / $gia) * 100;
+                                echo '<div class="feature-sale">Giảm Giá ' . floor($percent)  . '%</div>';
+                            } else {
+                            }
+                        }
+                        ?>
+                        <div class="like"><i class="fas fa-heart"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-location"><i class="fas fa-map-marker-alt"></i>
+                            <?php
+                            $vitri = $rows['MaViTri'];
+                            $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
+                            $rs_vitri = mysqli_query($connection, $q_vitri);
+                            $rw_vitri = mysqli_fetch_array($rs_vitri);
+                            ?>
+                            <?php echo $rw_vitri['TenViTri']
+                            ?></p>
+                        <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
+                        <p class="card-text">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <div class="card-f-left">
+                            <p><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</p>
+                            <?php
+                            if ($succhua == 0) {
+                                echo '<p><i class="fas fa-couch"></i> Đã Bán Hết</p>';
+                            } else {
+                                echo '<p><i class="fas fa-couch"></i> ' . $succhua . ' Chỗ</p>';
+                            }
+                            ?>
+
+                        </div>
+                        <div class="ml-auto card-f-right">
+                            <?php
+                            if ($giamgia > 0) {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
+                                <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            } else {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+    <div class="text-center"><a href="loai-tour.php?loai-tour=1">
+            <div class="btn btn-primary">XEM THÊM</div>
+        </a></div>
 </section>
 
 
@@ -200,7 +352,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     <?php
     $query = "SELECT * from loaitourdulich";
     $result = mysqli_query($connection, $query);
-    $query2 = "SELECT * from tourdulich where MaLoaiTour='2'";
+    $query2 = "SELECT * from tourdulich where MaLoaiTour='2' ORDER BY NgayTao DESC LIMIT 6";
     $result2 = mysqli_query($connection, $query2);
     $query3 = "SELECT * from loaitourdulich where MaLoaiTour='2'";
     $result3 = mysqli_query($connection, $query3);
@@ -216,7 +368,20 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                 <div class="card">
                     <div class="card-img-top">
                         <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
-                        <div class="feature">Đang Giảm Giá</div>
+                        <?php
+                        $succhua = $rows["SucChua"];
+                        $giamgia = $rows["GiamGia"];
+                        $gia = $rows["GiaTien"];
+                        if ($succhua == 0) {
+                            echo '<div class="feature-soldout">Đã Bán Hết</div>';
+                        } else {
+                            if ($giamgia > 0) {
+                                $percent = 100 - ($giamgia / $gia) * 100;
+                                echo '<div class="feature-sale">Giảm Giá ' . floor($percent) . '%</div>';
+                            } else {
+                            }
+                        }
+                        ?>
                         <div class="like"><i class="fas fa-heart"></i></div>
                     </div>
                     <div class="card-body">
@@ -236,8 +401,26 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         </p>
                     </div>
                     <div class="card-footer d-flex">
-                        <div class="card-f-left"><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</div>
-                        <div class="ml-auto card-f-right"><i class="fas fa-dollar-sign"></i> <span class="price"><?php echo product_price($rows['GiaTien']) ?></span></div>
+                        <div class="card-f-left">
+                            <p><i class="far fa-clock"></i> <?php echo $rows['SoNgay'] ?> Ngày</p>
+                            <?php
+                            if ($succhua == 0) {
+                                echo '<p><i class="fas fa-couch"></i> Đã Bán Hết</p>';
+                            } else {
+                                echo '<p><i class="fas fa-couch"></i> ' . $succhua . ' Chỗ</p>';
+                            }
+                            ?>
+                        </div>
+                        <div class="ml-auto card-f-right">
+                            <?php
+                            if ($giamgia > 0) {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
+                                <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            } else {
+                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,6 +428,9 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
         }
         ?>
     </div>
+    <div class="text-center"><a href="loai-tour.php?loai-tour=2">
+            <div class="btn btn-primary">XEM THÊM</div>
+        </a></div>
 </section>
 
 
@@ -273,9 +459,8 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
             <p>Nguyễn Đắc Huề</p>
         </div>
         <div class="col-md-2">
-            <h5>Hỗ Trợ</h5>
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
+            <h5>Điều Khoản</h5>
+            <p><a href="quy-dinh-huy-tour.php">Chính Sách Huỷ Tour</a></p>
         </div>
         <div class="col-md-4">
             <h5>Liên Hệ</h5>
