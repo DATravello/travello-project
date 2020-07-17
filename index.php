@@ -139,13 +139,13 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     </div>
 </div>
 
-<!-- TOUR ĐẶT NHIỀU -->
+<!-- TOUR GIẢM GIÁ -->
 
 <section class="container tour-container">
     <?php
     $query = "SELECT * from loaitourdulich";
     $result = mysqli_query($connection, $query);
-    $query2 = "SELECT * from tourdulich where GiamGia > 0";
+    $query2 = "SELECT * from tourdulich where GiamGia > 0 LIMIT 6";
     $result2 = mysqli_query($connection, $query2);
     ?>
     <h5 class="tour-title">Tour Đang Giảm Giá</h5>
@@ -212,6 +212,51 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
         ?>
     </div>
 </section>
+
+<style>
+    .parallax {
+        /* The image used */
+        background-image: url("img/parallax-1.jpg");
+
+        /* Set a specific height */
+        height: 300px;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<!-- Container element -->
+<!-- <div class="parallax" style="padding: 50px 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        ABC
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 
 <!-- TOUR TRONG NƯỚC -->
 <section class="container tour-container">
@@ -414,9 +459,8 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
             <p>Nguyễn Đắc Huề</p>
         </div>
         <div class="col-md-2">
-            <h5>Hỗ Trợ</h5>
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
+            <h5>Điều Khoản</h5>
+            <p><a href="quy-dinh-huy-tour.php">Chính Sách Huỷ Tour</a></p>
         </div>
         <div class="col-md-4">
             <h5>Liên Hệ</h5>

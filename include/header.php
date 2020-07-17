@@ -87,7 +87,7 @@ include('function.php');
                                 <a class="dropdown-item disabled">' . $rows["TenKH"] . '</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="thong-tin-tai-khoan.php">Thông Tin Tài Khoản</a>
-                                <a class="dropdown-item" href="dang-xuat.php">Đơn Hàng</a>
+                                <a class="dropdown-item" href="hoa-don-dat-tour.php">Tour Đã Đặt</a>
                                 <a class="dropdown-item" href="logout.php">Đăng Xuất</a>
                             </div>';
                         } else {

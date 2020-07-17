@@ -14,8 +14,8 @@
             <p>Nguyễn Đắc Huề</p>
         </div>
         <div class="col-md-2">
-            <h5>Hỗ Trợ</h5>
-            <p>Lorem ipsum</p>
+            <h5>Điều Khoản</h5>
+            <p><a href="quy-dinh-huy-tour.php">Chính Sách Huỷ Tour</a></p>
             <p>Lorem ipsum</p>
         </div>
         <div class="col-md-4">
