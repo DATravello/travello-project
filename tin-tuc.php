@@ -2,9 +2,18 @@
 include('include/header.php')
 ?>
 
-
+<title>Tin Tức | Travello</title>
 <!-- NỘI DUNG -->
 <section class="container tin-tuc">
+
+	<style>
+		.tin-tuc .card {
+			max-height: none;
+		}
+		.tin-tuc .card .card-body {
+			padding: 1.25rem !important;
+		}
+	</style>
 	<?php
 
 	$conn = mysqli_connect("localhost", "root", "", "travello_db");

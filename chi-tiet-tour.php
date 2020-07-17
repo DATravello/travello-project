@@ -37,7 +37,7 @@ if (isset($_GET['tour'])) {
     $rw_vitri = mysqli_fetch_array($rs_vitri);
 }
 ?>
-<title><?php echo $tentour?> | Travello</title>
+<title><?php echo $tentour ?> | Travello</title>
 <!-- NỘI DUNG -->
 
 <section class="container tour-container">
@@ -63,13 +63,28 @@ if (isset($_GET['tour'])) {
         <div class="col-md-4">
             <div class="tour-widget">
                 <h5 class="w-title">Thông tin tour</h5>
-                <div class="w-price">
-                    <h5>Giá: <h5>
-                            <p><?php echo product_price($rows['GiaTien']); ?> <p>
-                </div>
+                <?php
+                    $giamgia = $rows["GiamGia"];
+                    if($giamgia > 0) {
+                        echo '<div class="w-price">
+                                <h5>Giá: <h5>
+                                <p>'.product_price($rows['GiamGia']).'<p>
+                            </div>';
+                    }
+                    else {
+                        echo '<div class="w-price">
+                                <h5>Giá: <h5>
+                                <p>'.product_price($rows['GiaTien']).'<p>
+                            </div>';
+                    }
+                ?>
                 <div class="w-type">
                     <h5>Loại tour: </h5>
                     <p><?php echo $rows2['TenLoaiTour']; ?> <p>
+                </div>
+                <div class="w-time">
+                    <h5>Số chỗ còn: </h5>
+                    <p><?php echo $rows['SucChua']; ?> Chỗ</p>
                 </div>
                 <div class="w-time">
                     <h5>Thời gian: </h5>
@@ -99,7 +114,15 @@ if (isset($_GET['tour'])) {
                     <h5>Hướng dẫn viên: </h5>
                     <p><?php echo $rows_hdv['TenHDV']; ?></p>
                 </div>
-                <a href="dat-tour.php?tour=<?php echo $rows['MaTour']; ?>"><button class="btn btn-book">Đặt tour</button></a>
+                <?php
+                    $succhua = $rows["SucChua"];
+                    if($succhua > 0) {
+                        echo '<a href="dat-tour.php?tour='.$rows['MaTour'].'"><button class="btn btn-book">Đặt tour</button></a>';
+                    }
+                    else {
+                        echo '<button class="btn-soldout">Đã Hết Chỗ</button></a>';
+                    }
+                ?>
             </div>
 
         </div>

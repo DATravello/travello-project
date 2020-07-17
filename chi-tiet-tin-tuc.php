@@ -24,6 +24,8 @@ if (isset($_GET['tintuc'])) {
     $rows_loaitt = @mysqli_fetch_array($result_loaitt);
 }
 ?>
+<title> <?php echo $rows['TenTinTuc']; ?> | Tin Tức | Travello </title>
+
 
 <!-- NỘI DUNG -->
 

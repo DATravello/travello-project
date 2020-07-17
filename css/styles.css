@@ -59,6 +59,19 @@ h3 {
     outline: none;
 }
 
+
+.btn-soldout {
+    background: #5E6D77;
+    color: #FFF;
+    padding: 5px 30px;
+    margin-top: 20px;
+    border-radius: 0;
+    border: 1px solid #5E6D77;
+    text-transform: uppercase;
+    transition: .3s ease-in-out;
+    outline: none;
+}
+
 .btn-book:hover,
 .btn-book:active,
 .btn-book:visited,
@@ -323,6 +336,8 @@ h3 {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
     margin-bottom: 25px;
+    height: 100%;
+    max-height: 380px;
 }
 
 .card-img-top {
@@ -336,6 +351,28 @@ h3 {
     top: 15px;
     left: 0;
     background: #19A1E5;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 0 3px 3px 0;
+}
+
+.card-img-top .feature-sale {
+    position: absolute;
+    font-size: 13px;
+    top: 15px;
+    left: 0;
+    background: #CF1011;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 0 3px 3px 0;
+}
+
+.card-img-top .feature-soldout {
+    position: absolute;
+    font-size: 13px;
+    top: 15px;
+    left: 0;
+    background: #5E6D77;
     color: #fff;
     padding: 6px 10px;
     border-radius: 0 3px 3px 0;
@@ -364,7 +401,8 @@ h3 {
 }
 
 .card-body {
-    padding: 15px 20px;
+    padding: 1.25rem !important;
+    flex: auto !important;
 }
 
 .card-body .card-text i {
@@ -397,18 +435,40 @@ h3 {
     border: none;
     background: #fff;
     color: #768092;
-    margin-bottom: 10px;
 }
 
 .card-footer .fa-dollar-sign {
     color: #FA5636;
 }
 
-.card .card-footer .price {
-    font-size: 18px;
+.card .card-footer .price-available {
+    font-size: 16px;
     font-weight: bold;
     color: #1A2B50;
 }
+
+.card .card-footer .price-soldout {
+    font-size: 16px;
+    font-weight: bold;
+    color: #768092;
+}
+
+.card .card-footer .price-disable {
+    font-size: 16px;
+    font-weight: bold;
+    color: #768092;
+    text-decoration: line-through;
+}
+
+.card .card-footer .price-disable i {
+    color: #768092;
+}
+
+.card .card-footer .card-f-left p {
+    font-size: 13px !important;
+    margin-bottom: 5px !important;
+}
+
 
 
 /* INTRO */
