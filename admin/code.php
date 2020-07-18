@@ -1296,12 +1296,31 @@ if (isset($_POST['btn_capnhat_hd_tron_goi'])) {
     $query_run = mysqli_query($connection, $query);
 
     if ($query_run) {
-        $_SESSION['success'] = "Update Successed!";
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
         header('location: danh-sach-hoa-don-tour-tron-goi.php');
     } else {
-        $_SESSION['status'] = "Update Failed!";
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
         header('location: sua-hoa-don-tour-tron-goi.php');
     }
 }
 
-?>
+//SỬA YÊU CẦU HUỶ TOUR
+
+if(isset($_POST["btn-update-huy-tour"])) {
+
+    $mahd = $_POST["sua_mahd"];
+    $tinhtrang = $_POST["sua_tinhtrang"];
+    $ghichu = $_POST["sua_ghichu"];
+
+    $query = "UPDATE hoadon SET TinhTrang='$tinhtrang', GhiChu='$ghichu' WHERE MaHD='$mahd'";
+    $query_run = mysqli_query($connection, $query);
+
+    if ($query_run) {
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
+        header('location: danh-sach-yeu-cau-huy-tour.php');
+    } else {
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
+        header('location: cap-nhat-yeu-cau-huy-tour.php');
+    }
+
+}

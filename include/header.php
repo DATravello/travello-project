@@ -61,10 +61,6 @@ include('function.php');
                         <a class="nav-link" href="thuong-hieu-nha-hang.php">Nhà Hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Vận Chuyển</a>
-                    </li>
-
-                    <li class="nav-item">
                         <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
                     <li class="nav-item">

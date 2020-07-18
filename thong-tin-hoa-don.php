@@ -55,6 +55,22 @@ if (isset($_GET['ma-hoa-don'])) {
     }
 </style>
 <section class="container order-container">
+    <?php
+    if (isset($_POST['btnHuyTour'])) {
+        $mahd = $_POST["MaHD"];
+        $tinhtrang = $_POST["TinhTrang"];
+        $lydohuytour = $_POST["LyDoHuy"];
+
+        $sql = "UPDATE hoadon SET TinhTrang = 'Yêu Cầu Huỷ', TinhTrangCu = '$tinhtrang', LyDoHuyTour = '$lydohuytour' WHERE MaHD = $mahd";
+        $qr = mysqli_query($connection, $sql);
+
+        if ($qr) {
+            echo '<div class="alert alert-success text-center"><h3>Huỷ Thành Công</h3></div>';
+        } else {
+            echo '<div class="alert alert-danger text-center"><h3>Huỷ Thất Bại</h3></div>';
+        }
+    }
+    ?>
     <div class="row">
         <div class="col-md-6">
             <h5>Chi Tiết Hoá Đơn <span style="color:#007bff">#<?php echo $mahoadon ?></span> - <span style="font-weight:bold;"><?php echo $rw_hd["TinhTrang"] ?></span> </h5>
@@ -64,16 +80,19 @@ if (isset($_GET['ma-hoa-don'])) {
                 echo date_format($ngaydat, 'd/m/Y');
                 ?>
             </p>
+            <p><b>Lý Do Huỷ:</b> <i><?php echo $rw_hd["LyDoHuyTour"]?></i></p>
+            <p><b>Ghi Chú:</b> <i><?php echo $rw_hd["GhiChu"]?></i></p>
         </div>
         <div class="col-md-6" style="text-align: right;">
             <?php
-            if ($rw_hd["TinhTrang"] != "Đã Hoàn Thành") {
-
-                echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#huytour">Huỷ Tour</button>';
+            if ($rw_hd["TinhTrang"] == "Đã Hoàn Thành" || $rw_hd["TinhTrang"] == "Yêu Cầu Huỷ" || $rw_hd["TinhTrang"] == "Đã Huỷ") {
             } else {
+                echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#huytour">Huỷ Tour</button>';
             }
             ?>
         </div>
+
+        
 
         <!-- Modal -->
         <div class="modal fade" id="huytour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -86,13 +105,22 @@ if (isset($_GET['ma-hoa-don'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Vui lòng đọc kỹ các điều khoản về quy trình huỷ tour và phí huỷ đặt tour theo <a href="quy-dinh-huy-tour.php" style="font-weight:bold;text-decoration:none">quy định huỷ tour</a> của công ty!<br>
-                        Việc quý khách xác nhận huỷ tour đồng nghĩa với việc quý khách đã đọc và chấp nhận các điều khoản trên.
-                        </p>
+                        <form action="" method="post">
+                            <p>Vui lòng đọc kỹ các điều khoản về quy trình huỷ tour và phí huỷ đặt tour theo <a href="quy-dinh-huy-tour.php" style="font-weight:bold;text-decoration:none">quy định huỷ tour</a> của công ty!<br>
+                                Việc quý khách xác nhận huỷ tour đồng nghĩa với việc quý khách đã đọc và chấp nhận các điều khoản trên.
+                            </p>
+                            <div class="form-group">
+                                <label>Lý Do Huỷ Tour</label>
+                                <textarea name="LyDoHuy" class="form-control"></textarea>
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-danger">Xác Nhận</button>
+
+                        <input type="hidden" name="MaHD" value="<?php echo $rw_hd['MaHD']; ?>">
+                        <input type="hidden" name="TinhTrang" value="<?php echo $rw_hd['TinhTrang']; ?>">
+                        <button type="submit" name="btnHuyTour" class="btn btn-danger">Xác Nhận</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -244,6 +272,8 @@ if (isset($_GET['ma-hoa-don'])) {
     </div>
 
 </section>
+
+
 
 <?php
 include('include/footer.php');

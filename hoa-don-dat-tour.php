@@ -87,6 +87,16 @@ $r_hd = mysqli_query($connection, $q_hd);
         float: right;
     }
 
+    .status-request-cancel {
+        background: #e67300;
+        font-size: 14px;
+        color: #fff;
+        padding: 3px;
+        border-radius: 25px;
+        text-align: center;
+        width: fit-content;
+        float: right;
+    }
 
     .status-cancel {
         background: #dc3545;
@@ -214,6 +224,8 @@ $r_hd = mysqli_query($connection, $q_hd);
                                     echo '<p class="status status-unpayment">' . $rowHD["TinhTrang"] . '</p>';
                                 } else if ($rowHD["TinhTrang"] == "Đã Thanh Toán") {
                                     echo '<p class="status status-payment">' . $rowHD["TinhTrang"] . '</p>';
+                                } else if ($rowHD["TinhTrang"] == "Yêu Cầu Huỷ") {
+                                    echo '<p class="status status-request-cancel">' . $rowHD["TinhTrang"] . '</p>';
                                 } else if ($rowHD["TinhTrang"] == "Đã Huỷ") {
                                     echo '<p class="status status-cancel">' . $rowHD["TinhTrang"] . '</p>';
                                 }

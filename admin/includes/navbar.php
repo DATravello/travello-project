@@ -45,7 +45,22 @@
   <li class="nav-item active">
     <a class="nav-link" href="index.php">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a>
+      <span>Dashboard</span>
+    </a>
+
+  </li>
+  <li class="nav-item">
+    <?php
+      $sql = "SELECT COUNT(*) AS total FROM hoadon WHERE TinhTrang = 'Yêu Cầu Huỷ'";
+      $qr = mysqli_query($connection, $sql);
+      $rs = mysqli_fetch_array($qr);
+      $rs_cancel = $rs["total"];
+    ?>
+    <a class="nav-link" href="danh-sach-yeu-cau-huy-tour.php">
+      <i class="fas fa-window-close"></i>
+      <span>Yêu Cầu Huỷ Tour <span style="color:#ffcd3c">(<?php echo $rs_cancel?>)</span></span>
+    </a>
+    </a>
   </li>
 
   <!-- Divider -->
@@ -199,7 +214,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseUtilities">
-    <i class="fas fa-chart-bar"></i>
+      <i class="fas fa-chart-bar"></i>
       <span>Quản Lý Hóa Đơn</span>
     </a>
     <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionSidebar">

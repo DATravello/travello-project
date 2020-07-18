@@ -32,7 +32,7 @@ if (isset($_GET['diem-den'])) {
                     <div class="card-img-top">
                         <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
                         <div class="like"><i class="fas fa-heart"></i></div>
-                        <div class="feature">Tour Tự Lên</div>
+                        <div class="feature">Tour Tự Chọn</div>
                     </div>
                     <div class="card-body">
                         <p class="card-location"><i class="fas fa-map-marker-alt"></i>
