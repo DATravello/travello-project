@@ -1,11 +1,13 @@
-<?php session_start()?>
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đăng Nhập | Travello</title>
+    <title>Quên Mật Khẩu | Travello</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/animate/animate.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -51,34 +53,28 @@
                     </div>
 
                     <div class="col-12 form-input">
-                        <form action="logincode.php" id="login-form" method="POST">
+                        <form action="forgotcode.php" id="login-form" method="POST">
                             <?php
-                            if (isset($_SESSION['login-status']) && $_SESSION['login-status'] != '') {
-                                echo '<div class="alert alert-danger">' . $_SESSION['login-status'] . '</div>';
-                                unset($_SESSION['login-status']);
+                            if (isset($_SESSION['forgot-status']) && $_SESSION['forgot-status'] != '') {
+                                echo '<div class="alert alert-success">' . $_SESSION['forgot-status'] . '</div>';
+                                unset($_SESSION['forgot-status']);
                             }
                             ?>
                             <div class="form-group">
-                                <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Tên Đăng Nhập" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="txtMatKhau" id="txtMatKhau" class="form-control" placeholder="Mật Khẩu" required>
+                                <input type="email" name="Email" id="Email" class="form-control" placeholder="Email Đăng Nhập" required>
                             </div>
                             <div class="form-group text-center">
-                                <button type="submit" name="DangNhap" class="btn btn-success">Đăng Nhập</button>
+                                <button type="submit" name="TimMatKhau" class="btn btn-success">Yêu Cầu</button>
                             </div>
                         </form>
                     </div>
                     <div class="col-12 forgot text-center">
-                        <a href="forgot-password.php">Quên Mật Khẩu?</a><br>
-                        Chưa có tài khoản? <a href="register.php">Đăng ký</a>
+                        <a href="login.php">Đăng Nhập</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </body>
 <script src="scripts/jquery-3.5.1.slim.min.js"></script>
 <script src="scripts/popper.min.js"></script>
