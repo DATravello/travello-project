@@ -7,8 +7,8 @@ include('includes/navbar.php');
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Sửa HĐ Tour Trọn Gói
-            <a href="danh-sach-hoa-don-tour-tron-goi.php">
-                <button type="button" class="btn btn-success">Danh Sách HĐ Tour Trọn Gói</button>
+            <a href="danh-sach-hoa-don-tour-tu-len.php">
+                <button type="button" class="btn btn-success">Danh Sách HĐ Tour Tự Lên</button>
             </a>
         </h6>
     </div>
@@ -18,7 +18,7 @@ include('includes/navbar.php');
         $connection = mysqli_connect("localhost", "root", "", "travello_db");
         if (isset($_POST['edit_btn'])) {
             $mahd = $_POST['edit_MaHD'];
-            $query = "SELECT * FROM hoadon WHERE MaHD ='$mahd'";
+            $query = "SELECT * FROM hoadontourtutao WHERE MaHD ='$mahd'";
             $query_run = mysqli_query($connection, $query);
             foreach ($query_run as $row) {
         ?>
@@ -35,7 +35,7 @@ include('includes/navbar.php');
                             $rs_thanhtoan = mysqli_query($connection, $q_thanhtoan);
                             $TT = @mysqli_fetch_array($rs_thanhtoan)
                             ?>
-                            <option value="<?php echo $TT["MaTT"] ?>"><?php echo $TT["TenThanhToan"] ?></option>
+                             <option value="<?php echo $TT["MaTT"] ?>"><?php echo $TT["TenThanhToan"] ?></option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -46,7 +46,7 @@ include('includes/navbar.php');
                             $rs_khachhang = mysqli_query($connection, $q_khachhang);
                             $TL = @mysqli_fetch_array($rs_khachhang)
                             ?>
-                            <option value="<?php echo $TL["MaKH"] ?>"><?php echo $TL["TenKH"] ?></option>
+                              <option value="<?php echo $TL["MaKH"] ?>"><?php echo $TL["TenKH"] ?></option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -62,19 +62,19 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label>Số Người Lớn</label>
-                        <input type="number" name="sua_songuoilon" value="<?php echo $row['SoNguoiLon'] ?>" class="form-control" readonly>
+                        <input type="number" name="sua_songuoilon" value="<?php echo $row['SoNguoiLon'] ?>"  class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>Số Trẻ Em</label>
-                        <input type="number" name="sua_sotreem" value="<?php echo $row['SoTreEm'] ?>" class="form-control" readonly>
+                        <input type="number" name="sua_sotreem" value="<?php echo $row['SoTreEm'] ?>"  class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>Ngày Đặt</label>
-                        <input type="date" name="sua_ngaydat" value="<?php echo $row['NgayDat'] ?>" class="form-control" readonly>
+                        <input type="date" name="sua_ngaydat" value="<?php echo $row['NgayDat'] ?>"  class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>Tổng Tiền</label>
-                        <input type="number" name="sua_tongtien" value="<?php echo $row['TongTien'] ?>" class="form-control" readonly>
+                        <input type="number" name="sua_tongtien" value="<?php echo $row['TongTien'] ?>"  class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label> Tình Trạng </label>

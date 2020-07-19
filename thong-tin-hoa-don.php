@@ -13,6 +13,8 @@ if (isset($_GET['ma-hoa-don'])) {
     $matour = $rw_hd["MaTour"];
     $makh = $rw_hd["MaKH"];
     $matt = $rw_hd["MaTT"];
+    $tinhtrangtour = $rw_hd["TinhTrang"];
+    $TongTien = $rw_hd["TongTien"];
 
     //Query Tour
     $sql_tour = "SELECT * FROM tourdulich WHERE MaTour = $matour";
@@ -60,12 +62,169 @@ if (isset($_GET['ma-hoa-don'])) {
         $mahd = $_POST["MaHD"];
         $tinhtrang = $_POST["TinhTrang"];
         $lydohuytour = $_POST["LyDoHuy"];
+        $ngayhuy = date("Y-m-d");
 
-        $sql = "UPDATE hoadon SET TinhTrang = 'Yêu Cầu Huỷ', TinhTrangCu = '$tinhtrang', LyDoHuyTour = '$lydohuytour' WHERE MaHD = $mahd";
+        $sql = "UPDATE hoadon SET TinhTrang = 'Yêu Cầu Huỷ', TinhTrangCu = '$tinhtrang', LyDoHuyTour = '$lydohuytour', NgayHuy = '$ngayhuy' WHERE MaHD = $mahd";
         $qr = mysqli_query($connection, $sql);
 
         if ($qr) {
             echo '<div class="alert alert-success text-center"><h3>Huỷ Thành Công</h3></div>';
+
+            $email = $_SESSION['Email'];
+            $ngayhientai = date("Y-m-d");
+            $tentour = $rw_tour["TenTour"];
+            require_once('admin/phpmailler/class.phpmailer.php');
+            // and NgayDat='$ngayhientai'
+
+            $mailday = "";
+            require_once('admin/phpmailler/class.phpmailer.php');
+
+            //Khởi tạo đối tượng
+            $mail = new PHPMailer();
+            $mail->IsSMTP(); // Gọi đến class xử lý SMTP
+            $mail->Host       = "smtp.gmail.com"; // tên SMTP server
+            $mail->SMTPAuth   = true;                  // Sử dụng đăng nhập vào account
+            $mail->SMTPSecure = "ssl";
+            $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
+            $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
+            $mail->Username   = "huy240298@gmail.com"; // SMTP account username
+            $mail->Password   = "hue240298";            // SMTP account password
+            //Thiet lap thong tin nguoi gui va email nguoi gui
+            $mail->SetFrom('huy240298@gmail.com', 'Travello');
+            //Thiết lập thông tin người nhận
+            $mail->AddAddress($email, "Khách hàng");
+            //Thiết lập email nhận email hồi đáp
+            //nếu người nhận nhấn nút Reply
+            $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+            $mail->Subject    = "Yêu Cầu Huỷ Tour - $tentour";
+            //Thiết lập định dạng font chữ
+            $mail->CharSet = "utf-8";
+            //Thiết lập nội dung chính của email
+            $tenkh = $rw_u["TenKH"];
+            $sdtkh = $rw_u["SDT"];
+            $body = "Chào";
+            $mail->isHTML(true);
+            $mail->Body = '
+            <html>
+
+            <head>
+                <style type="text/css">
+                    section {
+                        display: -webkit-flex;
+                        display: flex;
+                        margin: 20px auto;
+                    }
+
+                    .left {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    .right {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    th {
+                        text-align: left;
+                        padding-left: 20px;
+                        background-color: rgba(0, 0, 0, .075);
+                    }
+
+                    td {
+                        border: 1px solid #eee;
+                    }
+
+                    .bg-primary {
+                        background: #007bff;
+                        color: #fff;
+                        padding: 20px 0;
+                        text-align: center;
+                    }
+
+                    .bg-primary p {
+                        margin: 5px 0;
+                    }
+
+                    h5 {
+                        font-size: 20px;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="container">
+                    <hr>
+                    <h3 style="text-align:center">YÊU CẦU HUỶ TOUR</h3>
+                    <hr>
+
+
+                    <b>Quý khách vừa yêu cầu huỷ tour <b style="color:#007bff">#'.$mahd.',</b> vui lòng đợi từ 10p - 15p sau nhân viên bộ phận CSKH sẽ liên lạc với quý khách theo
+                        số điện thoại quý khách đã đăng ký tài khoản. Nếu không thấy phản hồi, vui lòng liên hệ lại với công ty theo Hotline: 0326805211.<br>
+                        Trong trường hợp công ty không thể liên lạc được với quý khách, yêu cầu huỷ tour của quý khách sẽ không được chấp thuận!<br>
+                        Cám ơn quý khách đã tin tưởng sử dụng dịch vụ của chúng tôi!
+                    </b>
+                    <h5 style="color:red">A. Thông Tin Tour</h5>
+                    <section>
+                        <div class="left">
+                            <table style="width:100%">
+                                <tr>
+                                    <th>Mã đơn hàng:</th>
+                                    <td>#' . $mahd . '</td>
+                                </tr>
+                                <tr>
+                                    <th>Họ tên:</th>
+                                    <td>' . $tenkh . '</td>
+                                </tr>
+                                <tr>
+                                    <th>Số điện thoại:</th>
+                                    <td>' . $sdtkh . '</td>
+                                </tr>
+                                <tr>
+                                    <th>Tình trạng booking:</th>
+                                    <td>'.$tinhtrangtour.'</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="right">
+                            <table style="width:100%">
+                                <tr>
+                                    <th>Ngày tạo:</th>
+                                    <td>' . $ngayhuy . '</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>' . $email . '</td>
+                                </tr>
+                                <tr>
+                                    <th>Tổng Tiền:</th>
+                                    <td>' . product_price($TongTien) . '</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                    <h5 style="color:red">B. Chi Tiết Huỷ Tour</h5>
+
+                    <div class="group-amount">
+                        <p><b>Ngày Yêu Cầu: <i>' . $ngayhuy . '</i></b></p>
+                        <p> <b>Lý Do: <i>' . $lydohuytour . '</i></b></p>
+                    </div>
+
+                    <div class="bg-primary">
+                        <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
+                        <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
+                        <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+                    </div>
+                </div>
+            </body>
+
+            </html>';
+            if ($mail->Send()) {
+            } else {
+            }
         } else {
             echo '<div class="alert alert-danger text-center"><h3>Huỷ Thất Bại</h3></div>';
         }
@@ -80,19 +239,21 @@ if (isset($_GET['ma-hoa-don'])) {
                 echo date_format($ngaydat, 'd/m/Y');
                 ?>
             </p>
-            <p><b>Lý Do Huỷ:</b> <i><?php echo $rw_hd["LyDoHuyTour"]?></i></p>
-            <p><b>Ghi Chú:</b> <i><?php echo $rw_hd["GhiChu"]?></i></p>
+            <p><b>Lý Do Huỷ:</b> <i><?php echo $rw_hd["LyDoHuyTour"] ?></i></p>
+            <p><b>Ghi Chú:</b> <i><?php echo $rw_hd["GhiChu"] ?></i></p>
         </div>
         <div class="col-md-6" style="text-align: right;">
+            <a href="hoa-don-dat-tour.php"><button type="submit" class="btn btn-success">Quay Lại</button></a>
             <?php
             if ($rw_hd["TinhTrang"] == "Đã Hoàn Thành" || $rw_hd["TinhTrang"] == "Yêu Cầu Huỷ" || $rw_hd["TinhTrang"] == "Đã Huỷ") {
             } else {
                 echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#huytour">Huỷ Tour</button>';
             }
             ?>
+
         </div>
 
-        
+
 
         <!-- Modal -->
         <div class="modal fade" id="huytour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

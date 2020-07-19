@@ -8,7 +8,7 @@ include('includes/navbar.php');
 $connection = mysqli_connect("localhost", "root", "", "travello_db");
 
 //Query Hoá Đơn
-$query = "SELECT * FROM hoadon WHERE TinhTrang = 'Yêu Cầu Huỷ'";
+$query = "SELECT * FROM hoadon WHERE TinhTrang = 'Yêu Cầu Huỷ' ORDER BY NgayHuy ASC";
 $query_run = mysqli_query($connection, $query);
 ?>
 
@@ -55,13 +55,14 @@ $query_run = mysqli_query($connection, $query);
                         <tr>
                             <th>Mã Hoá Đơn</th>
                             <th>Tên Tour</th>
+                            <th>Ngày Huỷ</th>
                             <th>Tổng Tiền</th>
                             <th>Email</th>
                             <th>Điện Thoại</th>
                             <th>Lý Do Huỷ Tour</th>
                             <th>Tình Trạng Hoá Đơn</th>
-                            <th>Chấp Nhận Yêu Cầu</th>
-                            <th>Huỷ Bỏ Yêu Cầu</th>
+                            <th>Xác Nhận</th>
+                            <th>Huỷ Bỏ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,6 +86,7 @@ $query_run = mysqli_query($connection, $query);
                                 <tr>
                                     <td><?php echo $row['MaHD']; ?></td>
                                     <td> <?php echo $rw_tour['TenTour']; ?> </td>
+                                    <td> <?php echo $row['NgayHuy']; ?> </td>
                                     <td> <?php echo product_price($row['TongTien']); ?> </td>
                                     <td> <?php echo $rw_kh['Email']; ?> </td>
                                     <td> <?php echo $rw_kh['SDT']; ?> </td>
@@ -93,17 +95,18 @@ $query_run = mysqli_query($connection, $query);
                                     <td>
                                         <form action="cap-nhat-yeu-cau-huy-tour.php" method="post">
                                             <input type="hidden" name="mahd" value="<?php echo $row['MaHD']; ?>">
-                                            <button type="submit" name="accept_btn" class="btn btn-success"><i class="fas fa-check-circle"></i></button>
+                                            <button type="submit" name="accept_btn" class="btn btn-success"><i class="fas fa-pen"></i></button>
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="cap-nhat-yeu-cau-huy-tour.php" method="post">
+                                        <form action="code.php" method="POST">
                                             <input type="hidden" name="mahd" value="<?php echo $row['MaHD']; ?>">
-                                            <button type="submit" name="cancel_btn" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                                            <input type="hidden" name="tinhtrang" value="<?php echo $row['TinhTrangCu']; ?>">
+                                            <input type="hidden" name="email" value="<?php echo $rw_kh['Email']; ?>">
+                                            <input type="hidden" name="tentour" value="<?php echo $rw_tour['TenTour']; ?>">
+                                            <button type="submit" name="ignore_cancel_btn" class="btn btn-danger"><i class="fas fa-pen"></i></button>
                                         </form>
                                     </td>
-
-                                    
                                 </tr>
                         <?php
                             }

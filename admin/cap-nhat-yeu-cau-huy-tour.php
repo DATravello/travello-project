@@ -58,12 +58,12 @@ if (isset($_POST["accept_btn"])) {
 
                         <div class="form-group">
                             <label>Tên Tour</label>
-                            <input type="text" value="<?php echo $rw_tour['TenTour']; ?>" class="form-control" readonly>
+                            <input type="text" name="sua_tentour" value="<?php echo $rw_tour['TenTour']; ?>" class="form-control" readonly>
                         </div>
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" value="<?php echo $rw_kh['Email']; ?>" class="form-control" readonly>
+                            <input type="text" name="sua_email" value="<?php echo $rw_kh['Email']; ?>" class="form-control" readonly>
                         </div>
 
                         <div class="form-group">
