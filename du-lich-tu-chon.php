@@ -9,7 +9,7 @@ $result = mysqli_query($connection, $query);
 
 <section class="container destination-content">
 
-    <h5>DANH SÁCH ĐIỂM ĐẾN</h5>
+    <h3 class="text-center" style="font-size: 35px;margin:40px 0">DANH SÁCH ĐIỂM ĐẾN</h5>
     <div class="row">
         <?php
         while ($rows = mysqli_fetch_array($result)) {

@@ -69,9 +69,6 @@ include('includes/navbar.php');
               <th>Tình Trạng</th>
               <th>Edit</th>
             </tr>
-            <tr>
-
-            </tr>
             <!-- <tr>Xuất BILL</tr> -->
           </thead>
           <tbody>
@@ -102,9 +99,6 @@ include('includes/navbar.php');
                       <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button>
                     </form>
                   </td>
-                </tr>
-                <tr>
-
                 </tr>
 
             <?php

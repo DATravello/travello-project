@@ -10,10 +10,15 @@ if (isset($_POST["BtnDangKy"])) {
     $gioitinh = $_POST["txtGioiTinh"];
     $diachi = $_POST["txtDiaChi"];
     $message = "";
+    $now = date("Y-m-d");
 
-    if ($email == "" || $matkhau == "" || $hoten == "" || $sdt == "" || $ngaysinh = "" || $gioitinh == "" || $diachi == "") {
-        $_SESSION['status'] = "Vui lòng điền đầy đủ thông tin";
-        header("Location: register.php");
+    if ($email == "" || $pwd == "" || $hoten == "" || $sdt == "" || $ngaysinh == "" || $gioitinh == "" || $diachi == "") {
+        $_SESSION['register-status'] = "Vui lòng điền đầy đủ thông tin";
+        header("Location: register.php");   
+    }
+    else if( strlen(trim($pwd)) < 6 && strlen(trim($pwd)) > 8){
+        $_SESSION['register-status'] = "Mật khẩu phải dài hơn 6 kí tự và nhỏ hơn 8 kí tự!";
+        header("Location: register.php"); 
     } else {
         //Kiểm tra tồn tại email
         $sql = "SELECT * FROM khachhang where Email = '$email'";
@@ -23,8 +28,8 @@ if (isset($_POST["BtnDangKy"])) {
             $_SESSION['register-status'] = "Email đã tồn tại!";
             header("Location: register.php");
         } else {
-            $sql = "INSERT INTO khachhang(`Email`, `MatKhau`, `TenKH`, `SDT`, `GioiTinh`, `NgaySinh`, `DiaChi`)
-                VALUES ('$email', '$matkhau', '$hoten', '$sdt', '$gioitinh', '$ngaysinh', '$diachi')";
+            $sql = "INSERT INTO khachhang(`Email`, `MatKhau`, `TenKH`, `SDT`, `GioiTinh`, `NgaySinh`, `DiaChi`, `NgayDangKy`)
+                VALUES ('$email', '$matkhau', '$hoten', '$sdt', '$gioitinh', '$ngaysinh', '$diachi', '$now')";
             $rs = mysqli_query($connection, $sql);
 
             if ($rs) {

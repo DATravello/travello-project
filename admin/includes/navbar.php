@@ -45,7 +45,50 @@
   <li class="nav-item active">
     <a class="nav-link" href="index.php">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a>
+      <span>Dashboard</span>
+    </a>
+
+  </li>
+  <li class="nav-item">
+    <?php
+    $sql = "SELECT COUNT(*) AS total FROM hoadon WHERE TinhTrang = 'Yêu Cầu Huỷ'";
+    $qr = mysqli_query($connection, $sql);
+    $rs = mysqli_fetch_array($qr);
+    $rs_cancel = $rs["total"];
+    ?>
+    <a class="nav-link" href="danh-sach-yeu-cau-huy-tour.php">
+      <i class="fas fa-window-close"></i>
+      <span>Yêu Cầu Huỷ Tour <span style="color:#ffcd3c">(<?php echo $rs_cancel ?>)</span></span>
+    </a>
+    </a>
+  </li>
+
+  <?php
+  $sql_trongoi = "SELECT COUNT(*) AS total FROM hoadon WHERE TinhTrang = 'Chưa Xác Nhận'";
+  $qr_trongoi = mysqli_query($connection, $sql_trongoi);
+  $rs_trongoi = mysqli_fetch_array($qr_trongoi);
+  $rs_book_trongoi = $rs_trongoi["total"];
+
+  $sql_tutao = "SELECT COUNT(*) AS total FROM hoadontourtutao WHERE TinhTrang = 'Chưa Xác Nhận'";
+  $qr_tutao = mysqli_query($connection, $sql_tutao);
+  $rs_tutao = mysqli_fetch_array($qr_tutao);
+  $rs_book_tutao = $rs_tutao["total"];
+
+  $tongtour = $rs_book_trongoi + $rs_book_tutao;
+  ?>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTour" aria-expanded="true" aria-controls="collapseThree">
+      <i class="fas fa-clipboard-list"></i>
+      <span>Chưa Xác Nhận <span style="color:#ffcd3c">(<?php echo $tongtour ?>)</span></span>
+    </a>
+
+    <div id="collapseTour" class="collapse" aria-labelledby="headingTour" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="danh-sach-hoa-don-tour-tron-goi.php">Tour Trọn Gói <span style="color:#ffcd3c">(<?php echo $rs_book_trongoi ?>)</span></a>
+        <a class="collapse-item" href="danh-sach-hoa-don-tour-tron-goi.php">Tour Tự Chọn <span style="color:#ffcd3c">(<?php echo $rs_book_tutao ?>)</span></a>
+      </div>
+    </div>
   </li>
 
   <!-- Divider -->
@@ -199,7 +242,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseUtilities">
-    <i class="fas fa-chart-bar"></i>
+      <i class="fas fa-chart-bar"></i>
       <span>Quản Lý Hóa Đơn</span>
     </a>
     <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionSidebar">

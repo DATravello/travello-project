@@ -1283,10 +1283,10 @@ if (isset($_POST['btn_xoa_khachhang'])) {
 
 //SỬA HÓA ĐƠN TOUR TRỌN GÓI
 if (isset($_POST['btn_capnhat_hd_tron_goi'])) {
-    $mahd=$_POST['sua_mahd'];
-    $thanhtoan=$_POST['sua_thanhtoan'];
+    $mahd = $_POST['sua_mahd'];
+    $thanhtoan = $_POST['sua_thanhtoan'];
     $makh = $_POST['sua_khachhang'];
-    $tour=$_POST['sua_tour'];
+    $tour = $_POST['sua_tour'];
     $songuoilon = $_POST['sua_songuoilon'];
     $sotrem = $_POST['sua_sotreem'];
     $ngaydat = $_POST['sua_ngaydat'];
@@ -1296,12 +1296,274 @@ if (isset($_POST['btn_capnhat_hd_tron_goi'])) {
     $query_run = mysqli_query($connection, $query);
 
     if ($query_run) {
-        $_SESSION['success'] = "Update Successed!";
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
         header('location: danh-sach-hoa-don-tour-tron-goi.php');
     } else {
-        $_SESSION['status'] = "Update Failed!";
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
         header('location: sua-hoa-don-tour-tron-goi.php');
     }
 }
 
-?>
+//SỬA YÊU CẦU HUỶ TOUR
+
+if (isset($_POST["btn-update-huy-tour"])) {
+
+    $mahd = $_POST["sua_mahd"];
+    $tinhtrang = $_POST["sua_tinhtrang"];
+    $ghichu = $_POST["sua_ghichu"];
+
+    $query = "UPDATE hoadon SET TinhTrang='$tinhtrang', GhiChu='$ghichu' WHERE MaHD='$mahd'";
+    $query_run = mysqli_query($connection, $query);
+
+    if ($query_run) {
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
+        header('location: danh-sach-yeu-cau-huy-tour.php');
+
+        $email = $_POST["sua_email"];
+        $ngayhientai = date("Y-m-d");
+        $tentour = $_POST["sua_tentour"];
+        require_once('phpmailler/class.phpmailer.php');
+
+        $mailday = "";
+        require_once('phpmailler/class.phpmailer.php');
+
+        //Khởi tạo đối tượng
+        $mail = new PHPMailer();
+        $mail->IsSMTP(); // Gọi đến class xử lý SMTP
+        $mail->Host       = "smtp.gmail.com"; // tên SMTP server
+        $mail->SMTPAuth   = true;                  // Sử dụng đăng nhập vào account
+        $mail->SMTPSecure = "ssl";
+        $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
+        $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
+        $mail->Username   = "huy240298@gmail.com"; // SMTP account username
+        $mail->Password   = "hue240298";            // SMTP account password
+        //Thiet lap thong tin nguoi gui va email nguoi gui
+        $mail->SetFrom('huy240298@gmail.com', 'Travello');
+        //Thiết lập thông tin người nhận
+        $mail->AddAddress($email, "Khách hàng");
+        //Thiết lập email nhận email hồi đáp
+        //nếu người nhận nhấn nút Reply
+        $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+        $mail->Subject    = "Xác Nhận Huỷ Tour - $tentour";
+        //Thiết lập định dạng font chữ
+        $mail->CharSet = "utf-8";
+        //Thiết lập nội dung chính của email
+        $body = "Chào";
+        $mail->isHTML(true);
+        $mail->Body = '
+        <html>
+
+            <head>
+                <style type="text/css">
+                    section {
+                        display: -webkit-flex;
+                        display: flex;
+                        margin: 20px auto;
+                    }
+
+                    .section-body {
+                        margin: 20px auto;
+                    }
+
+                    .left {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    .right {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    th {
+                        text-align: left;
+                        padding-left: 20px;
+                        background-color: rgba(0, 0, 0, .075);
+                    }
+
+                    td {
+                        border: 1px solid #eee;
+                    }
+
+                    .bg-primary {
+                        background: #007bff;
+                        color: #fff;
+                        padding: 20px 0;
+                        text-align: center;
+                    }
+
+                    .bg-primary p {
+                        margin: 5px 0;
+                    }
+
+                    h5 {
+                        font-size: 20px;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="container">
+                    <hr>
+                    <h3 style="text-align:center">HUỶ TOUR THÀNH CÔNG</h3>
+                    <hr>
+
+                    <div class="section-body">
+                    <b>
+                    Yêu cầu huỷ tour <i style="color:#007bff">#' . $mahd . ',</i> của quý khách đã được chấp thuận. Vui lòng đợi từ 2-3 ngày tính ngày nghỉ và ngày lễ kể từ ngày yêu cầu huỷ tour của quý khách được xác nhận,
+                    Công ty sẽ hoàn tất thủ tục và hoàn trả tiền cho quý khách theo chính sách huỷ tour của công ty.<br>
+                    Cám ơn quý khách đã tin tưởng sử dụng dịch vụ của chúng tôi!
+                    </b>
+                    </div>
+                    <div class="bg-primary">
+                        <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
+                        <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
+                        <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+                    </div>
+
+                </div>
+            </body>
+
+            </html>';
+        if ($mail->Send()) {
+        } else {
+        }
+    } else {
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
+        header('location: cap-nhat-yeu-cau-huy-tour.php');
+    }
+}
+
+//KHÔNG CHẤP NHẬN YÊU CẦU HUỶ
+if (isset($_POST["ignore_cancel_btn"])) {
+
+    $mahd = $_POST["mahd"];
+    $tinhtrang = $_POST["tinhtrang"];
+    $email = $_POST["email"];
+    $tentour = $_POST["tentour"];
+
+    $query = "UPDATE hoadon SET TinhTrang='$tinhtrang' WHERE MaHD='$mahd'";
+    $query_run = mysqli_query($connection, $query);
+
+    if ($query_run) {
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
+        header('location: danh-sach-yeu-cau-huy-tour.php');
+
+        $email = $_POST["email"];
+        $tentour = $_POST["tentour"];
+        require_once('phpmailler/class.phpmailer.php');
+
+        $mailday = "";
+        require_once('phpmailler/class.phpmailer.php');
+
+        //Khởi tạo đối tượng
+        $mail = new PHPMailer();
+        $mail->IsSMTP(); // Gọi đến class xử lý SMTP
+        $mail->Host       = "smtp.gmail.com"; // tên SMTP server
+        $mail->SMTPAuth   = true;                  // Sử dụng đăng nhập vào account
+        $mail->SMTPSecure = "ssl";
+        $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
+        $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
+        $mail->Username   = "huy240298@gmail.com"; // SMTP account username
+        $mail->Password   = "hue240298";            // SMTP account password
+        //Thiet lap thong tin nguoi gui va email nguoi gui
+        $mail->SetFrom('huy240298@gmail.com', 'Travello');
+        //Thiết lập thông tin người nhận
+        $mail->AddAddress($email, "Khách hàng");
+        //Thiết lập email nhận email hồi đáp
+        //nếu người nhận nhấn nút Reply
+        $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+        $mail->Subject    = "Huỷ Tour Thất Bại - $tentour";
+        //Thiết lập định dạng font chữ
+        $mail->CharSet = "utf-8";
+        //Thiết lập nội dung chính của email
+        $body = "Chào";
+        $mail->isHTML(true);
+        $mail->Body = '
+        <html>
+
+            <head>
+                <style type="text/css">
+                    section {
+                        display: -webkit-flex;
+                        display: flex;
+                        margin: 20px auto;
+                    }
+
+                    .section-body {
+                        margin: 20px auto;
+                    }
+
+                    .left {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    .right {
+                        -webkit-flex: 2;
+                        -ms-flex: 2;
+                        flex: 2;
+                    }
+
+                    th {
+                        text-align: left;
+                        padding-left: 20px;
+                        background-color: rgba(0, 0, 0, .075);
+                    }
+
+                    td {
+                        border: 1px solid #eee;
+                    }
+
+                    .bg-primary {
+                        background: #007bff;
+                        color: #fff;
+                        padding: 20px 0;
+                        text-align: center;
+                    }
+
+                    .bg-primary p {
+                        margin: 5px 0;
+                    }
+
+                    h5 {
+                        font-size: 20px;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="container">
+                    <hr>
+                    <h3 style="text-align:center">HUỶ TOUR THÀNH CÔNG</h3>
+                    <hr>
+
+                    <div class="section-body">
+                    <b>
+                    Yêu cầu huỷ tour <i style="color:#007bff">#' . $mahd . ',</i> của quý khách không được chấp thuận.<br>
+                    Mọi thắc mắc vui lòng liên hệ hotline: 0326805211<br>
+                    Cám ơn quý khách đã tin tưởng sử dụng dịch vụ của chúng tôi!
+                    </b>
+                    </div>
+                    <div class="bg-primary">
+                        <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
+                        <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
+                        <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+                    </div>
+
+                </div>
+            </body>
+
+            </html>';
+        if ($mail->Send()) {
+        } else {
+        }
+
+    } else {
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
+        header('location: cap-nhat-yeu-cau-huy-tour.php');
+    }
+}
