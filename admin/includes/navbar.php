@@ -85,8 +85,8 @@
 
     <div id="collapseTour" class="collapse" aria-labelledby="headingTour" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="danh-sach-hoa-don-tour-tron-goi.php">Tour Trọn Gói <span style="color:#ffcd3c">(<?php echo $rs_book_trongoi ?>)</span></a>
-        <a class="collapse-item" href="danh-sach-hoa-don-tour-tron-goi.php">Tour Tự Chọn <span style="color:#ffcd3c">(<?php echo $rs_book_tutao ?>)</span></a>
+        <a class="collapse-item" href="tour-tron-goi-chua-xac-nhan.php">Tour Trọn Gói <span style="color:#ffcd3c">(<?php echo $rs_book_trongoi ?>)</span></a>
+        <a class="collapse-item" href="tour-tu-len-chua-xac-nhan.php">Tour Tự Chọn <span style="color:#ffcd3c">(<?php echo $rs_book_tutao ?>)</span></a>
       </div>
     </div>
   </li>

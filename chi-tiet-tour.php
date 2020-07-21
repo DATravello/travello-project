@@ -47,7 +47,7 @@ if (isset($_GET['tour'])) {
 }
 ?>
 
-
+<title><?php echo $rows['TenTour']; ?> | Travello</title>
 <section class="container tour-container">
     <div class="tour-title">
         <h2><?php echo $rows['TenTour']; ?></h2>

@@ -11,7 +11,7 @@ if (isset($_GET['diem-den']) && isset($_GET['thuong-hieu'])) {
 }
 ?>
 <!-- NỘI DUNG -->
-
+<title>Nhà Hàng | Travello</title>
 <section class="container khach-san">
 
     <div class="row">

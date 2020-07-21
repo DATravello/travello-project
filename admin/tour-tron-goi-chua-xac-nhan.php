@@ -50,7 +50,7 @@ include('includes/navbar.php');
         <?php
         $conn = mysqli_connect("localhost", "root", "", "travello_db");
         $query = "SELECT * FROM hoadon hd, thanhtoan tt, khachhang kh, tourdulich tour where hd.MaTT = tt.MaTT 
-        and hd.MaKH=kh.MaKH and tour.MaTour=hd.MaTour";
+        and hd.MaKH=kh.MaKH and tour.MaTour=hd.MaTour and hd.TinhTrang = 'Chưa Xác Nhận'";
         $result = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

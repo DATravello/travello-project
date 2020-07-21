@@ -147,11 +147,16 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     $result = mysqli_query($connection, $query);
     $query2 = "SELECT * from tourdulich where GiamGia > 0 LIMIT 6";
     $result2 = mysqli_query($connection, $query2);
+
     ?>
     <h5 class="tour-title">Tour Đang Giảm Giá</h5>
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -186,7 +191,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">
@@ -273,6 +278,10 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -307,7 +316,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">
@@ -362,6 +371,10 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -397,7 +410,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">

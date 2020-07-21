@@ -25,6 +25,10 @@ if (isset($_GET['diem-den'])) {
     <div class="row">
         <?php
         while ($rows = mysqli_fetch_array($result)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -47,7 +51,7 @@ if (isset($_GET['diem-den'])) {
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour-tu-chon.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">

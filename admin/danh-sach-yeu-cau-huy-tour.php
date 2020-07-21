@@ -111,7 +111,7 @@ $query_run = mysqli_query($connection, $query);
                         <?php
                             }
                         } else {
-                            echo "no record found";
+                            echo "No record found";
                         }
                         ?>
 

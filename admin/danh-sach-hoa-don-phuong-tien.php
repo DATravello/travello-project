@@ -48,17 +48,18 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $conn = mysqli_connect("localhost", "root", "", "travello_db");
-        $query = "SELECT * FROM hoadonphuongtien";
-        $query_run = mysqli_query($conn, $query);
-        $query1 = "SELECT * FROM hoadonphuongtien hdpt, hoadon hd, phuongtien pt, khachhang kh where hdpt.MaKH = kh.MaKH 
-        and hdpt.MaPhuongTien=pt.MaPhuongTien ";
-        $result1 = mysqli_query($connection, $query1);
+        $query = "SELECT * FROM hoadonphuongtien hdpt,
+			        hoadontourtutao hdtt,
+			        phuongtien pt,
+			        khachhang kh
+        WHERE hdpt.MaKH = kh.MaKH
+        and hdpt.MaPhuongTien = pt.MaPhuongTien
+        and hdpt.MaHD = hdtt.MaHD ";
+        $result = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Mã HĐ Phương Tiện</th>
               <th>Mã HĐ</th>
               <th>Tên Khách Hàng</th>
               <th>Tên Phương Tiện</th>
@@ -72,17 +73,16 @@ include('includes/navbar.php');
           <tbody>
 
             <?php
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            if (mysqli_num_rows($result) > 0) {
+              while ($row = mysqli_fetch_assoc($result)) {
             ?>
                 <tr>
-                  <td><?php echo $row['MaHoaDonPT']; ?></td>
                   <td><?php echo $row['MaHD']; ?></td>
                   <td><?php
-                      echo $rows1['TenKH'];
+                      echo $row['TenKH'];
                       ?></td>
                   <td><?php
-                      echo $rows1['PhuongTien'];
+                      echo $row['PhuongTien'];
                       ?></td>
                   <td> <?php echo $row['SoLuongXeDat']; ?> </td>
                   <td> <?php echo $row['SoLuongNgayDat']; ?> </td>

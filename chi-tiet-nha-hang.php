@@ -11,6 +11,7 @@ if (isset($_GET['nha-hang'])) {
 }
 ?>
 
+<title> <?php echo $rows["TenNhaHang"] ?>| Travello</title>
 <!-- NỘI DUNG -->
 
 <div class="container tour-container hotel-content">

@@ -63,7 +63,7 @@ include('function.php');
                         <a class="nav-link" href="tin-tuc.php">Tin Tức</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Liên Hệ</a>
+                        <a class="nav-link" href="lien-he.php">Liên Hệ</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
