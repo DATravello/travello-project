@@ -59,10 +59,10 @@
                             }
                             ?>
                             <div class="form-group">
-                                <input type="email" name="txtEmail" id="txtEmail" class="form-control" placeholder="Tên Đăng Nhập" required>
+                                <input type="email" name="EmailKH" id="EmailKH" class="form-control" placeholder="Địa chỉ Email" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="txtMatKhau" id="txtMatKhau" class="form-control" placeholder="Mật Khẩu" required>
+                                <input type="password" name="MatKhauKH" id="MatKhauKH" class="form-control" placeholder="Mật Khẩu" required>
                             </div>
                             <div class="form-group text-center">
                                 <button type="submit" name="DangNhap" class="btn btn-success">Đăng Nhập</button>

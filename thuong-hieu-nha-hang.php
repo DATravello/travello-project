@@ -6,11 +6,10 @@ include('include/header.php')
 <section class="container destination">
 	<?php
 
-	$conn = mysqli_connect("localhost", "root", "", "travello_db");
 	$query = "SELECT * FROM thuonghieunh";
-	$query_run = mysqli_query($conn, $query);
+	$query_run = mysqli_query($connection, $query);
 	$query1 = "SELECT * FROM loainhahang lnh, thuonghieunh th WHERE lnh.MaLoaiNH = th.MaLoaiNH";
-	$query_run1 = mysqli_query($conn, $query1);
+	$query_run1 = mysqli_query($connection, $query1);
 	$temp = "";
 	?>
 	<div class="row">

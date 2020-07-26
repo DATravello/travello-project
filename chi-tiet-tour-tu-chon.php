@@ -102,6 +102,7 @@ if (isset($_POST['btn_DatTour'])) {
                 $tinhtrang = 'Chưa Xác Nhận';
                 $soTreEm = $_POST["SoTETour"];
                 $soNguoiLon = $_POST["SoNLTour"];
+                $sl = $soTreEm + $soNguoiLon;
                 $TongTienTour = $tongtienks + $tongtiennh + $tongtienpt + $chiphitour;
 
                 $sql_tour = "INSERT INTO hoadontourtutao (`MaHD`, `MaKH`, `MaTT`, `MaTour`, `SoTreEm`, `SoNguoiLon`, `NgayDat`, `TongTien`, `TinhTrang`)
@@ -109,11 +110,8 @@ if (isset($_POST['btn_DatTour'])) {
                 $sql_tour_run = mysqli_query($connection, $sql_tour);
 
                 if ($sql_tour_run) {
-                    $soTreEm = $_POST["SoTETour"];
-                    $soNguoiLon = $_POST["SoNLTour"];
-                    $sl = $soTreEm + $soNguoiLon;
-
                     for ($i = 1; $i <= $sl; $i++) {
+                        $mahoadon = $mahd;
                         $tenHK = $_POST["TenHK$i"];
                         $cmndHK = $_POST["CmndHK$i"];
                         $sdtHK = $_POST["SdtHK$i"];
@@ -121,7 +119,7 @@ if (isset($_POST['btn_DatTour'])) {
                         $ngaysinhHK = $_POST["ngaysinhHK$i"];
 
                         $q_thanhvientour = "INSERT INTO thanhvientour (`MaHD`, `TenTV`, `CMND`, `SDT`, `GioiTinh`, `NgaySinh`) 
-                                    VALUES ('$mahd', '$tenHK', '$cmndHK', '$sdtHK', '$gioitinhHK', '$ngaysinhHK')";
+                                    VALUES ('$mahoadon', '$tenHK', '$cmndHK', '$sdtHK', '$gioitinhHK', '$ngaysinhHK')";
                         $q_thanhvientour_run = mysqli_query($connection, $q_thanhvientour);
                     }
                     if ($q_thanhvientour_run) {
@@ -145,15 +143,15 @@ if (isset($_POST['btn_DatTour'])) {
                         $mail->SMTPSecure = "ssl";
                         $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
                         $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
-                        $mail->Username   = "huy240298@gmail.com"; // SMTP account username
-                        $mail->Password   = "hue240298";            // SMTP account password
+                        $mail->Username   = "travelloco.op@gmail.com"; // SMTP account username
+                        $mail->Password   = "travello123";            // SMTP account password
                         //Thiet lap thong tin nguoi gui va email nguoi gui
-                        $mail->SetFrom('huy240298@gmail.com', 'Travello');
+                        $mail->SetFrom('travelloco.op@gmail.com', 'Travello');
                         //Thiết lập thông tin người nhận
                         $mail->AddAddress($email, "Khách hàng");
                         //Thiết lập email nhận email hồi đáp
                         //nếu người nhận nhấn nút Reply
-                        $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+                        $mail->AddReplyTo("travelloco.op@gmail.com", "Travello");
                         $mail->Subject    = "Xác nhận đặt tour - $tentour";
                         //Thiết lập định dạng font chữ
                         $mail->CharSet = "utf-8";
@@ -286,7 +284,7 @@ if (isset($_POST['btn_DatTour'])) {
                             <div class="bg-primary">
                                 <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
                                 <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
-                                <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+                                <p>ĐT: (+84) 326 805 211 - Email: TravelloCo.op@gmail.com</p>
                             </div>
                         </div>
                     </body>
@@ -294,9 +292,9 @@ if (isset($_POST['btn_DatTour'])) {
                     </html>';
                         // $mail->Body=$row['hoadon'];
                         if ($mail->Send()) {
-                            echo "<div class='alert alert-success'>Đặt hàng thành công.</div>";
+                            echo "<h3 class='alert alert-success text-center'>Đặt Tour Thành Công!<br>Vui Lòng Kiểm Tra Email.</h3>";
                         } else
-                            echo "<div class='alert alert-success'>Đặt hàng thất bại.</div>";
+                            echo "<h3 class='alert alert-danger text-center'>Đặt Tour Thất Bại.</h3>";
                     } else {
                         $message = "Đặt Tour Thất Bại";
                         echo "<script type='text/javascript'>alert('$message');</script>";
@@ -349,10 +347,42 @@ if (isset($_POST['btn_DatTour'])) {
                     </div>
                     <script>
                         function tongTien() {
-                            var tienKS = parseInt($("#tongtienks").val());
-                            var tienXe = parseInt($('#tongtienxe').val());
-                            var tienNH = parseInt($('#tongtiennh').val());
-                            var tongTienTour = <?php echo $rw_tour["ChiPhiTour"] ?> + tienKS + tienXe;
+
+                            var idKS = parseInt($('#ChonKhachSan').val());
+                            var idPT = parseInt($('#ChonPhuongTien').val());
+                            var idNH = parseInt($('#ChonNhaHang').val());
+
+
+                            var tienKS = parseInt($("#TienKS" + idKS).val());
+                            var tienPT = parseInt($('#TongTienXe' + idPT).val());
+                            var tienNH = parseInt($('#TongTienNhaHang' + idNH).val());
+                            var tongTienTour;
+                            var chiphi = <?php echo $rw_tour["ChiPhiTour"] ?>
+
+                            if(!idKS && !idPT && !idNH) {
+                                tongTienTour = 0;
+                            }
+                            else if (idKS && !idPT && !idNH) {
+                                tongTienTour = chiphi + tienKS;
+                            }
+                            else if(!idKS && idPT && !idNH) {
+                                tongTienTour = chiphi + tienPT;
+                            }
+                            else if(!idKS && !idPT && idNH) {
+                                tongTienTour = chiphi + tienNH;
+                            }
+                            else if(idKS && idPT && !idNH) {
+                                tongTienTour = chiphi + tienKS + tienPT;
+                            }
+                            else if(!idKS && idPT && idNH) {
+                                tongTienTour = chiphi + tienPT + tienNH;
+                            }
+                            else if(idKS && !idPT && idNH) {
+                                tongTienTour = chiphi + tienKS + tienNH;
+                            }
+                            else {
+                                tongTienTour = chiphi + tienKS + tienPT + tienNH;
+                            }
                             $("#tongTienTour").text(tongTienTour.toLocaleString('it-IT', {
                                 style: 'currency',
                                 currency: 'VND'
@@ -429,22 +459,21 @@ if (isset($_POST['btn_DatTour'])) {
                         ?>
                         <script>
                             function tienphongks() {
-                                var totalks = <?php echo $soks["total"] ?>;
-                                for (var i = 0; i < totalks; i++) {
-                                    var soluong = $('#sophong' + i).val();
-                                    var giaphong = $('#GiaPhong' + i).val();
-                                    if (soluong == 0) {
-                                        var tongtienphong = 0;
-                                    } else {
-                                        var tongtienphong = parseInt(soluong) * parseInt(giaphong);
-                                    }
+                                var id = parseInt($('#ChonKhachSan').val());
 
-                                    $("#tongtienphong" + i).text(tongtienphong.toLocaleString('it-IT', {
-                                        style: 'currency',
-                                        currency: 'VND'
-                                    }));
-                                    $('#tongtienks' + i).val(tongtienphong);
+                                var soluong = $('#sophong' + id).val();
+                                var giaphong = $('#GiaPhong' + id).val();
+                                if (soluong == 0) {
+                                    var tongtienphong = 0;
+                                } else {
+                                    var tongtienphong = parseInt(soluong) * parseInt(giaphong);
                                 }
+                                $('#TienKS' + id).val(tongtienphong);
+
+                                $("#tienphongks" + id).text(tongtienphong.toLocaleString('it-IT', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }));
                             }
                         </script>
 
@@ -469,7 +498,7 @@ if (isset($_POST['btn_DatTour'])) {
                                         <div class="col-md-6">
                                             <p style="font-size:17px">Số phòng trống: <span style="color:red;font-weight:bold"><?php echo $rw_khachsan["SoPhong"]; ?></span> phòng</p>
                                             <p style="font-size:17px">Giá chỉ từ: <span style="color:red;font-weight:bold"><?php echo product_price($rw_khachsan['Gia']) ?>
-                                                    <input id="GiaPhong<?php echo $i ?>" name="GiaPhong<?php echo $rw_khachsan['MaKS']; ?>" value="<?php echo $rw_khachsan['Gia']; ?>" style="visibility:hidden"></p>
+                                                    <input id="GiaPhong<?php echo $rw_khachsan['MaKS']; ?>" name="GiaPhong<?php echo $rw_khachsan['MaKS']; ?>" value="<?php echo $rw_khachsan['Gia']; ?>" style="visibility:hidden"></p>
                                             </p>
                                         </div>
                                         <div class="col-md-6">
@@ -493,13 +522,13 @@ if (isset($_POST['btn_DatTour'])) {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="" id="lable">Số Lượng</label>
-                                                <input type="number" class="form-control" onclick="tienphongks()" name="SoPhongDat<?php echo $rw_khachsan['MaKS']; ?>" id="sophong<?php echo $i; ?>">
+                                                <input type="number" class="form-control" onclick="tienphongks(), tongTien()" name="SoPhongDat<?php echo $rw_khachsan['MaKS']; ?>" id="sophong<?php echo $rw_khachsan['MaKS']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <p>Thành Tiền</p>
-                                            <p style="color:red;font-weight:bold" id="tongtienphong<?php echo $i; ?>"></p>
-                                            <input type="number" id="tongtienks<?php echo $i; ?>" name="TongTienKS<?php echo $rw_khachsan['MaKS']; ?>" style="visibility:hidden;height:0;width:0">
+                                            <p style="color:red;font-weight:bold" id="tienphongks<?php echo $rw_khachsan['MaKS']; ?>"></p>
+                                            <input type="number" name="TongTienKS<?php echo $rw_khachsan['MaKS']; ?>" class="form-control" id="TienKS<?php echo $rw_khachsan['MaKS']; ?>" hidden>
                                         </div>
                                     </div>
                                 </div>
@@ -581,36 +610,29 @@ if (isset($_POST['btn_DatTour'])) {
                             ?>
                                 <script>
                                     function tienxetheosoluong() {
-                                        var soxe = <?php echo $soxe['total'] ?>;
-                                        var sumXe = 0;
-                                        var sum = 0;
+                                        var id = parseInt($('#ChonPhuongTien').val());
 
-                                        for (var i = 0; i < soxe; i++) {
-                                            var a = $('#soluongxe' + i).val();
-                                            var b = $('#songay' + i).val();
-                                            var dongia = $('#dongia' + i).text();
+                                        var soluong = $('#soluongxe' + id).val();
+                                        var songay = $('#songay' + id).val();
+                                        var dongia = $('#dongia' + id).text();
 
-                                            if (a == 0 && b != 0) {
-                                                sum = parseInt(b) * parseInt(dongia);
-                                            } else if (a != 0 && b == 0) {
-                                                sum = parseInt(a) * parseInt(dongia);
-                                            } else if (a == 0 && b == 0) {
-                                                sum = 0;
-                                            } else {
-                                                sum = parseInt(a) * parseInt(b) * parseInt(dongia);
-                                            }
-                                            $('#tongtienXe' + i).text(sum.toLocaleString('it-IT', {
-                                                style: 'currency',
-                                                currency: 'VND'
-                                            }));
+                                        if (soluong == 0 && songay != 0) {
+                                            sum = songay * parseInt(dongia);
 
-                                            $('#TongTienXe' + i).val(sum);
-                                            if (a === '0') {
-                                                document.getElementById("ChonPhuongTien").disabled = true;
-                                            } else {
-                                                document.getElementById("ChonPhuongTien").disabled = false;
-                                            }
+                                        } else if (soluong != 0 && songay == 0) {
+                                            sum = soluong * parseInt(dongia);
+
+                                        } else if (soluong == 0 && songay == 0) {
+                                            sum = 0;
+                                        } else {
+                                            sum = parseInt(soluong) * parseInt(songay) * parseInt(dongia);
                                         }
+                                        $('#TongTienXe' + id).val(sum);
+
+                                        $('#tongtienXe' + id).text(sum.toLocaleString('it-IT', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }));
                                     }
                                 </script>
 
@@ -626,23 +648,23 @@ if (isset($_POST['btn_DatTour'])) {
                                             <div class="col-md-2" style="padding-right:0;">
                                                 <div class="form-group">
                                                     <label for="label">Số Lượng Xe</label>
-                                                    <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="SoLuongXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="soluongxe<?php echo $i ?>">
+                                                    <input type="number" class="form-control" onclick="tienxetheosoluong(), tongTien()" name="SoLuongXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="soluongxe<?php echo $rw_pt["MaPhuongTien"] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-2" style="padding-right:0;">
                                                 <div class="form-group">
                                                     <label for="label">Số Ngày</label>
-                                                    <input type="number" class="form-control" onclick="tienxetheosoluong(),tongTien()" name="SoNgayDatXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="songay<?php echo $i ?>">
+                                                    <input type="number" class="form-control" onclick="tienxetheosoluong(), tongTien()" name="SoNgayDatXe<?php echo $rw_pt["MaPhuongTien"] ?>" id="songay<?php echo $rw_pt["MaPhuongTien"] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-2" style="padding-right:0;">
                                                 Đơn giá: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;"><?php echo product_price($rw_pt["Gia"]) ?>/Ngày</p>
-                                                <p id="dongia<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
+                                                <p id="dongia<?php echo $rw_pt["MaPhuongTien"] ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_pt["Gia"] ?></p>
                                                 <input type="hidden" value="<?php echo $rw_pt["Gia"] ?>" id="giaxe<?php echo $rw_pt["MaPhuongTien"] ?>" name="giaxe<?php echo $rw_pt["MaPhuongTien"] ?>">
                                             </div>
                                             <div class="col-md-2" style="padding-right:0;">
-                                                Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $i ?>">0 đ</p>
-                                                <input type="number" id="TongTienXe<?php echo $i ?>" name="TongTienXe<?php echo $rw_pt["MaPhuongTien"] ?>" style="visibility:hidden;width:0;height:0">
+                                                Thành tiền: <p style="color:red;font-weight:bold;width:100%;border:none;background:#fff;" id="tongtienXe<?php echo $rw_pt["MaPhuongTien"] ?>">0 đ</p>
+                                                <input type="number" class="form-control" id="TongTienXe<?php echo $rw_pt["MaPhuongTien"] ?>" name="TongTienXe<?php echo $rw_pt["MaPhuongTien"] ?>" hidden>
                                             </div>
                                         </div>
                                     </div>
@@ -682,20 +704,22 @@ if (isset($_POST['btn_DatTour'])) {
 
                                 <script>
                                     function TienNhaHang() {
-                                        var soNH = <?php echo $sonh['total']; ?>;
-                                        var sumNH = 0;
-                                        for (var i = 0; i < soNH; i++) {
-                                            var soNL = $("#songuoilon" + i).val();
-                                            var soTE = $("#sotreem" + i).val();
-                                            var giaNL = $('#gianguoilon' + i).text();
-                                            var giaTE = $('#giatreem' + i).text();
-                                            sumNH = (parseInt(soNL) * parseInt(giaNL)) + (parseInt(soTE) * parseInt(giaTE));
-                                            $("#sumtiennhahang" + i).text(sumNH.toLocaleString('it-IT', {
-                                                style: 'currency',
-                                                currency: 'VND'
-                                            }));
-                                            $("#TongTienNhaHang" + i).val(sumNH);
-                                        }
+                                        var id = parseInt($('#ChonNhaHang').val());
+
+                                        var soNL = $("#songuoilon" + id).val();
+                                        var soTE = $("#sotreem" + id).val();
+
+                                        var giaNL = $('#gianguoilon' + id).text();
+                                        var giaTE = $('#giatreem' + id).text();
+
+                                        sum = (parseInt(soNL) * parseInt(giaNL)) + (parseInt(soTE) * parseInt(giaTE));
+
+                                        $("#sumtiennhahang" + id).text(sum.toLocaleString('it-IT', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }));
+
+                                        $("#TongTienNhaHang" + id).val(sum);
                                     }
                                 </script>
                                 <div class="card" id="<?php echo $rw_nh["MaNH"] ?>" style="display:none;">
@@ -738,24 +762,24 @@ if (isset($_POST['btn_DatTour'])) {
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="label">Số Lượng Người Lớn</label>
-                                                    <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoNguoiLon<?php echo $rw_nh["MaNH"] ?>" id="songuoilon<?php echo $i ?>">
+                                                    <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoNguoiLon<?php echo $rw_nh["MaNH"] ?>" id="songuoilon<?php echo $rw_nh["MaNH"] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="label">Số Lượng Trẻ Em</label>
-                                                    <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoTreEm<?php echo $rw_nh["MaNH"] ?>" id="sotreem<?php echo $i ?>">
+                                                    <input type="number" onclick="TienNhaHang(),tongTien()" value="0" class="form-control" name="SoTreEm<?php echo $rw_nh["MaNH"] ?>" id="sotreem<?php echo $rw_nh["MaNH"] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 Đơn giá:
                                                 <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaNguoiLon']); ?>/Người Lớn</p>
-                                                <p id="gianguoilon<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
+                                                <p id="gianguoilon<?php echo $rw_nh["MaNH"] ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaNguoiLon"] ?></p>
                                                 <p style="color:red;font-weight:bold;font-size:13px"><?php echo product_price($rw_nh['GiaTreEm']); ?>/Trẻ Em</p>
-                                                <p id="giatreem<?php echo $i ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
+                                                <p id="giatreem<?php echo $rw_nh["MaNH"] ?>" style="visibility:hidden;height:0;margin:0"><?php echo $rw_nh["GiaTreEm"] ?></p>
                                             </div>
                                             <div class="col-md-3">
                                                 Tổng tiền:
-                                                <p id="sumtiennhahang<?php echo $i ?>" style="color:red;font-weight:bold;font-size:13px"></p>
-                                                <input type="hidden" id="TongTienNhaHang<?php echo $i ?>" name="TongTienNhaHang<?php echo $rw_nh["MaNH"] ?>">
+                                                <p id="sumtiennhahang<?php echo $rw_nh["MaNH"] ?>" style="color:red;font-weight:bold;font-size:13px"></p>
+                                                <input type="text" id="TongTienNhaHang<?php echo $rw_nh["MaNH"] ?>" name="TongTienNhaHang<?php echo $rw_nh["MaNH"] ?>" hidden>
                                             </div>
                                         </div>
                                     </div>
@@ -899,7 +923,6 @@ if (isset($_POST['btn_DatTour'])) {
 <script src="plugins/jquery-validation-1.19.2/dist/jquery.validate.min.js"></script>
 <script src="scripts/validate-cus.js"></script>
 
-    <?php
-    include('include/footer.php');
-    ?>
-
+<?php
+include('include/footer.php');
+?>

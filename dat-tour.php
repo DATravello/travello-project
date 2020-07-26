@@ -81,15 +81,15 @@ if (isset($_POST['btn_DatTour'])) {
             $mail->SMTPSecure = "ssl";
             $mail->Host       = "smtp.gmail.com";     // Thiết lập thông tin của SMPT
             $mail->Port       = 465;                     // Thiết lập cổng gửi email của máy
-            $mail->Username   = "huy240298@gmail.com"; // SMTP account username
-            $mail->Password   = "hue240298";            // SMTP account password
+            $mail->Username   = "travelloco.op@gmail.com"; // SMTP account username
+            $mail->Password   = "travello123";            // SMTP account password
             //Thiet lap thong tin nguoi gui va email nguoi gui
-            $mail->SetFrom('huy240298@gmail.com', 'Travello');
+            $mail->SetFrom('travelloco.op@gmail.com', 'Travello');
             //Thiết lập thông tin người nhận
             $mail->AddAddress($email, "Khách hàng");
             //Thiết lập email nhận email hồi đáp
             //nếu người nhận nhấn nút Reply
-            $mail->AddReplyTo("huy240298@gmail.com", "Travello");
+            $mail->AddReplyTo("travelloco.op@gmail.com", "Travello");
             $mail->Subject    = "Xác Nhận Đặt Tour - $tentour";
             //Thiết lập định dạng font chữ
             $mail->CharSet = "utf-8";
@@ -222,7 +222,7 @@ if (isset($_POST['btn_DatTour'])) {
                 <div class="bg-primary">
                     <p><b>Công ty Du lịch và Lữ hành Travello</b><br></p>
                     <p>140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. HCM<br></p>
-                    <p>ĐT: (+84) 326 805 211 - Email: Travello@gmail.com</p>
+                    <p>ĐT: (+84) 326 805 211 - Email: TravelloCo.op@gmail.com</p>
                 </div>
             </div>
         </body>

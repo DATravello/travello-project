@@ -1,5 +1,5 @@
 <?php
-include('include/header.php')
+include('include/header.php');
 ?>
 
 <title>Tin Tức | Travello</title>
@@ -16,11 +16,10 @@ include('include/header.php')
 	</style>
 	<?php
 
-	$conn = mysqli_connect("localhost", "root", "", "travello_db");
 	$query = "SELECT * FROM tintuc";
-	$query_run = mysqli_query($conn, $query);
+	$query_run = mysqli_query($connection, $query);
 	$query1 = "SELECT * FROM theloai tl, tintuc tt WHERE tl.MaTheLoai = tt.MaTheLoai";
-	$query_run1 = mysqli_query($conn, $query1);
+	$query_run1 = mysqli_query($connection, $query1);
 	$temp = "";
 
 

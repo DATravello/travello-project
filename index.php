@@ -89,7 +89,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $rows_loaitour["TenLoaiTour"] ?></h5>
                         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         <a href="loai-tour.php?loai-tour=<?php echo $rows_loaitour["MaLoaiTour"]; ?>" class="btn btn-dark">Xem Ngay</a>
                     </div>
                 </div>
@@ -456,6 +455,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 </a>
 
 
+
 <!-- FOOTER -->
 
 
@@ -490,6 +490,8 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     </div>
 </div>
 
+
+
 <script>
     const toTop = document.querySelector(".to-top");
 
@@ -513,3 +515,4 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 <script src="scripts/cus.js"></script>
 
 </html>
+
