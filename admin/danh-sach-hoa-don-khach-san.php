@@ -10,6 +10,12 @@ include('includes/navbar.php');
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Danh Sách Hóa Đơn Khách Sạn</h6>
+      <div class="m-0">
+        <form action="table-excel/xuat-bill-khach-san.php" method="post">
+          <input type="hidden" name="xuat_bill" value="<?php echo $row['MaHDKS']; ?>">
+          <button type="submit" name="btn_xuat_bill_ks" class="btn btn-danger">Xuất Hóa Đơn</i></button>
+        </form>
+      </div>
     </div>
 
     <div class="card-body">
@@ -91,14 +97,6 @@ include('includes/navbar.php');
           </tbody>
         </table>
 
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="m-0">
-        <form action="table-excel/xuat-bill-khach-san.php" method="post">
-          <input type="hidden" name="xuat_bill" value="<?php echo $row['MaHDKS']; ?>">
-          <button type="submit" name="btn_xuat_bill_ks" class="btn btn-danger">Xuất Hóa Đơn</i></button>
-        </form>
       </div>
     </div>
   </div>

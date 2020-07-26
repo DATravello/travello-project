@@ -3,14 +3,6 @@
 
   <!-- Sidebar - Brand -->
   <?php
-  // $connection = mysqli_connect("localhost","root","","furnitureshop");    
-  // $query = " SELECT * FROM user WHERE email='".$_SESSION['username']."' ";
-  // $query_run = mysqli_query($connection, $query);
-
-  // foreach($query_run as $row)
-  // {
-  ?>
-  <?php
   $taikhoan = $_SESSION['TaiKhoan'];
   $q_tk = "SELECT * FROM taikhoan WHERE TenTK = '$taikhoan'";
   $rs_tk = mysqli_query($connection, $q_tk);
@@ -255,43 +247,6 @@
       </div>
     </div>
   </li>
-
-  <!-- Divider -->
-  <!-- <hr class="sidebar-divider"> -->
-
-  <!-- Heading -->
-  <!-- <div class="sidebar-heading">
-  Addons
-</div> -->
-
-  <!-- Nav Item - Pages Collapse Menu -->
-  <!-- <li class="nav-item">
-  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-    <i class="fas fa-fw fa-folder"></i>
-    <span>Pages</span>
-  </a>
-  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-    <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="news.php">News</a>
-      <a class="collapse-item" href="blank.html">Blank Page</a>
-    </div>
-  </div> -->
-  </li>
-
-  <!-- Nav Item - Charts -->
-  <!-- <li class="nav-item">
-  <a class="nav-link" href="charts.html">
-    <i class="fas fa-fw fa-chart-area"></i>
-    <span>Charts</span></a>
-</li> -->
-
-  <!-- Nav Item - Tables -->
-  <!-- <li class="nav-item">
-  <a class="nav-link" href="tables.php">
-    <i class="fas fa-fw fa-table"></i>
-    <span>Tables</span></a>
-</li> -->
-
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 
@@ -338,7 +293,7 @@
           </a>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="admin-profile.php">
+            <a class="dropdown-item" href="#">
               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Thông Tin
             </a>
@@ -354,17 +309,11 @@
 
     </nav>
     <!-- End of Topbar -->
-    <?php
-    // }
-
-    ?>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -381,8 +330,6 @@
             <form action="logout.php" method="GET">
               <button type="submit" name="logout" class="btn btn-primary">Đăng Xuất</button>
             </form>
-
-
           </div>
         </div>
       </div>

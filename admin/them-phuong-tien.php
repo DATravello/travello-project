@@ -41,10 +41,10 @@ include('includes/navbar.php');
         }
         ?>
         <form action="code.php" method="POST" enctype="multipart/form-data">
-
+            <div class="modal-body">
                 <div class="form-group">
                     <label> Loại Phương Tiện </label>
-                    <select class="form-control"  name="loaipt">
+                    <select class="form-control" name="loaipt">
                         <?php
                         $q_loaipt = "SELECT * FROM theloaiphuongtien";
                         $rs_loaipt = mysqli_query($connection, $q_loaipt);
@@ -87,13 +87,13 @@ include('includes/navbar.php');
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="reset" value="reset" class="btn btn-warning" data-dismiss="modal">Xoá Trường</button>
-                <button type="submit" name="btn_them_phuong_tien" class="btn btn-primary">Lưu</button>
-            </div>
-
-        </form>
+    <div class="modal-footer">
+        <button type="reset" value="reset" class="btn btn-warning" data-dismiss="modal">Xoá Trường</button>
+        <button type="submit" name="btn_them_phuong_tien" class="btn btn-primary">Lưu</button>
     </div>
+
+    </form>
+</div>
 
 </div>
 <?php
