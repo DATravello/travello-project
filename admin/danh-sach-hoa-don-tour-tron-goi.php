@@ -49,11 +49,9 @@ include('includes/navbar.php');
       <div class="table-responsive">
         <?php
         $conn = mysqli_connect("localhost", "root", "", "travello_db");
-        $query = "SELECT * FROM hoadon";
-        $query_run = mysqli_query($conn, $query);
-        $query1 = "SELECT * FROM hoadon hd, thanhtoan tt, khachhang kh, tourdulich tour where hd.MaTT = tt.MaTT 
+        $query = "SELECT * FROM hoadon hd, thanhtoan tt, khachhang kh, tourdulich tour where hd.MaTT = tt.MaTT 
         and hd.MaKH=kh.MaKH and tour.MaTour=hd.MaTour";
-        $result1 = mysqli_query($connection, $query1);
+        $result = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -74,28 +72,28 @@ include('includes/navbar.php');
           <tbody>
 
             <?php
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+              if (mysqli_num_rows($result) > 0) {
+                while ($rows = mysqli_fetch_assoc($result)) {
             ?>
                 <tr>
-                  <td><?php echo $row['MaHD']; ?></td>
+                  <td><?php echo $rows['MaHD']; ?></td>
                   <td><?php
-                      echo $rows1['TenThanhToan'];
+                      echo $rows['TenThanhToan'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenKH'];
+                      echo $rows['TenKH'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenTour'];
+                      echo $rows['TenTour'];
                       ?></td>
-                  <td> <?php echo $row['SoNguoiLon']; ?> </td>
-                  <td> <?php echo $row['SoTreEm']; ?> </td>
-                  <td> <?php echo $row['NgayDat']; ?> </td>
-                  <td> <?php echo $row['TongTien']; ?> </td>
-                  <td> <?php echo $row['TinhTrang']; ?> </td>
+                  <td> <?php echo $rows['SoNguoiLon']; ?> </td>
+                  <td> <?php echo $rows['SoTreEm']; ?> </td>
+                  <td> <?php echo $rows['NgayDat']; ?> </td>
+                  <td> <?php echo $rows['TongTien']; ?> </td>
+                  <td> <?php echo $rows['TinhTrang']; ?> </td>
                   <td>
                     <form action="sua-hoa-don-tour-tron-goi.php" method="post">
-                      <input type="hidden" name="edit_MaHD" value="<?php echo $row['MaHD']; ?>">
+                      <input type="hidden" name="edit_MaHD" value="<?php echo $rows['MaHD']; ?>">
                       <button type="submit" name="edit_btn" class="btn btn-success"><i class="fas fa-pen-square"></i></button>
                     </form>
                   </td>

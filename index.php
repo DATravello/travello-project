@@ -89,7 +89,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $rows_loaitour["TenLoaiTour"] ?></h5>
                         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         <a href="loai-tour.php?loai-tour=<?php echo $rows_loaitour["MaLoaiTour"]; ?>" class="btn btn-dark">Xem Ngay</a>
                     </div>
                 </div>
@@ -147,11 +146,16 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     $result = mysqli_query($connection, $query);
     $query2 = "SELECT * from tourdulich where GiamGia > 0 LIMIT 6";
     $result2 = mysqli_query($connection, $query2);
+
     ?>
     <h5 class="tour-title">Tour Đang Giảm Giá</h5>
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -186,7 +190,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">
@@ -273,6 +277,10 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -307,7 +315,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                             ?></p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">
@@ -362,6 +370,10 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     <div class="row">
         <?php
         while ($rows = @mysqli_fetch_array($result2)) {
+            $matour = $rows["MaTour"];
+            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+            $rs_rv = mysqli_query($connection, $sql_rv);
+            $rw_rv =  mysqli_fetch_array($rs_rv);
         ?>
             <!-- Card -->
             <div class="col-md-4">
@@ -397,7 +409,7 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews">4 Reviews</span>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span class="reviews"><?php echo $rw_rv["rv"]; ?> Đánh giá</span>
                         </p>
                     </div>
                     <div class="card-footer d-flex">
@@ -435,14 +447,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 
 
 
-
-
-
-<a href="#" class="to-top">
-    <i class="fas fa-arrow-up"></i>
-</a>
-
-
 <!-- FOOTER -->
 
 
@@ -477,17 +481,6 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
     </div>
 </div>
 
-<script>
-    const toTop = document.querySelector(".to-top");
-
-    window.addEventListener("scroll", () => {
-        if (window.pageYOffset > 100) {
-            toTop.classList.add("active");
-        } else {
-            toTop.classList.remove("active");
-        }
-    })
-</script>
 
 
 </body>
@@ -500,3 +493,36 @@ $result_loaitour = mysqli_query($connection, $query_loaitour);
 <script src="scripts/cus.js"></script>
 
 </html>
+
+<script>
+  var div = document.createElement('div');
+  div.className = 'fb-customerchat';
+  div.setAttribute('page_id', '112630380533253');
+  div.setAttribute('ref', 'b64:dHJhdmVsbG8=');
+  document.body.appendChild(div);
+  window.fbMessengerPlugins = window.fbMessengerPlugins || {
+    init: function () {
+      FB.init({
+        appId            : '1678638095724206',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.3'
+      });
+    }, callable: []
+  };
+  window.fbAsyncInit = window.fbAsyncInit || function () {
+    window.fbMessengerPlugins.callable.forEach(function (item) { item(); });
+    window.fbMessengerPlugins.init();
+  };
+  setTimeout(function () {
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }, 0);
+</script>
+

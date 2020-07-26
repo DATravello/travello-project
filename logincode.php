@@ -1,30 +1,27 @@
 <?php
 include('security.php');
 
+if($_SESSION['Email'])
+{
+    header("location: index.php");
+}
+
 if (isset($_POST['DangNhap'])) {
-    $email = $_POST['txtEmail'];
-    $pwd = $_POST['txtMatKhau'];
+    $email = $_POST['EmailKH'];
+    $pwd = $_POST['MatKhauKH'];
 
-    if (empty($_POST['txtEmail']) || empty($_POST['txtMatKhau'])) {
+    if (empty($_POST['EmailKH']) || empty($_POST['MatKhauKH'])) {
         $_SESSION['login-status'] = 'Không Được Để Trống!';
-        header("location:index.php?Empty=cannot-be-empty-email-password");
     } else {
-        $query = "SELECT * FROM khachhang WHERE Email = '$email'";
+        $query = "SELECT * FROM khachhang WHERE Email = '$email' AND MatKhau = '$pwd'";
         $result = mysqli_query($connection, $query);
-        if ($row = (mysqli_fetch_assoc($result))) {
-            $pwd_data = $row["MatKhau"];
-
-            if ($pwd == $pwd_data) {
-                $_SESSION['Email'] = $_POST['txtEmail'];
-                $_SESSION['login-status'] = 'Đăng Nhập Thành Công';
-                header("location:index.php");
-            } else {
-                $_SESSION['login-status'] = 'Sai Mật Khẩu!';
-                header("location:login.php");
-            }
+        $num_rows = mysqli_num_rows($result);
+        if ($num_rows == 0) {
+            $_SESSION['login-status'] = 'Sai Email hoặc Mật khẩu Đăng Nhập!';
         } else {
-            $_SESSION['login-status'] = 'Sai Email Đăng Nhập';
-            header("location:login.php?Invalid=invalid-email-and-password");
+            $_SESSION['login-status'] = 'Đăng nhập thành công!';
+            $_SESSION['Email'] = $email;
+            header('location: index.php');
         }
     }
 }

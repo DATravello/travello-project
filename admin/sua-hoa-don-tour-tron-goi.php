@@ -21,6 +21,7 @@ include('includes/navbar.php');
             $query = "SELECT * FROM hoadon WHERE MaHD ='$mahd'";
             $query_run = mysqli_query($connection, $query);
             foreach ($query_run as $row) {
+                $makh = $row["MaKH"];
         ?>
                 <form action="code.php" method="POST">
                     <div class="form-group">
@@ -29,7 +30,7 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label> Thanh Toán</label>
-                        <select class="form-control" name="sua_thanhtoan" readonly>
+                        <select class="form-control" name="sua_thanhtoan" disabled>
                             <?php
                             $q_thanhtoan = "SELECT * FROM thanhtoan";
                             $rs_thanhtoan = mysqli_query($connection, $q_thanhtoan);
@@ -40,9 +41,9 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label> Tên Khách Hàng</label>
-                        <select class="form-control" name="sua_khachhang" readonly>
+                        <select class="form-control" name="sua_khachhang" disabled>
                             <?php
-                            $q_khachhang = "SELECT * FROM khachhang";
+                            $q_khachhang = "SELECT * FROM khachhang WHERE MaKH = $makh";
                             $rs_khachhang = mysqli_query($connection, $q_khachhang);
                             $TL = @mysqli_fetch_array($rs_khachhang)
                             ?>
@@ -51,7 +52,7 @@ include('includes/navbar.php');
                     </div>
                     <div class="form-group">
                         <label> Tên Tour</label>
-                        <select class="form-control" name="sua_tour" readonly>
+                        <select class="form-control" name="sua_tour" disabled>
                             <?php
                             $q_tourdl = "SELECT * FROM tourdulich";
                             $rs_tourdl = mysqli_query($connection, $q_tourdl);

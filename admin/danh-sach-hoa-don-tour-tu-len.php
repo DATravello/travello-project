@@ -49,12 +49,10 @@ include('includes/navbar.php');
       <div class="table-responsive">
         <?php
         $conn = mysqli_connect("localhost", "root", "", "travello_db");
-        $query = "SELECT * FROM hoadontourtutao";
-        $query_run = mysqli_query($conn, $query);
-        $query1 = "SELECT * FROM hoadontourtutao hdtt, thanhtoan tt, khachhang kh, tourdulich tour
+        $query = "SELECT * FROM hoadontourtutao hdtt, thanhtoan tt, khachhang kh, tourdulich tour
          where hdtt.MaTT = tt.MaTT 
         and hdtt.MaKH=kh.MaKH and tour.MaTour=hdtt.MaTour";
-        $result1 = mysqli_query($connection, $query1);
+        $query_run = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -74,19 +72,19 @@ include('includes/navbar.php');
           <tbody>
 
             <?php
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            if (mysqli_num_rows($query_run) > 0) {
+              while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                 <tr>
                   <td><?php echo $row['MaHD']; ?></td>
                   <td><?php
-                      echo $rows1['TenKH'];
+                      echo $row['TenKH'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenThanhToan'];
+                      echo $row['TenThanhToan'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenTour'];
+                      echo $row['TenTour'];
                       ?></td>
                   <td> <?php echo $row['SoNguoiLon']; ?> </td>
                   <td> <?php echo $row['SoTreEm']; ?> </td>

@@ -53,10 +53,12 @@
           <tr>
             <th>Mã KH</th>
             <th>Tên KH</th>
+            <th>Ngày Sinh</th>
             <th>Địa Chỉ</th>
             <th>Giới Tính</th>
             <th>SDT</th>
             <th>Email</th>
+            <th>Ngày Đăng Ký</th>
             <th>EDIT</th>
             <th>DELETE</th>
           </tr>
@@ -72,10 +74,12 @@
                 <tr>
                   <td><?php echo $row['MaKH']; ?></td>
                   <td> <?php echo $row['TenKH']; ?>  </td>
+                  <td> <?php echo $row['NgaySinh']; ?>  </td>
                   <td> <?php echo $row['DiaChi']; ?>  </td>
                   <td> <?php echo $row['GioiTinh']; ?>  </td>
                   <td> <?php echo $row['SDT']; ?>  </td>
                   <td> <?php echo $row['Email']; ?>  </td>
+                  <td> <?php echo $row['NgayDangKy']; ?>  </td>
                   <td>
                     <form action="sua-khach-hang.php" method="post">
                       <input type="hidden" name="edit_MaKH" value="<?php echo $row['MaKH']; ?>">

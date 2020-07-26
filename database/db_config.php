@@ -13,6 +13,6 @@ if($dbconfig)
 }
 else
 {
-    echo "Database connected failed";
+    echo '<div class="alert alert-danger">Database connected failed</div>';
 }
 ?>

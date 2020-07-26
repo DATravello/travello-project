@@ -179,40 +179,114 @@ $MaKH = $rowTK["MaKH"];
             <div class="card">
                 <div class="card-body">
                     <h5 class="text-center">Thông Tin Tài Khoản</h5>
+                    <?php
+                    if (isset($_POST['btnUpdateUser'])) {
+                        $hoten = $_POST["HoTen"];
+                        $ngaysinh = $_POST["NgaySinh"];
+                        $diachi = $_POST["DiaChi"];
+                        $gioitinh = $_POST["GioiTinh"];
+                        $sdt = $_POST["SDT"];
+                        $email = $_POST["Email"];
+                        $matkhaucu = $_GET["MatKhauCu"];
+                        $matkhaumoi = $_GET["MatKhauMoi"];
+                        $confirm = $_GET["NhapLai"];
+
+                        if (isset($_POST['check']) && $_POST['check'] == "true") {
+                            $sql_pass = "SELECT * FROM khachhang WHERE Email = '$email'";
+                            $q_pass = mysqli_query($connection, $sql_pass);
+                            $rw_pass = mysqli_fetch_array($q_pass);
+                            $pass = $rw_pass["MatKhau"];
+
+                            if ($matkhaucu == $pass) {
+                                if ($matkhaumoi == $confirm) {
+                                    $sql = "UPDATE khachhang SET TenKH = '$hoten', NgaySinh = '$ngaysinh', DiaChi = '$diachi', GioiTinh = '$gioitinh', SDT = '$sdt', MatKhau = '$matkhaumoi' WHERE Email = '$email'";
+                                    $query = mysqli_query($connection, $sql);
+
+                                    if ($query) {
+                                        echo '<div class="alert alert-success text-center">Cập Nhật Thành Công!</div>';
+                                        header('location: thong-tin-tai-khoan.php');
+                                    } else {
+                                        echo '<div class="alert alert-danger text-center">Cập Nhật Thất Bại</div>';
+                                    }
+                                } else {
+                                    echo '<div class="alert alert-danger text-center">Mật Khẩu Mới Không Trùng Nhau!</div>';
+                                }
+                            } else {
+                                echo '<div class="alert alert-danger text-center">Mật Khẩu Cũ Không Đúng!<div>';
+                            }
+                        } else {
+                            $sql = "UPDATE khachhang SET TenKH = '$hoten', NgaySinh = '$ngaysinh', DiaChi = '$diachi', GioiTinh = '$gioitinh', SDT = '$sdt' WHERE Email = '$email'";
+                            $query = mysqli_query($connection, $sql);
+
+                            if ($query) {
+                                echo '<div class="alert alert-success text-center">Cập Nhật Thành Công!</div>';
+                            } else {
+                                echo '<div class="alert alert-danger text-center">Cập Nhật Thất Bại!</div>';
+                            }
+                        }
+                    }
+                    ?>
                     <form id="info-u" class="info-u">
                         <div class="form-group">
                             <label for="formGroupExampleInput">Họ Tên</label>
-                            <input type="text" class="form-control" id="HoTen" placeholder="<?php echo $rowTK["TenKH"] ?>" disabled>
+                            <input type="text" class="form-control" id="HoTen" name="HoTen" placeholder="<?php echo $rowTK["TenKH"] ?>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Ngày Sinh</label>
-                            <input type="text" class="form-control" id="NgaySinh" onfocus="(this.type='date')" placeholder="<?php echo $rowTK["NgaySinh"] ?>" disabled>
+                            <input type="text" class="form-control" id="NgaySinh" name="NgaySinh" onfocus="(this.type='date')" placeholder="<?php echo $rowTK["NgaySinh"] ?>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Địa Chỉ</label>
-                            <input type="text" class="form-control" id="DiaChi" placeholder="<?php echo $rowTK["DiaChi"] ?>" disabled>
+                            <input type="text" class="form-control" id="DiaChi" name="DiaChi" placeholder="<?php echo $rowTK["DiaChi"] ?>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Giới Tính</label>
-                            <input type="text" class="form-control" id="GioiTinh" placeholder="<?php echo $rowTK["GioiTinh"] ?>" disabled>
+                            <input type="text" class="form-control" id="GioiTinh" name="GioiTinh" placeholder="<?php echo $rowTK["GioiTinh"] ?>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Số Điện Thoại</label>
-                            <input type="number" class="form-control" id="SDT" placeholder="<?php echo $rowTK["SDT"] ?>" disabled>
+                            <input type="number" class="form-control" id="SDT" name="SDT" placeholder="<?php echo $rowTK["SDT"] ?>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Email</label>
-                            <input type="email" class="form-control" id="Email" placeholder="<?php echo $rowTK["Email"] ?>" disabled>
+                            <input type="email" class="form-control" name="Email" placeholder="<?php echo $rowTK["Email"] ?>" disabled>
                         </div>
+                        <script>
+                            function Check() {
+                                if ($('input#checkbox').is(':checked')) {
+                                    $('#change-pass').removeAttr("hidden");
+                                } else {
+                                    $('#change-pass').attr("hidden", true);
+                                }
+                            }
+                        </script>
+                        <div class="form-group">
+                            <input type="checkbox" name="check" class="check" id="checkbox" onclick="Check()" value="true">
+                            <label for="check">Thay Đổi Mật Khẩu</label>
+                        </div>
+                        <div id="change-pass" hidden>
+                            <div class="form-group pass">
+                                <label for="formGroupExampleInput2">Mật Khẩu Cũ</label>
+                                <input type="password" class="form-control" name="MatKhauCu" placeholder="Nhập mật khẩu cũ">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Mật Khẩu Mới</label>
+                                <input type="password" class="form-control" name="MatKhauMoi" placeholder="Mật khẩu từ 6 đến 8 ký tự">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Nhập Lại</label>
+                                <input type="password" class="form-control" name="NhapLai" placeholder="Nhập lại mật khẩu mới">
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="text-align:right"><button type="submit" class="btn btn-success" name="btnUpdateUser">Lưu Lại <i class="fas fa-save"></i></button></div>
                     </form>
-                    <hr>
-                    <div style="text-align:right"><button class="btn btn-success">Lưu Lại <i class="fas fa-save"></i></button></div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
+
 
 <?php
 include('include/footer.php');

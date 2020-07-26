@@ -1,8 +1,8 @@
 <?php
 include('include/header.php');
-if (!$_SESSION["Email"] == null) {   
-}
-else {
+
+if (!$_SESSION["Email"] == null) {
+} else {
     $_SESSION["Email"] = null;
 }
 
@@ -47,7 +47,7 @@ if (isset($_GET['tour'])) {
 }
 ?>
 
-
+<title><?php echo $rows['TenTour']; ?> | Travello</title>
 <section class="container tour-container">
     <div class="tour-title">
         <h2><?php echo $rows['TenTour']; ?></h2>
@@ -153,7 +153,7 @@ if (isset($_GET['tour'])) {
                                         <i class="fas fa-phone-alt rounded-circle" style="display: inline-block;"></i>
                                     </div>
                                     <div class="phone-right">
-                                        Gọi hotline
+                                        <a href="tel:0932644183">Gọi hotline</a>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +164,8 @@ if (isset($_GET['tour'])) {
                                         <i class="fas fa-envelope-open-text rounded-circle" style="display: inline-block;"></i>
                                     </div>
                                     <div class="phone-right">
-                                        Gọi hotline
+                                        <a href="mailto:travelloco.op@gmail.com?subject=<?php echo $rows["TenTour"]?>">
+                                            Gửi Email</a>
                                     </div>
                                 </div>
                             </div>

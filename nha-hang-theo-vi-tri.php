@@ -13,6 +13,7 @@
 		$rs_nh = mysqli_query($connection, $q_nh);
 	}
 	?>
+	<title> Nhà Hàng | Travello</title>
 	<div class="row">
 		<?php
 		while ($rw_nh = mysqli_fetch_array($rs_nh)) {

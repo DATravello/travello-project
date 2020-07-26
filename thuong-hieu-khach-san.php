@@ -1,5 +1,5 @@
 <?php
-include('include/header.php')
+include('include/header.php');
 ?>
 <title>Thương Hiệu Khách Sạn | Travello</title>
 
@@ -7,11 +7,10 @@ include('include/header.php')
 <section class="container destination">
 	<?php
 
-	$conn = mysqli_connect("localhost", "root", "", "travello_db");
 	$query = "SELECT * FROM thuonghieuks";
-	$query_run = mysqli_query($conn, $query);
+	$query_run = mysqli_query($connection, $query);
 	$query1 = "SELECT * FROM thuonghieuks th, loaikhachsan tl WHERE tl.MaLoaiKS = th.MaLoaiKS";
-	$query_run1 = mysqli_query($conn, $query1);
+	$query_run1 = mysqli_query($connection, $query1);
 	$temp = "";
 	?>
 	<div class="row">

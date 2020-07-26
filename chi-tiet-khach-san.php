@@ -20,6 +20,7 @@ if (isset($_GET['khach-san'])) {
     $rows_loaiks = @mysqli_fetch_array($result_pt);
 }
 ?>
+
 <title><?php echo $rows['TenKS']; ?> | Travello</title>
 <!-- NỘI DUNG -->
 
