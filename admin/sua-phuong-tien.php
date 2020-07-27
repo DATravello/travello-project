@@ -15,7 +15,6 @@
     
   <div class="card-body">
     <?php
-        $connection = mysqli_connect("localhost","root","","travello_db");
         if(isset($_POST['edit_btn']))
         {
             $mapt = $_POST['sua_MaPhuongTien'];

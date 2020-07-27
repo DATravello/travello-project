@@ -47,7 +47,6 @@
 
     <div class="table-responsive">
       <?php
-        $connection = mysqli_connect("localhost","root","","travello_db");
         $query = "SELECT * FROM loaitourdulich";
         $query_run = mysqli_query($connection, $query);
       ?>

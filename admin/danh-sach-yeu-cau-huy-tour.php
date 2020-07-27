@@ -5,8 +5,6 @@ include('includes/navbar.php');
 ?>
 
 <?php
-$connection = mysqli_connect("localhost", "root", "", "travello_db");
-
 //Query Hoá Đơn
 $query = "SELECT * FROM hoadon WHERE TinhTrang = 'Yêu Cầu Huỷ' ORDER BY NgayHuy ASC";
 $query_run = mysqli_query($connection, $query);

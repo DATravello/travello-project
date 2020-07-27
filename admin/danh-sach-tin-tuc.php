@@ -43,14 +43,9 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $connection = mysqli_connect("localhost", "root", "", "travello_db");
-        $query = "SELECT * FROM tintuc";
-        $query_run = mysqli_query($connection, $query);
-        // $query1="SELECT *, theloai.TenTheLoai FROM tintuc INNER JOIN theloai ON tintuc.MaTheLoai = theloai.MaTheLoai";
-        // $result1 = mysqli_query($connection, $query1);
-        $query1 = "SELECT * FROM tintuc, nhanvien, theloai where tintuc.MaNV = nhanvien.MaNV
+        $query = "SELECT * FROM tintuc, nhanvien, theloai where tintuc.MaNV = nhanvien.MaNV
          and theloai.MaTheLoai=tintuc.MaTheLoai";
-        $result1 = mysqli_query($connection, $query1);
+        $query_run = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -71,16 +66,16 @@ include('includes/navbar.php');
           <tbody>
             <?php
             $i=0;
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            if (mysqli_num_rows($query_run) > 0) {
+              while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                 <tr>
                   <td><?php echo $row['MaTinTuc']; ?></td>
                   <td><?php
-                      echo $rows1['TenTheLoai'];
+                      echo $row['TenTheLoai'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenNV'];
+                      echo $row['TenNV'];
                       ?></td>
                   <td> <?php echo $row['TenTinTuc']; ?> </td>
                   <td> <img src="img/tin-tuc/<?php echo $row['HinhAnh']; ?>" style="width:150px;height:100px"> </td>

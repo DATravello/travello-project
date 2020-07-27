@@ -153,7 +153,7 @@ if (isset($_GET['tour'])) {
                                         <i class="fas fa-phone-alt rounded-circle" style="display: inline-block;"></i>
                                     </div>
                                     <div class="phone-right">
-                                        <a href="tel:0932644183">Gọi hotline</a>
+                                        <a href="tel:0326805211">Gọi hotline</a>
                                     </div>
                                 </div>
                             </div>

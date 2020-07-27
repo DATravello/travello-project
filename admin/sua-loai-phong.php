@@ -14,7 +14,6 @@ include('includes/navbar.php');
 
         if (isset($_POST['edit_btn_MaLoaiPhong'])) {
             $id = $_POST['edit_MaLoaiPhong'];
-
             $query = "SELECT * FROM loaiphong WHERE MaLoaiPhong='$id'";
             $query_run = mysqli_query($connection, $query);
 

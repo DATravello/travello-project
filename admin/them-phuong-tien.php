@@ -54,7 +54,6 @@ include('includes/navbar.php');
                         <?php
                         }
                         ?>
-                        <!-- </div> -->
                     </select>
                 </div>
                 <div class="form-group">

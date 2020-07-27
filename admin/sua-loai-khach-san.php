@@ -15,7 +15,6 @@
         if(isset($_POST['edit_btn_MaLoaiKS']))
         {
             $id = $_POST['edit_MaLoaiKS'];
-        
             $query = "SELECT * FROM loaikhachsan WHERE MaLoaiKS='$id'";
             $query_run = mysqli_query($connection, $query);
         

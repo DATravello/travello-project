@@ -13,7 +13,6 @@ include('includes/navbar.php');
 
     <div class="card-body">
         <?php
-        // $connection = mysqli_connect("localhost", "root", "", "travello_db");
         if (isset($_POST['edit_btn'])) {
             $manh = $_POST['sua_mnh'];
 

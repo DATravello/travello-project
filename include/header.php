@@ -107,7 +107,7 @@ include('function.php');
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/Slider-1.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-4.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>KHÁM PHÁ THẾ GIỚI</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -115,7 +115,7 @@ include('function.php');
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="img/Slider-2.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-3.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>Trải Nghiệm Mới</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -123,11 +123,11 @@ include('function.php');
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="img/Slider-3.jpg" class="d-block w-100" alt="...">
+                    <img src="img/Slider-5.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp" style="animation-delay: .3s;">
                         <h5>Tìm Chuyến Đi</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        <p><a href="#">Tìm Kiếm</a></p>
+                        <p><a href="#search">Tìm Kiếm</a></p>
                     </div>
                 </div>
             </div>

@@ -45,11 +45,8 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $conn = mysqli_connect("localhost", "root", "", "travello_db");
-        $query = "SELECT * FROM nhahang";
-        $query_run = mysqli_query($conn, $query);
-        $query1 = "SELECT * FROM nhahang, thuonghieunh, vitri where nhahang.MaThuongHieuNH = thuonghieunh.MaThuongHieuNH and vitri.MaViTri=nhahang.MaViTri";
-        $result1 = mysqli_query($connection, $query1);
+        $query = "SELECT * FROM thuonghieunh, vitri, nhahang where nhahang.MaThuongHieuNH = thuonghieunh.MaThuongHieuNH and vitri.MaViTri=nhahang.MaViTri";
+        $query_run = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -73,17 +70,17 @@ include('includes/navbar.php');
 
             <?php
             $i = 0;
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            if (mysqli_num_rows($query_run) > 0) {
+              while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                 <tr>
                   <td><?php echo $row['MaNH']; ?></td>
                   <td><?php
-                      echo $rows1['TenThuongHieuNH'];
+                      echo $row['TenThuongHieuNH'];
                       ?></td>
                   <td> <?php echo $row['TenNhaHang']; ?> </td>
                   <td><?php
-                      echo $rows1['TenViTri'];
+                      echo $row['TenViTri'];
                       ?></td>
                   <td> <?php echo $row['DiaChi']; ?> </td>
                   <td><img src="img/nha-hang/<?php echo $row['Anh']; ?>" style="width:150px;height:100px"> </td>

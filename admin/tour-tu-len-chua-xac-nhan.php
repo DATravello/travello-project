@@ -48,7 +48,6 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $conn = mysqli_connect("localhost", "root", "", "travello_db");
         $query = "SELECT * FROM hoadontourtutao hdtt, thanhtoan tt, khachhang kh, tourdulich tour
          where hdtt.MaTT = tt.MaTT 
         and hdtt.MaKH=kh.MaKH and tour.MaTour=hdtt.MaTour and

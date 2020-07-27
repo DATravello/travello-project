@@ -47,7 +47,6 @@ include('includes/navbar.php');
                     <div class="form-group">
                         <label>Loại Nhà Hàng</label>
                         <select class="form-control" name="LoaiNhaHang">
-                            <!-- <div class="form-group" name="LoaiTin"> -->
                             <?php
                             $q_lnh = "SELECT * FROM loainhahang";
                             $rs_lnh = mysqli_query($connection, $q_lnh);
@@ -57,7 +56,6 @@ include('includes/navbar.php');
                             <?php
                             }
                             ?>
-                            <!-- </div> -->
                         </select>
                     </div>
                     <label> Tên Thương Hiệu </label>

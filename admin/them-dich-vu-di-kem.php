@@ -57,7 +57,6 @@
             </div>
             <div class="form-group">
                 <label> Ghi Chú </label>
-                <!-- <input type="file" name="images" id="images" class="form-control" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"> -->
                 <input type="text" name="GhiChu" class="form-control" placeholder="Nhập Ghi Chú">
             </div>
         </div>

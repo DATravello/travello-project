@@ -44,7 +44,6 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label> Loại Tour Du Lịch </label>
                     <select class="form-control" name="loaitour">
-                        <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_loaitour = "SELECT * FROM loaitourdulich";
                         $rs_loaitour = mysqli_query($connection, $q_loaitour);
@@ -54,7 +53,6 @@ include('includes/navbar.php');
                         <?php
                         }
                         ?>
-                        <!-- </div> -->
                     </select>
                 </div>
                 <div class="form-group">

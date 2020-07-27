@@ -48,7 +48,6 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $conn = mysqli_connect("localhost", "root", "", "travello_db");
         $query = "SELECT * FROM hoadon hd, thanhtoan tt, khachhang kh, tourdulich tour where hd.MaTT = tt.MaTT 
         and hd.MaKH=kh.MaKH and tour.MaTour=hd.MaTour and hd.TinhTrang = 'Chưa Xác Nhận'";
         $result = mysqli_query($connection, $query);
@@ -67,7 +66,6 @@ include('includes/navbar.php');
               <th>Tình Trạng</th>
               <th>Edit</th>
             </tr>
-            <!-- <tr>Xuất BILL</tr> -->
           </thead>
           <tbody>
 
