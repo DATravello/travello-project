@@ -4,8 +4,6 @@ include("db_config.php");
 // * THÊM LOẠI NHÀ HÀNG *// (ĐƯỢC)
 if (isset($_POST['btn_them_loai_nh'])) {
     $tenloainhahang = $_POST['TenLoaiNH'];
-
-
     $sql_tenloainh = "SELECT * FROM loainhahang WHERE TenLoaiNH = '$tenloainhahang'";
     $rstenloainh = mysqli_query($connection, $sql_tenloainh);
 
@@ -874,23 +872,17 @@ if (isset($_POST['btn_capnhat_ks'])) {
     $anhks = $_FILES["Anh"]['name'];
     $anhlp = $_FILES["AnhLoaiPhong"]['name'];
     $gia = $_POST['sua_gia'];
-    if ((file_exists("img/khach-san/" . $_FILES["Anh"]["name"])) && file_exists("img/loai-phong/" . $_FILES["AnhLoaiPhong"]["name"])) {
-        $store = $_FILES["Anh"]["name"] && $_FILES["AnhLoaiPhong"]["name"];
-        $_SESSION['status'] = "Hình đã tồn tại. '.$store.'";
-        header('location: sua-khach-san.php');
-    } else {
-        $query = "UPDATE khachsan SET  MaThuongHieuKS='$thuonghieuks', MaViTri='$vitri', TenKS='$tenks', HangSao='$hangsao', DiaChi='$diachiks', DienThoai='$dtks', MaLoaiPhong='$loaiphong', SoPhong='$sophong', WebSite='$website',MoTa='$mota',MoTaLoaiPhong='$motalp', Anh='$anhks', AnhLoaiPhong='$anhlp', Gia='$gia' WHERE MaKS='$maks'";
-        $query_run = mysqli_query($connection, $query);
+    $query = "UPDATE khachsan SET  MaThuongHieuKS='$thuonghieuks', MaViTri='$vitri', TenKS='$tenks', HangSao='$hangsao', DiaChi='$diachiks', DienThoai='$dtks', MaLoaiPhong='$loaiphong', SoPhong='$sophong', WebSite='$website',MoTa='$mota',MoTaLoaiPhong='$motalp', Anh='$anhks', AnhLoaiPhong='$anhlp', Gia='$gia' WHERE MaKS='$maks'";
+    $query_run = mysqli_query($connection, $query);
 
-        if ($query_run) {
-            move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/khach-san/" . $_FILES["Anh"]["name"]);
-            move_uploaded_file($_FILES["AnhLoaiPhong"]["tmp_name"], "img/loai-phong/" . $_FILES["AnhLoaiPhong"]["name"]);
-            $_SESSION['success'] = "Update Successed!";
-            header('location: danh-sach-khach-san.php');
-        } else {
-            $_SESSION['status'] = "Update Failed!";
-            header('location: sua-khach-san.php');
-        }
+    if ($query_run) {
+        move_uploaded_file($_FILES["Anh"]["tmp_name"], "img/khach-san/" . $_FILES["Anh"]["name"]);
+        move_uploaded_file($_FILES["AnhLoaiPhong"]["tmp_name"], "img/loai-phong/" . $_FILES["AnhLoaiPhong"]["name"]);
+        $_SESSION['success'] = "Cập Nhật Thành Công!";
+        header('location: danh-sach-khach-san.php');
+    } else {
+        $_SESSION['status'] = "Cập Nhật Thất Bại!";
+        header('location: sua-khach-san.php');
     }
 }
 
@@ -1561,7 +1553,6 @@ if (isset($_POST["ignore_cancel_btn"])) {
         if ($mail->Send()) {
         } else {
         }
-
     } else {
         $_SESSION['status'] = "Cập Nhật Thất Bại!";
         header('location: cap-nhat-yeu-cau-huy-tour.php');

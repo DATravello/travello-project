@@ -47,11 +47,8 @@
 
     <div class="table-responsive">
       <?php
-        $connection = mysqli_connect("localhost","root","","travello_db");
-        $query = "SELECT * FROM thuonghieunh";
+        $query = "SELECT * FROM thuonghieunh, loainhahang where thuonghieunh.MaLoaiNH = loainhahang.MaLoaiNH";
         $query_run = mysqli_query($connection, $query);
-        $query1="SELECT * FROM thuonghieunh, loainhahang where thuonghieunh.MaLoaiNH = loainhahang.MaLoaiNH";
-        $result1 = mysqli_query($connection, $query1);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -68,15 +65,15 @@
         <tbody>
 
           <?php
-            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) 
+            if(mysqli_num_rows($query_run)) 
             {
-              while(($row = mysqli_fetch_assoc($query_run))&& $rows1 =mysqli_fetch_assoc($result1))
+              while($row = mysqli_fetch_assoc($query_run))
               {
           ?>
                 <tr>
                   <td> <?php echo $row['MaThuongHieuNH']; ?>  </td>
                   <td><?php
-                  echo $rows1['TenLoaiNH']; 
+                  echo $row['TenLoaiNH']; 
                   ?></td>
                   <td> <?php echo $row['TenThuongHieuNH']; ?>  </td>
                   <td><?php echo $row['MoTa']; ?></td>

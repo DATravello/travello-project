@@ -47,11 +47,8 @@
 
     <div class="table-responsive">
       <?php
-        $connection = mysqli_connect("localhost","root","","travello_db");
-        $query = "SELECT * FROM phuongtien";
-        $query_run = mysqli_query($connection, $query);
-        $query1 = "SELECT * FROM phuongtien pt, theloaiphuongtien tl where pt.MaTLPhuongTien = tl.MaTLPhuongTien";
-        $result1 = mysqli_query($connection, $query1);
+        $query = "SELECT * FROM phuongtien pt, theloaiphuongtien tl where pt.MaTLPhuongTien = tl.MaTLPhuongTien";
+        $result = mysqli_query($connection, $query);
       ?>
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -70,15 +67,15 @@
         <tbody>
 
           <?php
-            if(mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0)
+            if(mysqli_num_rows($result) > 0)
             {
-              while(($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1))
+              while($row = mysqli_fetch_assoc($result))
               {
           ?>
                 <tr>
                   <td><?php echo $row['MaPhuongTien']; ?></td>
                   <td><?php
-                      echo $rows1['TenTLPhuongTien'];
+                      echo $row['TenTLPhuongTien'];
                   ?></td>
                   <td> <?php echo $row['PhuongTien']; ?>  </td>
                   <td> <img src="img/phuong-tien/<?php echo $row['HinhAnh']; ?>" style="width:150px;height:100px">  </td>

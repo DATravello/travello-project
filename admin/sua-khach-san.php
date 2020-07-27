@@ -17,7 +17,6 @@ include('includes/navbar.php');
 
         <div class="card-body">
             <?php
-            $connection = mysqli_connect("localhost", "root", "", "travello_db");
             if (isset($_POST['edit_btn'])) {
                 $maks = $_POST['sua_maks'];
                 $query = "SELECT * FROM khachsan WHERE MaKS ='$maks'";
@@ -32,7 +31,7 @@ include('includes/navbar.php');
                             </div>
                             <div class="form-group">
                                 <label> Tên Thương Hiệu</label>
-                                <select class="form-control" name="sua_mathks">
+                                <select class="form-control" name="sua_mathks" value="<?php echo $TL["TenThuongHieuKS"] ?>">
                                     <?php
                                     $q_thuonghieuks = "SELECT * FROM thuonghieuks";
                                     $rs_thuonghieuks = mysqli_query($connection, $q_thuonghieuks);
@@ -99,11 +98,11 @@ include('includes/navbar.php');
                             </div>
                             <div class="form-group">
                                 <label>Mô Tả Khách Sạn </label>
-                                <textarea name="sua_mota" rows="5" value="<?php echo $row['MoTa'] ?>" class="form-control" placeholder="Nhập Mô Tả"></textarea>
+                                <textarea name="sua_mota" rows="5" value="<?php echo $row['MoTa'] ?>" class="form-control" placeholder="Nhập Mô Tả"><?php echo $row['MoTa'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Mô Tả Loại Phòng </label>
-                                <textarea name="sua_motalp" rows="5" value="<?php echo $row['MoTaLoaiPhong'] ?>" class="form-control" placeholder="Nhập Mô Tả Loại Phòng"></textarea>
+                                <textarea name="sua_motalp" rows="5" value="<?php echo $row['MoTaLoaiPhong'] ?>" class="form-control" placeholder="Nhập Mô Tả Loại Phòng"><?php echo $row['MoTaLoaiPhong'] ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Hình Ảnh </label>
@@ -112,7 +111,7 @@ include('includes/navbar.php');
                                         <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                     </div>
                                     <div class="custom-file">
-                                        <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                        <input type="file" value="<?php echo $row['Anh'] ?>" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                                         <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                                     </div>
                                 </div>
@@ -123,7 +122,7 @@ include('includes/navbar.php');
                                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" name="AnhLoaiPhong" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                            <input type="file" value="<?php echo $row['AnhLoaiPhong'] ?>" name="AnhLoaiPhong" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                                         </div>
                                     </div>

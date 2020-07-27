@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
+img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] {display: none;}
 * {
     margin: 0;
     padding: 0;
@@ -132,19 +133,23 @@ h3 {
 
 .carousel-caption a {
     text-transform: uppercase;
-    background: #2196F3;
+    background: transparent;
     border-radius: 50px;
     padding: 10px 25px;
+    font-weight: bold;
     color: #fff;
     margin-top: 15px;
     display: inline-block;
     transition: .3s;
+    border: solid 1px #fff;
 }
 
 .carousel-caption a:hover {
-    background: #fff;
-    color: #2196F3;
+    background-color: #000;
+    color: #fff;
     text-decoration: none;
+    border: solid 1px #000;
+
 }
 
 .navbar-scrolled {

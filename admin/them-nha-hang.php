@@ -46,7 +46,6 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label>Tên Thương Hiệu</label>
                     <select class="form-control" name="ThuongHieuNH">
-                        <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_thuonghieu = "SELECT * FROM thuonghieunh";
                         $rs_thuonghieu = mysqli_query($connection, $q_thuonghieu);
@@ -56,7 +55,6 @@ include('includes/navbar.php');
                         <?php
                         }
                         ?>
-                        <!-- </div> -->
                     </select>
                 </div>
 
@@ -67,7 +65,6 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label>Vị Trí</label>
                     <select class="form-control" name="ViTriNH">
-                        <!-- <div class="form-group" name="LoaiTin"> -->
                         <?php
                         $q_vitri = "SELECT * FROM vitri";
                         $rs_vitri = mysqli_query($connection, $q_vitri);
@@ -77,7 +74,6 @@ include('includes/navbar.php');
                         <?php
                         }
                         ?>
-                        <!-- </div> -->
                     </select>
                 </div>
                 <div class="form-group">

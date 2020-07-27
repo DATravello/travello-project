@@ -49,9 +49,8 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        $conn = mysqli_connect("localhost", "root", "", "travello_db");
         $query = "SELECT * FROM hoadonnh";
-        $query_run = mysqli_query($conn, $query);
+        $query_run = mysqli_query($connection, $query);
         $query1 = "SELECT * FROM hoadonnh hdnh, hoadon hd, khachhang kh, nhahang nh where hdnh.MaKH = kh.MaKH 
         and hdnh.MaNH=nh.MaNH ";
         $result1 = mysqli_query($connection, $query1);

@@ -4,23 +4,6 @@ include('includes/header.php');
 include('includes/navbar.php');
 ?>
 
-<?php
-if (isset($_POST["accept_btn"])) {
-    $mahd = $_POST["mahd"];
-
-    // $sql = "UPDATE hoadon SET TinhTrang = 'Đã Huỷ' WHERE MaHD = $mahd";
-    // $querry = mysqli_query($connection, $sql);
-
-    // if ($querry) {
-    //     $_SESSION['success'] = 'Thành Công!';
-    // } else {
-    //     $_SESSION['status'] = 'Thất Bại!';
-    // }
-
-
-}
-?>
-
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">

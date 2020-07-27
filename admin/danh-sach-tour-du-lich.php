@@ -45,12 +45,9 @@ include('includes/navbar.php');
 
       <div class="table-responsive">
         <?php
-        // $connection = mysqli_connect("localhost","root","","travello_db");
-        $query = "SELECT * FROM tourdulich";
-        $query_run = mysqli_query($connection, $query);
-        $query1 = "SELECT * FROM tourdulich, loaitourdulich, nhahang, khachsan, phuongtien, huongdanvien, dichvudikem, vitri
+        $query = "SELECT * FROM loaitourdulich, nhahang, khachsan, phuongtien, huongdanvien, dichvudikem, vitri, tourdulich
          where tourdulich.MaLoaiTour = loaitourdulich.MaLoaiTour and nhahang.MaNH=tourdulich.MaNH AND khachsan.MaKS = tourdulich.MaKS AND huongdanvien.MaHDV = tourdulich.MaHDV AND phuongtien.MaPhuongTien = tourdulich.MaPhuongTien AND dichvudikem.MaDV = tourdulich.MaDV AND vitri.MaViTri=tourdulich.MaViTri";
-        $result1 = mysqli_query($connection, $query1);
+        $query_run = mysqli_query($connection, $query);
         ?>
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -81,35 +78,35 @@ include('includes/navbar.php');
 
             <?php
             $i = 0;
-            if (mysqli_num_rows($query_run) > 0 && mysqli_num_rows($result1) > 0) {
-              while (($row = mysqli_fetch_assoc($query_run)) && $rows1 = mysqli_fetch_assoc($result1)) {
+            if (mysqli_num_rows($query_run) > 0) {
+              while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                 <tr>
                   <td><?php echo $row['MaTour']; ?></td>
                   <td><?php
-                      echo $rows1['TenLoaiTour'];
+                      echo $row['TenLoaiTour'];
                       ?></td>
                   <td> <?php echo $row['TenTour']; ?> </td>
                   <td> <img src="img/tour-du-lich/<?php echo $row['Anh']; ?>" style="width:150px;height:100px"> </td>
                   <td> <?php echo $row['NoiKhoiHanh']; ?> </td>
                   <td><?php
-                      echo $rows1['TenViTri'];
+                      echo $row['TenViTri'];
                       ?></td>
                   <td> <?php echo $row['ThoiGian']; ?> </td>
                   <td><?php
-                      echo $rows1['TenKS'];
+                      echo $row['TenKS'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenNhaHang'];
+                      echo $row['TenNhaHang'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenHDV'];
+                      echo $row['TenHDV'];
                       ?></td>
                   <td><?php
-                      echo $rows1['PhuongTien'];
+                      echo $row['PhuongTien'];
                       ?></td>
                   <td><?php
-                      echo $rows1['TenDV'];
+                      echo $row['TenDV'];
                       ?></td>
                   <td> <?php echo product_price($row['GiaTien']); ?> </td>
                   <td> <?php echo product_price($row['GiaTreEm']); ?> </td>
