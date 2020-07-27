@@ -5,8 +5,9 @@
     <div class="row">
         <div class="col-md-4">
             <h3 style="color:#fff">Travello</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                At quisquam deserunt error nesciunt earum, alias minima pariatur?<p>
+            <p>Chuyên cung cấp tour du lịch với các loại hình du lịch đa dạng cả trong và ngoài nước.
+                Mong muốn đưa đến cho bạn trải nghiệm du lịch tuyệt vời nhất là niềm vinh hạnh của chúng tôi!
+            <p>
         </div>
         <div class="col-md-2">
             <h5>Thành Viên</h5>
@@ -16,14 +17,13 @@
         <div class="col-md-2">
             <h5>Điều Khoản</h5>
             <p><a href="quy-dinh-huy-tour.php">Chính Sách Huỷ Tour</a></p>
-            <p>Lorem ipsum</p>
         </div>
         <div class="col-md-4">
             <h5>Liên Hệ</h5>
             <p>140 Lê Trọng Tấn, P.Tây Thạnh, Q.Tân Phú, TP.HCM</p>
             <p>(+84) 32 6805 211</p>
-            <p>travello@gmail.com</p>
-            <p>www.travello.co</p>
+            <p>travelloco.op@gmail.com</p>
+            <p>www.travello.cf</p>
         </div>
     </div>
 
