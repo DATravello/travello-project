@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 <label>Tên Thương Hiệu</label>
-                <select class="form-control"  name="ThuongHieu">
+                <select class="form-control" name="ThuongHieu">
                         <?php
                         $q_thuonghieu = "SELECT * FROM thuonghieuks";
                         $rs_thuonghieu = mysqli_query($connection, $q_thuonghieu);

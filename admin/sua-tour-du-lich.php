@@ -148,7 +148,7 @@
                     </div>
                     <div class="form-group">
                         <label>Hành Trình </label>
-                        <input type="text" name="sua_hanhtrinh" value="<?php echo $row['HanhTrinh'] ?>" class="form-control" placeholder="Enter HanhTrinh">
+                        <textarea rows="5" name="sua_hanhtrinh" class="form-control"><?php echo $row['HanhTrinh'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Số Ngày </label>

@@ -175,7 +175,7 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Hành Trình </label>
-                    <input type="text" name="HanhTrinh" class="form-control" placeholder="Nhập Hành Trình">
+                    <textarea row="5" name="HanhTrinh" class="form-control">Nhập Hành Trình</textarea>
                 </div>
                 <div class="form-group">
                     <label> Số Ngày </label>
@@ -183,11 +183,11 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label> Sức Chứa </label>
-                    <input type="number" name="SucChua" class="form-control" placeholder="Nhập Số Ngày">
+                    <input type="number" name="SucChua" class="form-control" placeholder="Nhập Sức Chứa">
                 </div>
                 <div class="form-group">
                     <label> Chi Phí Tour </label>
-                    <input type="number" name="ChiPhiTour" class="form-control" placeholder="Nhập Số Ngày">
+                    <input type="number" name="ChiPhiTour" class="form-control" placeholder="Nhập Chi Phí Tour">
                 </div>
                 <div class="form-group">
                     <label> Ảnh </label>
