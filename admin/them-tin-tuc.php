@@ -66,19 +66,16 @@ include('includes/navbar.php');
                 </div>
                 <div class="form-group">
                     <label>Nhân Viên</label>
-                    <select class="form-control" name="NhanVien" disabled>
+                    <select class="form-control" name="NhanVien">
                         <?php
-                        $taikhoan = $_SESSION['TaiKhoan'];
-                        $q_tk = "SELECT * FROM taikhoan WHERE TenTK = '$taikhoan'";
-                        $rs_tk = mysqli_query($connection, $q_tk);
-                        $rw_tk = mysqli_fetch_array($rs_tk);
-
-                        $manv = $rw_tk["MaNV"];
-                        $q_nv = "SELECT * FROM nhanvien WHERE MaNV = $manv";
+                        $q_nv = "SELECT * FROM nhanvien";
                         $rs_nv = mysqli_query($connection, $q_nv);
-                        $rw_nv = mysqli_fetch_array($rs_nv);
+                        while ($TL = @mysqli_fetch_array($rs_nv)) {
                         ?>
-                        <option value="<?php echo $rw_nv["MaNV"] ?>"><?php echo $rw_nv["TenNV"] ?></option>
+                            <option value="<?php echo $TL["MaNV"] ?>"><?php echo $TL["TenNV"] ?></option>
+                        <?php
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -92,7 +89,7 @@ include('includes/navbar.php');
                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <input type="file" name="HinhAnh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                     </div>
@@ -100,6 +97,10 @@ include('includes/navbar.php');
                 <div class="form-group">
                     <label> Tạo Bởi </label>
                     <input type="text" name="TaoBoi" class="form-control" placeholder="Nhập Tác Giả">
+                </div>
+                <div class="form-group">
+                    <label> Ngày </label>
+                    <input type="date" name="Ngay" class="form-control" placeholder="Nhập Ngày">
                 </div>
             </div>
 

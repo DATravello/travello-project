@@ -43,18 +43,16 @@
                     </select>
                     </div>
                     <div class="form-group">
-                    
-                        <label> Tên Nhân Viên</label>
+                        <label> Nhân Viên</label>
+                        <select class="form-control"  name="sua_mannv">
                         <?php
-                            $manv = $row["MaNV"];
-                            $nv = "SELECT * FROM nhanvien WHERE MaNV = $manv";
-                            $rs_n = mysqli_query($connection, $nv);
-                            $rw_nv = mysqli_fetch_array($rs_n);
+                        $q_nv = "SELECT * FROM nhanvien";
+                        $rs_nv= mysqli_query($connection, $q_nv);
+                        while ($NV = @mysqli_fetch_array($rs_nv)) {
                         ?>
-                        <select class="form-control" name="sua_mannv"  disabled>
-                            <option value="<?php echo $rw_nv["MaNV"] ?>" selected><?php echo $rw_nv["TenNV"] ?></option>
+                            <option value="<?php echo $NV["MaNV"] ?>"><?php echo $NV["TenNV"] ?></option>
                         <?php
-                        //}
+                        }
                         ?>
                     </select>
                     </div>
@@ -85,6 +83,10 @@
                     <div class="form-group">
                         <label>Tác Giả </label>
                         <input type="text" name="sua_tacgia" value="<?php echo $row['TaoBoi'] ?>" class="form-control" placeholder="Enter TaoBoi">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày </label>
+                        <input type="date" name="sua_ngay" value="<?php echo $row['Ngay'] ?>" class="form-control" placeholder="Enter Ngày">
                     </div>
                     <a href="danh-sach-tin-tuc.php" class="btn btn-danger">Cancel</a>
                     <button type="submit" name="btn_capnhat_tt" class="btn btn-primary">Update</button>
