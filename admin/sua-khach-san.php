@@ -1,7 +1,7 @@
 <?php
-include('security.php');
-include('includes/header.php');
-include('includes/navbar.php');
+include 'security.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
 <div class="container-fluid">
@@ -17,12 +17,12 @@ include('includes/navbar.php');
 
         <div class="card-body">
             <?php
-            if (isset($_POST['edit_btn'])) {
-                $maks = $_POST['sua_maks'];
-                $query = "SELECT * FROM khachsan WHERE MaKS ='$maks'";
-                $query_run = mysqli_query($connection, $query);
-                foreach ($query_run as $row) {
-            ?>
+if (isset($_POST['edit_btn'])) {
+    $maks = $_POST['sua_maks'];
+    $query = "SELECT * FROM khachsan WHERE MaKS ='$maks'";
+    $query_run = mysqli_query($connection, $query);
+    foreach ($query_run as $row) {
+        ?>
                     <form action="code.php" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="form-group">
@@ -33,28 +33,28 @@ include('includes/navbar.php');
                                 <label> Tên Thương Hiệu</label>
                                 <select class="form-control" name="sua_mathks" value="<?php echo $TL["TenThuongHieuKS"] ?>">
                                     <?php
-                                    $q_thuonghieuks = "SELECT * FROM thuonghieuks";
-                                    $rs_thuonghieuks = mysqli_query($connection, $q_thuonghieuks);
-                                    while ($TL = @mysqli_fetch_array($rs_thuonghieuks)) {
-                                    ?>
+$q_thuonghieuks = "SELECT * FROM thuonghieuks";
+        $rs_thuonghieuks = mysqli_query($connection, $q_thuonghieuks);
+        while ($TL = @mysqli_fetch_array($rs_thuonghieuks)) {
+            ?>
                                         <option value="<?php echo $TL["MaThuongHieuKS"] ?>"><?php echo $TL["TenThuongHieuKS"] ?></option>
                                     <?php
-                                    }
-                                    ?>
+}
+        ?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label> Vị Trí</label>
                                 <select class="form-control" name="sua_vitri">
                                     <?php
-                                    $q_vitri = "SELECT * FROM vitri";
-                                    $rs_vitri = mysqli_query($connection, $q_vitri);
-                                    while ($TL = @mysqli_fetch_array($rs_vitri)) {
-                                    ?>
+$q_vitri = "SELECT * FROM vitri";
+        $rs_vitri = mysqli_query($connection, $q_vitri);
+        while ($TL = @mysqli_fetch_array($rs_vitri)) {
+            ?>
                                         <option value="<?php echo $TL["MaViTri"] ?>"><?php echo $TL["TenViTri"] ?></option>
                                     <?php
-                                    }
-                                    ?>
+}
+        ?>
                                 </select>
                             </div>
 
@@ -78,14 +78,14 @@ include('includes/navbar.php');
                                 <label> Loại Phòng</label>
                                 <select class="form-control" name="sua_loaiphong">
                                     <?php
-                                    $q_loaiphong = "SELECT * FROM loaiphong";
-                                    $rs_loaiphong = mysqli_query($connection, $q_loaiphong);
-                                    while ($TL = @mysqli_fetch_array($rs_loaiphong)) {
-                                    ?>
+$q_loaiphong = "SELECT * FROM loaiphong";
+        $rs_loaiphong = mysqli_query($connection, $q_loaiphong);
+        while ($TL = @mysqli_fetch_array($rs_loaiphong)) {
+            ?>
                                         <option value="<?php echo $TL["MaLoaiPhong"] ?>"><?php echo $TL["TenLoaiPhong"] ?></option>
                                     <?php
-                                    }
-                                    ?>
+}
+        ?>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -117,11 +117,11 @@ include('includes/navbar.php');
                         <div class="custom-file">
                             <input type="file" name="Anh" accept="image/*" onchange="previewImage()" id="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>   
+                        </div>
                     </div>
-                    
+
                     </div>
-                                
+
                     <div class="form-group">
                     <label>Ảnh </label><br>
                         <img id="previewImg" src="img/loai-phong/<?php echo $row['AnhLoaiPhong']; ?>">
@@ -135,9 +135,9 @@ include('includes/navbar.php');
                         <div class="custom-file">
                             <input type="file" name="AnhLoaiPhong" accept="image/*" onchange="previewImage()" id="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>   
+                        </div>
                     </div>
-                    
+
                     </div>
                                     <div class="form-group">
                                         <label>Giá </label>
@@ -151,10 +151,10 @@ include('includes/navbar.php');
                     </form>
 
             <?php
-                }
-            }
+}
+}
 
-            ?>
+?>
 
         </div>
         </div>
@@ -163,6 +163,6 @@ include('includes/navbar.php');
 
 
 <?php
-include('includes/footer.php');
-include('includes/scripts.php');
+include 'includes/footer.php';
+include 'includes/scripts.php';
 ?>
