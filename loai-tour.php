@@ -1,16 +1,15 @@
-<?php include('include/header.php');
+<?php include 'include/header.php';
 if (isset($_GET['loai-tour'])) {
     $maloaitour = $_GET['loai-tour'];
-    require_once('database/db_config.php');
+    require_once 'database/db_config.php';
     $query = "SELECT * from tourdulich where MaLoaiTour='$maloaitour' ORDER BY NgayTao DESC";
     $result = mysqli_query($connection, $query);
-
 
     $query_lt = "SELECT * FROM loaitourdulich where MaLoaiTour = '$maloaitour'";
     $result_lt = mysqli_query($connection, $query_lt);
     $rows_lt = @mysqli_fetch_assoc($result_lt);
     $tenloaitour = $rows_lt["TenLoaiTour"];
-?>
+    ?>
 
     <title><?php echo $tenloaitour ?> | Travello</title>
 
@@ -108,16 +107,14 @@ if (isset($_GET['loai-tour'])) {
                         <h5>LỌC THEO</h5>
                     </div>
                     <div class="card">
-                        <div class="fil-list" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <div class="fil-left">Giá Tiền</div>
-                            <div class="fil-right"><i class="fas fa-sort-down"></i></div>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="filter-range"></div>
-                                <button type="button" class="filter-apply">Lọc</button>
-                            </div>
+                        <div class="card-body">
+                            <h3>Gia Tien</h3>
+                            <?php
+                                $price_max = "SELECT MAX(GiaTien) AS p FROM tourdulich";
+                                $q_max =  mysqli_query($connection, $price_max);
+                                $r_max = mysqli_fetch_array($q_max);
+                            ?>
+                            <p id="price_range">0 đ - <?php echo product_price($r_max["p"]) ?> </p>
                         </div>
                     </div>
 
@@ -130,31 +127,31 @@ if (isset($_GET['loai-tour'])) {
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="5" id="defaultCheck1">
                                     <label class="form-check-label" for="defaultCheck1">
                                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="4" id="defaultCheck1">
                                     <label class="form-check-label" for="defaultCheck1">
                                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="3" id="defaultCheck1">
                                     <label class="form-check-label" for="defaultCheck1">
                                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="2" id="defaultCheck1">
                                     <label class="form-check-label" for="defaultCheck1">
                                         <i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
                                     <label class="form-check-label" for="defaultCheck1">
                                         <i class="fas fa-star"></i>
                                     </label>
@@ -163,16 +160,55 @@ if (isset($_GET['loai-tour'])) {
                         </div>
                     </div>
 
+
+                    <div class="card">
+                        <div class="fil-list" data-toggle="collapse" data-target="#DiemDen" aria-expanded="false" aria-controls="collapseTwo">
+                            <div class="fil-left">Diem Den</div>
+                            <div class="fil-right"><i class="fas fa-sort-down"></i></div>
+                        </div>
+
+                        <div id="DiemDen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                            <?php
+                                $q = "SELECT * FROM vitri";
+                                $rs = mysqli_query($connection, $q);
+                                while($rw = @mysqli_fetch_array($rs)) {
+                                    ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="<?php echo $rw["MaViTri"]?>" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        <p><?php echo $rw["TenViTri"]?></p>
+                                    </label>
+                                </div>
+                                    <?php
+                                }
+                            ?>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-md-9">
+
+            <script>
+            $(document).ready(function() {
+                fuction filter_data() {
+                    $(".filter-data").html(<div id="loading" style=""></div>)
+                    var action = 'fetch-data';
+                    var min_price = $('#hidden_min_price').val();
+                    var max_price = $('#hidden_max_price').val();
+                }
+            })
+            </script>
+            
+            <div class="col-md-9 filter-data">
                 <h5 class="tour-title"><?php echo $rows_lt['TenLoaiTour']; ?></h5>
                 <div class="row">
                     <?php while ($rows = @mysqli_fetch_array($result)) {
                         $matour = $rows["MaTour"];
                         $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
                         $rs_rv = mysqli_query($connection, $sql_rv);
-                        $rw_rv =  mysqli_fetch_array($rs_rv);
+                        $rw_rv = mysqli_fetch_array($rs_rv);
                     ?>
 
 
@@ -181,27 +217,26 @@ if (isset($_GET['loai-tour'])) {
                                 <div class="card-img-top">
                                     <img style="height: 200px;width: 100%" src="admin/img/tour-du-lich/<?php echo $rows['Anh'] ?>" alt="Card image cap">
                                     <?php
-                                    $succhua = $rows["SucChua"];
-                                    $giamgia = $rows["GiamGia"];
-                                    $gia = $rows["GiaTien"];
-                                    if ($succhua == 0) {
-                                        echo '<div class="feature-soldout">Đã Bán Hết</div>';
-                                    } else {
-                                        if ($giamgia > 0) {
-                                            $percent = 100 - ($giamgia / $gia) * 100;
-                                            echo '<div class="feature-sale">Giảm Giá ' . floor($percent) . '%</div>';
-                                        } else {
-                                        }
-                                    }
-                                    ?>
+                        $succhua = $rows["SucChua"];
+                        $giamgia = $rows["GiamGia"];
+                        $gia = $rows["GiaTien"];
+                        if ($succhua == 0) {
+                            echo '<div class="feature-soldout">Đã Bán Hết</div>';
+                        } else {
+                            if ($giamgia > 0) {
+                            $percent = 100 - ($giamgia / $gia) * 100;
+                            echo '<div class="feature-sale">Giảm Giá ' . floor($percent) . '%</div>';
+                            } else {}
+                        }
+                    ?>
                                     <div class="like"><i class="fas fa-heart"></i></div>
                                 </div>
                                 <div class="card-body">
                                     <?php
-                                    $vt = $rows['MaViTri'];
-                                    $query_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
-                                    $rs_vt = mysqli_query($connection, $query_vt);
-                                    $vitri = mysqli_fetch_array($rs_vt);
+                                        $vt = $rows['MaViTri'];
+                                        $query_vt = "SELECT * FROM vitri WHERE MaViTri = $vt";
+                                        $rs_vt = mysqli_query($connection, $query_vt);
+                                        $vitri = mysqli_fetch_array($rs_vt);
                                     ?>
                                     <p class="card-location"><i class="fas fa-map-marker-alt"></i> <?php echo $vitri["TenViTri"] ?></p>
                                     <h5 class="card-title"><a href="chi-tiet-tour.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
@@ -216,12 +251,12 @@ if (isset($_GET['loai-tour'])) {
                                     </div>
                                     <div class="ml-auto card-f-right">
                                         <?php
-                                        if ($giamgia > 0) {
-                                            echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
-                                                    <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
-                                        } else {
-                                            echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
-                                        }
+                                            if ($giamgia > 0) {
+                                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiamGia']) . '</span></div>
+                                                                                        <div class="price-disable"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                                            } else {
+                                                echo '<div class="price-available"><i class="fas fa-dollar-sign"></i> <span class="price">' . product_price($rows['GiaTien']) . '</span></div>';
+                                            }
                                         ?>
                                     </div>
                                 </div>
@@ -230,15 +265,14 @@ if (isset($_GET['loai-tour'])) {
 
 
 
-                <?php
-                    }
-                }
+                                        <?php
+                        }
+                        }
 
-                ?>
+                        ?>
                 </div>
-
             </div>
         </div>
 
     </section>
-    <?php include('include/footer.php'); ?>
+    <?php include 'include/footer.php';?>
