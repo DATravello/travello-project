@@ -418,6 +418,16 @@ if (isset($_POST['btn_DatTour'])) {
             $('#btn_tab1-next').click(function() {
                 $("#form-dat-tour").validate();
             });
+
+            $('#form-dat-tour').validate( {
+                onkeyup: function ( element, event ) {
+                    if ( event.which === 9 ) {
+                        this.element(element);
+                    } else {
+                        return;
+                    }
+                },
+            } );
         </script>
         <!-- LEFT CONTENT -->
         <div class="col-md-8 tour-content">
@@ -428,7 +438,7 @@ if (isset($_POST['btn_DatTour'])) {
                 <a class="nav-item nav-link inactive col-md-3" id="tab-4">4. Xác Nhận</a>
 
             </div>
-            <form id="form-dat-tour" method="post">
+            <form id="form-dat-tour" name="myForm" method="post">
                 <div class="tab-content" id="nav-tabContent">
 
                     <div class="tab-pane fade show active" id="nav-tab-1" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -558,7 +568,6 @@ if (isset($_POST['btn_DatTour'])) {
         </div>
     </div>
 </section>
-
 
 <script>
     function tab1Next() {

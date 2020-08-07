@@ -1,8 +1,8 @@
 <?php
-include('include/header.php');
+include 'include/header.php';
 if (isset($_GET['diem-den'])) {
     $mavt = $_GET['diem-den'];
-    require_once('database/db_config.php');
+    require_once 'database/db_config.php';
 
     // Querry Khách sạn
     $query = "SELECT * FROM tourdulich WHERE MaViTri='$mavt' ORDER BY NgayTao DESC";
@@ -24,12 +24,12 @@ if (isset($_GET['diem-den'])) {
     <h5 class="title-hotel">DANH SÁCH TOUR DU LỊCH</h5>
     <div class="row">
         <?php
-        while ($rows = mysqli_fetch_array($result)) {
-            $matour = $rows["MaTour"];
-            $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
-            $rs_rv = mysqli_query($connection, $sql_rv);
-            $rw_rv =  mysqli_fetch_array($rs_rv);
-        ?>
+while ($rows = mysqli_fetch_array($result)) {
+    $matour = $rows["MaTour"];
+    $sql_rv = "SELECT COUNT(*) AS rv FROM nhanxet WHERE MaTour = '$matour'";
+    $rs_rv = mysqli_query($connection, $sql_rv);
+    $rw_rv = mysqli_fetch_array($rs_rv);
+    ?>
             <!-- Card -->
             <div class="col-md-4">
                 <div class="card">
@@ -41,13 +41,13 @@ if (isset($_GET['diem-den'])) {
                     <div class="card-body">
                         <p class="card-location"><i class="fas fa-map-marker-alt"></i>
                             <?php
-                            $vitri = $rows['MaViTri'];
-                            $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
-                            $rs_vitri = mysqli_query($connection, $q_vitri);
-                            $rw_vitri = mysqli_fetch_array($rs_vitri);
-                            ?>
+$vitri = $rows['MaViTri'];
+    $q_vitri = "SELECT * FROM vitri WHERE MaViTri= '$vitri'";
+    $rs_vitri = mysqli_query($connection, $q_vitri);
+    $rw_vitri = mysqli_fetch_array($rs_vitri);
+    ?>
                             <?php echo $rw_vitri['TenViTri']
-                            ?>
+    ?>
                         </p>
                         <h5 class="card-title"><a href="chi-tiet-tour-tu-chon.php?tour=<?php echo $rows['MaTour']; ?>"><?php echo $rows['TenTour'] ?></a></h5>
                         <p class="card-text">
@@ -64,8 +64,8 @@ if (isset($_GET['diem-den'])) {
                 </div>
             </div>
         <?php
-        }
-        ?>
+}
+?>
     </div>
 
 </section>
@@ -73,5 +73,5 @@ if (isset($_GET['diem-den'])) {
 
 
 <?php
-include('include/footer.php');
+include 'include/footer.php';
 ?>

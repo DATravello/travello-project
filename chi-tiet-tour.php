@@ -210,32 +210,7 @@ if (isset($_GET['tour'])) {
             }
             ?>
             <hr>
-            <?php
 
-            if (isset($_POST["btnBinhLuan"])) {
-                //query KH
-                $email = $_SESSION["Email"];
-                $q_khach = "SELECT * FROM khachhang WHERE Email = '$email'";
-                $rs_khach = mysqli_query($connection, $q_khach);
-                $rw_khach = @mysqli_fetch_array($rs_khach);
-                $makh = $rw_khach["MaKH"];
-                $noidung = $_POST["NoiDung"];
-
-                //Querry Nhan Xet
-                if ($makh == "" || $noidung == "" || $matour == "") {
-                    echo '<div class="alert alert-success">Không được để trống!</div>';
-                } else {
-                    $qr_nx = "INSERT INTO nhanxet (`MaTour`, `MaKH`, `NoiDung`) VALUES('$matour', '$makh', '$noidung')";
-                    $rs_nx = mysqli_query($connection, $qr_nx);
-
-                    if ($rs_nx) {
-                        $_SESSION['BLSuccess'] = 'Thành Công!';
-                    } else {
-                        $_SESSION['BLSuccess'] = 'Thất Bại!';
-                    }
-                }
-            }
-            ?>
 
             <?php
             if (isset($_SESSION['BLSuccess']) && $_SESSION['BLSuccess'] != '') {
@@ -265,9 +240,35 @@ if (isset($_GET['tour'])) {
                     ';
             }
             ?>
+            <?php
+            if (isset($_POST["btnBinhLuan"])) {
+                //query KH
+                $email = $_SESSION["Email"];
+                $q_khach = "SELECT * FROM khachhang WHERE Email = '$email'";
+                $rs_khach = mysqli_query($connection, $q_khach);
+                $rw_khach = @mysqli_fetch_array($rs_khach);
+                $makh = $rw_khach["MaKH"];
+                
+                $noidung = $_POST["NoiDung"];
+
+                //Querry Nhan Xet
+                if ($makh == "" || $noidung == "" || $matour == "") {
+                    echo '<div class="alert alert-success">Không được để trống!</div>';
+                } else {
+                    $qr_nx = "INSERT INTO nhanxet (MaTour, MaKH, NoiDung) VALUES('$matour', '$makh', '$noidung')";
+                    $rs_nx = mysqli_query($connection, $qr_nx);
+
+                    if ($rs_nx) {
+                        $_SESSION['BLSuccess'] = 'Thành Công!';
+                        echo '<meta http-equiv="refresh" content="0.5">';
+                    } else {
+                        $_SESSION['BLSuccess'] = 'Thất Bại!';
+                    }
+                }
+            }
+            ?>
         </div>
     </div>
-
 </section>
 
 
