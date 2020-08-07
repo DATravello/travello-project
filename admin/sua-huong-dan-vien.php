@@ -1,7 +1,7 @@
 <?php
-    include('security.php');
-    include('includes/header.php');
-    include('includes/navbar.php');
+include 'security.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
 <div class="card shadow mb-4">
@@ -12,19 +12,17 @@
             </a>
     </h6>
   </div>
-    
+
   <div class="card-body">
     <?php
 
-        if(isset($_POST['edit_btn']))
-        {
-            $mahdv = $_POST['edit_MaHDV'];
-            $query = "SELECT * FROM huongdanvien WHERE MaHDV='$mahdv'";
-            $query_run = mysqli_query($connection, $query);
-        
-            foreach($query_run as $row)
-            {
-    ?>
+if (isset($_POST['edit_btn'])) {
+    $mahdv = $_POST['edit_MaHDV'];
+    $query = "SELECT * FROM huongdanvien WHERE MaHDV='$mahdv'";
+    $query_run = mysqli_query($connection, $query);
+
+    foreach ($query_run as $row) {
+        ?>
                 <form action="code.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Mã Hướng Dẫn Viên</label>
@@ -51,13 +49,17 @@
                         <input type="number" name="sua_sdt" value="<?php echo $row['SDT'] ?>" class="form-control" placeholder="Nhập SĐT">
                     </div>
                     <div class="form-group">
-                        <label>Ảnh</label>
+                    <label>Ảnh </label><br>
+                        <img id="previewImg" src="img/huong-dan-vien/<?php echo $row['Anh']; ?>" style="width:100px;height:100px">
+                    </div>
+                    <div class="form-group">
+
                         <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="Anh" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <input type="file" name="Anh" accept="image/*" onchange="previewImage()" id="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
                         </div>
                     </div>
@@ -68,16 +70,16 @@
                 </form>
 
                 <?php
-            }
-        }
-        
-      ?>
-    
+}
+}
+
+?>
+
   </div>
 </div>
 
 
 <?php
-    include('includes/footer.php');
-    include('includes/scripts.php');
+include 'includes/footer.php';
+include 'includes/scripts.php';
 ?>

@@ -1,7 +1,7 @@
 <?php
-    include('security.php');
-    include('includes/header.php');
-    include('includes/navbar.php');
+include 'security.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
 <div class="card shadow mb-4">
@@ -12,17 +12,15 @@
             </a>
     </h6>
   </div>
-    
+
   <div class="card-body">
     <?php
-        if(isset($_POST['edit_btn']))
-        {
-            $matt = $_POST['sua_matt'];
-            $query = "SELECT * FROM tintuc WHERE MaTinTuc ='$matt'";
-            $query_run = mysqli_query($connection, $query);
-            foreach($query_run as $row)
-            {
-    ?>
+if (isset($_POST['edit_btn'])) {
+    $matt = $_POST['sua_matt'];
+    $query = "SELECT * FROM tintuc WHERE MaTinTuc ='$matt'";
+    $query_run = mysqli_query($connection, $query);
+    foreach ($query_run as $row) {
+        ?>
                 <form action="code.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label> Mã Tin Tức </label>
@@ -32,29 +30,21 @@
                         <label> Tên Loại Tin</label>
                         <select class="form-control"  name="sua_matheloai">
                         <?php
-                        $q_theloai = "SELECT * FROM theloai";
-                        $rs_theloai = mysqli_query($connection, $q_theloai);
-                        while ($TL = @mysqli_fetch_array($rs_theloai)) {
-                        ?>
+$q_theloai = "SELECT * FROM theloai";
+        $rs_theloai = mysqli_query($connection, $q_theloai);
+        while ($TL = @mysqli_fetch_array($rs_theloai)) {
+            ?>
                             <option value="<?php echo $TL["MaTheLoai"] ?>"><?php echo $TL["TenTheLoai"] ?></option>
                         <?php
-                        }
-                        ?>
+}
+        ?>
                     </select>
                     </div>
                     <div class="form-group">
                         <label> Nhân Viên</label>
-                        <select class="form-control"  name="sua_mannv">
-                        <?php
-                        $q_nv = "SELECT * FROM nhanvien";
-                        $rs_nv= mysqli_query($connection, $q_nv);
-                        while ($NV = @mysqli_fetch_array($rs_nv)) {
-                        ?>
-                            <option value="<?php echo $NV["MaNV"] ?>"><?php echo $NV["TenNV"] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                        <select class="form-control" name="sua_mannv" disabled>
+                            <option value="<?php echo $rw_nv["MaNV"] ?>"><?php echo $rw_nv["TenNV"] ?></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label> Tên Tin Tức </label>
@@ -81,9 +71,9 @@
                         <div class="custom-file">
                             <input type="file" name="HinhAnh" accept="image/*" onchange="previewImage()" id="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>   
+                        </div>
                     </div>
-                    
+
                     </div>
                     <div class="form-group">
                         <label>Tác Giả </label>
@@ -91,23 +81,23 @@
                     </div>
                     <div class="form-group">
                         <label>Ngày </label>
-                        <input type="date" name="sua_ngay" value="<?php echo $row['Ngay'] ?>" class="form-control" placeholder="Enter Ngày">
+                        <input type="date" name="sua_ngay" value="<?php echo date('Y-m-d', strtotime($row['Ngay'])) ?>" class="form-control" placeholder="Enter Ngày">
                     </div>
                     <a href="danh-sach-tin-tuc.php" class="btn btn-danger">Cancel</a>
                     <button type="submit" name="btn_capnhat_tt" class="btn btn-primary">Update</button>
                 </form>
 
                 <?php
-            }
-        }
-        
-      ?>
-    
+}
+}
+
+?>
+
   </div>
 </div>
 
 
 <?php
-    include('includes/footer.php');
-    include('includes/scripts.php');
+include 'includes/footer.php';
+include 'includes/scripts.php';
 ?>

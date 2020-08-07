@@ -1,7 +1,7 @@
 <?php
-include('security.php');
-include('includes/header.php');
-include('includes/navbar.php');
+include 'security.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 <div class="container-fluid">
 
@@ -15,9 +15,8 @@ include('includes/navbar.php');
         </div>
         <?php
 
-
-        if (isset($_SESSION['success']) && $_SESSION['success'] != '') {
-            echo    '<div class="btn btn-success btn-icon-split">
+if (isset($_SESSION['success']) && $_SESSION['success'] != '') {
+    echo '<div class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-check"></i>
                         </span>
@@ -25,11 +24,11 @@ include('includes/navbar.php');
                         ' . $_SESSION['success'] . '
                         </span>
                         </div>';
-            unset($_SESSION['success']);
-        }
+    unset($_SESSION['success']);
+}
 
-        if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-            echo '<div class="btn btn-warning btn-icon-split">
+if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
+    echo '<div class="btn btn-warning btn-icon-split">
                      <span class="icon text-white-50">
                         <i class="fas fa-exclamation-triangle"></i>
                      </span>
@@ -37,9 +36,9 @@ include('includes/navbar.php');
                         ' . $_SESSION['status'] . '
                      </span>
                      </div>';
-            unset($_SESSION['status']);
-        }
-        ?>
+    unset($_SESSION['status']);
+}
+?>
         <form action="code.php" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
@@ -54,28 +53,20 @@ include('includes/navbar.php');
                     <label>Loại Tin Tức</label>
                     <select class="form-control" name="LoaiTin">
                         <?php
-                        $q_theloai = "SELECT * FROM theloai";
-                        $rs_theloai = mysqli_query($connection, $q_theloai);
-                        while ($TL = @mysqli_fetch_array($rs_theloai)) {
-                        ?>
+$q_theloai = "SELECT * FROM theloai";
+$rs_theloai = mysqli_query($connection, $q_theloai);
+while ($TL = @mysqli_fetch_array($rs_theloai)) {
+    ?>
                             <option value="<?php echo $TL["MaTheLoai"] ?>"><?php echo $TL["TenTheLoai"] ?></option>
                         <?php
-                        }
-                        ?>
+}
+?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Nhân Viên</label>
-                    <select class="form-control" name="NhanVien">
-                        <?php
-                        $q_nv = "SELECT * FROM nhanvien";
-                        $rs_nv = mysqli_query($connection, $q_nv);
-                        while ($TL = @mysqli_fetch_array($rs_nv)) {
-                        ?>
-                            <option value="<?php echo $TL["MaNV"] ?>"><?php echo $TL["TenNV"] ?></option>
-                        <?php
-                        }
-                        ?>
+                    <select class="form-control" name="NhanVien" disabled>
+                            <option value="<?php echo $rw_nv["MaNV"] ?>"><?php echo $rw_nv["TenNV"] ?></option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -95,8 +86,9 @@ include('includes/navbar.php');
                         <div class="custom-file">
                             <input type="file" name="HinhAnh" accept="image/*" onchange="previewImage()" id="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="inputGroupFile01">Chọn file</label>
-                        </div>   
+                        </div>
                     </div>
+                </div>
                 <div class="form-group">
                     <label> Tạo Bởi </label>
                     <input type="text" name="TaoBoi" class="form-control" placeholder="Nhập Tác Giả">
@@ -117,6 +109,6 @@ include('includes/navbar.php');
 
 </div>
 <?php
-include('includes/scripts.php');
-include('includes/footer.php');
+include 'includes/scripts.php';
+include 'includes/footer.php';
 ?>
