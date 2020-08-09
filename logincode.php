@@ -1,11 +1,6 @@
 <?php
 include('security.php');
 
-if($_SESSION['Email'])
-{
-    header("location: index.php");
-}
-
 if (isset($_POST['DangNhap'])) {
     $email = $_POST['EmailKH'];
     $pwd = $_POST['MatKhauKH'];

@@ -108,7 +108,7 @@ if (isset($_GET['loai-tour'])) {
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h3>Gia Tien</h3>
+                            <h3>Giá Tiền</h3>
                             <?php
                                 $price_max = "SELECT MAX(GiaTien) AS p FROM tourdulich";
                                 $q_max =  mysqli_query($connection, $price_max);
@@ -163,7 +163,7 @@ if (isset($_GET['loai-tour'])) {
 
                     <div class="card">
                         <div class="fil-list" data-toggle="collapse" data-target="#DiemDen" aria-expanded="false" aria-controls="collapseTwo">
-                            <div class="fil-left">Diem Den</div>
+                            <div class="fil-left">Điểm Đến</div>
                             <div class="fil-right"><i class="fas fa-sort-down"></i></div>
                         </div>
 
